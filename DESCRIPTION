@@ -1,0 +1,16 @@
+Package: ipdw
+Title: ipdw: Interpolation by Inverse Path Distance Weighting
+Description: Interpolation of geo-referenced point data by Inverse
+    Path Distance Weighting
+Version: 0.2-1
+Author: Joseph Stachelek <jstachel@sfwmd.gov>
+Maintainer: Joseph Stachelek <jstachel@sfwmd.gov>
+Depends:
+    R (>= 3.0.2),gdistance
+Imports:
+    raster
+Suggests:
+    geoR,gstat,gdata,spatstat
+License: GPL (>= 2)
+LazyData: true
+Roxygen: list(wrap=TRUE)
