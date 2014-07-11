@@ -1,11 +1,13 @@
 #'@name costrasterGen
 #'@title Generate a cost Raster
-#'@description generate a cost raster from an object of class "SpatialPolygons"
+#'@description Generate a cost raster from an object of class \code{SpatialPolygons}, \code{matrix}, or \code{SpatialPointsDataFrame}
 #'@author Joseph Stachelek
-#'@param xymat Matrix of coordinates
+#'@param xymat Matrix of coordinates or a \code{SpatialPointsDataFrame} object
 #'@param pols SpatialPolygons object
-#'@param extent Define extent based on extent of xymat (pnts) or pols (polys). Default is polys.
+#'@param extent Define extent based on extent of xymat/xyspdf (points) or pols (polys). Default is polys.
 #'@param projstr proj4 string defining the inherent projection
+#'@details Ensure that the projection of the xymat coordinates and pols match. This can be accomplished by running the \code{projection} command on both inputs. If they do not match use the \code{spTransform} command.
+#'@seealso \code{\link[rgdal]{spTransform-methods}}, \code{\link[raster]{rasterize}}
 #'@return RasterLayer
 #'@import raster
 #'@export
@@ -16,13 +18,26 @@
 #'Srs2<-Polygons(list(Sr2), "s2")
 #'pols<-SpatialPolygons(list(Srs1,Srs2), 1:2)
 #'
+#'#using a matrix object
 #'xymat<-matrix(3,3,nrow=1,ncol=2)
 #'costras<-costrasterGen(xymat,pols,projstr=NULL)
+#'
+#'
+#'#plotting
 #'plot(costras)
 #'points(xymat)
 
 'costrasterGen'<-function(xymat,pols,extent="polys",projstr){
   
+if(class(xymat)=="SpatialPointsDataFrame"|class(xymat)=="SpatialPoints"){
+  xymat<-coordinates(xymat)
+}
+
+#add check to see if projstr and projection(pols) match
+if(!identical(projstr,projection(pols))){
+  message("The projection of polygons does not match projstr, see rgdal::spTransform")
+}
+
 #define spatial domain based on pnts or polys
 if(extent=="polys"){
   xmn<-min(bbox(pols)[1,])
@@ -31,7 +46,7 @@ if(extent=="polys"){
   ymx<-max(bbox(pols)[2,])
 }
 
-if(extent=="pnts"){
+if(extent=="points"){
   ymn<-range(xymat[,2])[1]
   ymx<-range(xymat[,2])[2]
   xmn<-range(xymat[,1])[1]

@@ -6,12 +6,13 @@
 costrasterGen(xymat, pols, extent = "polys", projstr)
 }
 \arguments{
-  \item{xymat}{Matrix of coordinates}
+  \item{xymat}{Matrix of coordinates or a
+  \code{SpatialPointsDataFrame} object}
 
   \item{pols}{SpatialPolygons object}
 
-  \item{extent}{Define extent based on extent of xymat
-  (pnts) or pols (polys). Default is polys.}
+  \item{extent}{Define extent based on extent of
+  xymat/xyspdf (points) or pols (polys). Default is polys.}
 
   \item{projstr}{proj4 string defining the inherent
   projection}
@@ -20,8 +21,15 @@ costrasterGen(xymat, pols, extent = "polys", projstr)
 RasterLayer
 }
 \description{
-generate a cost raster from an object of class
-"SpatialPolygons"
+Generate a cost raster from an object of class
+\code{SpatialPolygons}, \code{matrix}, or
+\code{SpatialPointsDataFrame}
+}
+\details{
+Ensure that the projection of the xymat coordinates and
+pols match. This can be accomplished by running the
+\code{projection} command on both inputs. If they do not
+match use the \code{spTransform} command.
 }
 \examples{
 Sr1<-Polygon(cbind(c(0,0,2,2,0),c(0,4,4,0,0)))
@@ -30,12 +38,20 @@ Srs1<-Polygons(list(Sr1), "s1")
 Srs2<-Polygons(list(Sr2), "s2")
 pols<-SpatialPolygons(list(Srs1,Srs2), 1:2)
 
+#using a matrix object
 xymat<-matrix(3,3,nrow=1,ncol=2)
 costras<-costrasterGen(xymat,pols,projstr=NULL)
+
+
+#plotting
 plot(costras)
 points(xymat)
 }
 \author{
 Joseph Stachelek
+}
+\seealso{
+\code{\link[rgdal]{spTransform-methods}},
+\code{\link[raster]{rasterize}}
 }
 
