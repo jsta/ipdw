@@ -85,6 +85,7 @@
     
     if(overlapped==TRUE){
         finalraster<-sum(rstack.mult,na.rm=T)
+        finalraster<-reclassify(finalraster,cbind(0,NA))
     }else{
       finalraster<-sum(rstack.mult,na.rm=F) #this is the correct on for kattegat
     }
@@ -98,8 +99,9 @@
     return(finalraster)
   }
 #optional removal of path distances
-file.remove(list.files(path=file.path(tempdir()),pattern=paste(yearmon,"A4ras*",sep="")))
+
 if(removefile==TRUE){
+  file.remove(list.files(path=file.path(tempdir()),pattern=paste(yearmon,"A4ras*",sep="")))
     file.remove(list.files(path=file.path(tempdir()),pattern=paste(paramlist[k],"A5ras*",sep=""),full.names=T))
   #file.remove(raster_data_full)
 }

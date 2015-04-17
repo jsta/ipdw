@@ -10,6 +10,7 @@
 #'@seealso \code{\link[rgdal]{spTransform-methods}}, \code{\link[raster]{rasterize}}
 #'@return RasterLayer
 #'@import raster
+#'@import sp
 #'@export
 #'@examples
 #'Sr1<-Polygon(cbind(c(0,0,2,2,0),c(0,4,4,0,0)))
@@ -17,6 +18,7 @@
 #'Srs1<-Polygons(list(Sr1), "s1")
 #'Srs2<-Polygons(list(Sr2), "s2")
 #'pols<-SpatialPolygons(list(Srs1,Srs2), 1:2)
+#'
 #'
 #'#using a matrix object
 #'xymat<-matrix(3,3,nrow=1,ncol=2)
@@ -34,8 +36,8 @@ if(class(xymat)=="SpatialPointsDataFrame"|class(xymat)=="SpatialPoints"){
 }
 
 #add check to see if projstr and projection(pols) match
-if(!identical(projstr,projection(pols))){
-  message("The projection of polygons does not match projstr, see rgdal::spTransform")
+if(!identical(projstr,projection(pols))&&class(xymat)!="matrix"){
+  message("Warning, the projection of polygons does not match projstr. See rgdal::spTransform")
 }
 
 #define spatial domain based on pnts or polys
@@ -46,7 +48,7 @@ if(extent=="polys"){
   ymx<-max(bbox(pols)[2,])
 }
 
-if(extent=="points"){
+if(extent=="points"|extent=="pnts"){
   ymn<-range(xymat[,2])[1]
   ymx<-range(xymat[,2])[2]
   xmn<-range(xymat[,1])[1]

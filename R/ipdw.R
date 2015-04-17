@@ -36,7 +36,7 @@
   }
   
   #pathdistGen
-  pathdists<-pathdistGen(spdf,costras,range,step,yearmon)
+  pathdists<-pathdistGen(spdf,costras,range,step)
   
   #ipdwInterp
   final.ipdw<-ipdwInterp(spdf,pathdists,paramlist,yearmon,removefile=TRUE)

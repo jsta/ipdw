@@ -31,8 +31,9 @@
   fit<-lm(mvp[,2]~mvp[,1])
   r2<-round(summary(fit)$r.squared,2)
   rmse<-round(sqrt(mean((mvp[,1]-mvp[,2])^2,na.rm=TRUE)),2)
-  pe<-round(100*mean(mvp[,1]/mvp[,2]),2)
-  stats<-data.frame(c("r2",r2,"rmse", rmse,"pe",pe))
+  logmse<-round(log(mean((mvp[,1]-mvp[,2])^2,na.rm=TRUE)),2)
+  pe<-round(100*mean(mvp[,1]/mvp[,2],na.rm=TRUE),2)
+  stats<-data.frame(c("r2",r2,"rmse", rmse,"pe",pe,"logmse",logmse))
   names(stats)<-c("validation stats")
   
   stats<-list(stats,mvp)
@@ -40,7 +41,7 @@
   
   #optional plotting
   if(plot==TRUE){
-    plot(mvp[,1],mvp[,2],ylim=range(mvp[,2]),xlim=range(mvp[,1]),ylab="Interpolated",xlab="Measured",main=title)
+    plot(mvp[,1],mvp[,2],ylim=range(mvp[,2],na.rm=T),xlim=range(mvp[,1],na.rm=T),ylab="Interpolated",xlab="Measured",main=title)
     abline(fit,col="red")
     abline(a=0,b=1)
   }

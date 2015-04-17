@@ -4,7 +4,6 @@
 #'@param spdf SpatialPointsDataFrame object
 #'@param costras RasterLayer cost raster
 #'@param range numeric. Range of interpolation neighborhood
-#'@param step numeric. Number of sub loops to manage memory during raster processing.
 #'@param yearmon character. String specifying the name of the spdf
 #'@return RasterStack object of path distances
 #'@import raster
@@ -28,7 +27,7 @@
 
 
 
-'pathdistGen'<-function(spdf,costras,range,step=16,yearmon="default"){
+'pathdistGen'<-function(spdf,costras,range,yearmon="default"){
   
 
   ipdw.range<-range/res(costras)[1]/2 #this is a per cell distance
@@ -64,7 +63,7 @@
   as.numeric(gsub('.*A4ras([0123456789]*)\\.grd$','\\1',raster_data))->fileNum
   raster_data<-raster_data[order(fileNum)]
   rstack<-stack(raster_data)
-  rstack<-reclassify(rstack,c(-99999,-99999,NA))
+  rstack<-reclassify(rstack,cbind(-99999,NA))
   file.remove(list.files(path=file.path(tempdir()),pattern=paste(yearmon,"A4ras*",sep=""),full.names=T))
   
   return(rstack)
