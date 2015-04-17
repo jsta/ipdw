@@ -12,7 +12,7 @@
 \restylefloat{figure}
 
 \author{Joseph Stachelek}
-\title{Interpolation via Inverse Path Distance Weighting}
+\title{Spatial Interpolation via Inverse Path Distance Weighting}
 
 \Abstract{
 The \proglang{R} package \pkg{ipdw} provides functions for interpolation of georeferenced point data via Inverse Path Distance Weighting. Useful for coastal marine applications where barriers in the landscape preclude interpolation with Euclidean distances. This method of interpolation requires significant computation and is only practical for relatively small and coarse grids. The \pkg{ipdw} implementation may provide additional flexibility and greater speed relative to alternatives. 
@@ -75,7 +75,8 @@ Each polyline is converted seperately to an object of class \code{Polygons}. Nex
 
 \begin{Schunk}
 \begin{Sinput}
-R> costras<-costrasterGen(kattegat$coords,pols,extent="pnts",katproj)
+R> projection(pols)<-katproj
+R> costras<-costrasterGen(kattegat$coords,pols,extent="points",katproj)
 R> #insert contiguous barrier
 R> costras[160:170,1:80]<-10000
 \end{Sinput}
@@ -214,6 +215,7 @@ R> valid.idw<-errorGen(final.idw,measured.spdf,measured.spdf@data)
 Results from IDW and IPDW appear similar because no validation points are present in the area downstream (south) of the contiguous barrier (Figure~\ref{fig:one},Figure~\ref{fig:two}) . Up to this point, we have seen a simple implementation of IPDW requiring only a \code{SpatialPointsDataFrame} and a cost \code{Raster}. 
 
 Test comparisons between the \pkg{ipdw} and the ESRI \citep{mitchell2012,suominen2010} implementations of IPDW found \pkg{ipdw} to be much faster and more flexible. In particular, the high-level function \code{ipdw} provides the ability to run IPDW in one step while the lower-level function \code{ipdwInterp} can be called multiple times following \code{pathdistGen} in order to interpolate multiple parameters of a single \code{SpatialPointsDataFrame}. This is accomplished by saving the output from \code{pathdistGen}.
+
 %\newpage
 \setlength{\bibsep}{0pt}
 

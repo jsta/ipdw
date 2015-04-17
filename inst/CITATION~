@@ -1,0 +1,17 @@
+citHeader("To cite package 'ipdw' in publications use:")
+
+if(!exists("meta") || is.null(meta))
+    meta <- packageDescription("ipdw")
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+     
+citEntry(entry = "Manual",
+         title = "ipdw: Spatial Interpolation by Inverse Path Distance Weighting. ",
+         author = personList(as.person("Joseph Stachelek")),
+         year = year,
+         note = note,
+         url = "http://CRAN.R-project.org/package=ipdw",
+
+         textVersion = paste("Joseph Stachelek (", year, 
+             "). ipdw: Spatial Interpolation by Inverse Path Distance Weighting. ",
+             note, ".", sep=""))
