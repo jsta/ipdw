@@ -19,4 +19,8 @@ The ipdw package was developed with coastal marine applications in mind where pa
 **Joseph Stachelek and Christopher J. Madden (2015)**. Application of Inverse Path Distance weighting for high density spatial mapping of coastal water quality patterns.
 *International Journal of Geographical Information Science*
 [preprint](http://jsta.github.io/public/stachmadden2015am.pdf) | [journal](http://dx.doi.org/10.1080/13658816.2015.1018833)
+
+**Tapio Suominen, Harri Tolvanen, and Risto Kalliola (2010)**. Surface layer salinity gradients and flow patterns in the archipelago coast of SW Finland, northern Baltic Sea.
+*Marine Environmental Research*
+[journal](http://dx.doi.org/10.1016/j.marenvres.2009.10.009)
   
