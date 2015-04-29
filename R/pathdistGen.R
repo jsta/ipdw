@@ -29,7 +29,7 @@
 
 'pathdistGen'<-function(spdf,costras,range,yearmon="default"){
   
-
+  
   ipdw.range<-range/res(costras)[1]/2 #this is a per cell distance
   
   #start interpolation#####
@@ -43,6 +43,8 @@
     dist=ipdw.range    
   }
   
+  pb<-txtProgressBar(max=nrow(spdf),style=3)
+  
     for(i in 1:nrow(spdf)){
       coord<-spdf[i,]
       A<-accCost(trans,coord)
@@ -53,8 +55,9 @@
       #showTmpFiles()
       
       rf<-writeRaster(A4,filename=file.path(tempdir(),paste(yearmon,"A4ras",i,".grd",sep="")),overwrite=T,NAflag=-99999)
-      #print(paste(round((i/nrow(spdf))*100,1),"% complete"))
+      setTxtProgressBar(pb,i)      
     }
+  close(pb)
      
   
   #create raster stack
