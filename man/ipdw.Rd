@@ -8,47 +8,38 @@ ipdw(spdf, costras, range, paramlist, overlapped = FALSE,
   yearmon = "default", removefile = TRUE, step = 16)
 }
 \arguments{
-  \item{spdf}{SpatialPointsDataFrame object}
+\item{spdf}{SpatialPointsDataFrame object}
 
-  \item{costras}{RasterLayer. Cost raster}
+\item{costras}{RasterLayer. Cost raster}
 
-  \item{range}{numeric. Range of interpolation
-  neighborhood}
+\item{range}{numeric. Range of interpolation neighborhood}
 
-  \item{paramlist}{character. String representing parameter
-  names}
+\item{paramlist}{character. String representing parameter names}
 
-  \item{overlapped}{logical. Default is FALSE, specify TRUE
-  if some points lie on top of barriers}
+\item{overlapped}{logical. Default is FALSE, specify TRUE if some points lie on top of barriers}
 
-  \item{yearmon}{character. String specifying the name of
-  the spdf}
+\item{yearmon}{character. String specifying the name of the spdf}
 
-  \item{removefile}{logical. Remove files after
-  processing?}
+\item{removefile}{logical. Remove files after processing?}
 
-  \item{step}{numeric. Number of sub loops to manage memory
-  during raster processing.}
+\item{step}{numeric. Number of sub loops to manage memory during raster processing.}
 }
 \value{
 RasterLayer
 }
 \description{
-Interpolate geo-referenced point data using inverse path
-distance weighting
+Interpolate geo-referenced point data using inverse path distance weighting
 }
 \details{
 This is a high level function that interpolates a
 SpatialPointsDataFrame object in a single pass.
 
-Points must be located within a single contiguous area. The
-presence of "landlocked" points will cause errors. It may
-be necessary to increase the value assigned to land areas
-when using a large range value in combination with a large
-sized cost rasters (grain x extent). In these cases, the
-value of land areas should be increased to ensure that it
-is always greater than the maximum accumulated cost path
-distance of any given geo-referenced point.
+Points must be located within a single contiguous area. The presence of "landlocked"
+points will cause errors. It may be necessary to increase the value
+assigned to land areas when using a large range value in combination
+with a large sized cost rasters (grain x extent). In these cases, the
+value of land areas should be increased to ensure that it is always
+greater than the maximum accumulated cost path distance of any given geo-referenced point.
 }
 \examples{
 #see vignette

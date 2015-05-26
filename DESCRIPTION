@@ -13,4 +13,3 @@ Suggests:
     geoR,gstat,gdata,spatstat
 License: GPL (>= 2)
 LazyData: true
-Roxygen: list(wrap=TRUE)

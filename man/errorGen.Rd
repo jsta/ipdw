@@ -8,15 +8,15 @@ errorGen(finalraster, validation.spdf, validation.data, plot = FALSE,
   title = "")
 }
 \arguments{
-  \item{finalraster}{RasterLayer object}
+\item{finalraster}{RasterLayer object}
 
-  \item{validation.spdf}{SpatialPointsDataFrame}
+\item{validation.spdf}{SpatialPointsDataFrame}
 
-  \item{validation.data}{data.frame}
+\item{validation.data}{data.frame}
 
-  \item{plot}{logical. Plot comparison?}
+\item{plot}{logical. Plot comparison?}
 
-  \item{title}{Plot labels}
+\item{title}{Plot labels}
 }
 \value{
 List of error statistics

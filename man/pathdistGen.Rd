@@ -7,15 +7,13 @@
 pathdistGen(spdf, costras, range, yearmon = "default")
 }
 \arguments{
-  \item{spdf}{SpatialPointsDataFrame object}
+\item{spdf}{SpatialPointsDataFrame object}
 
-  \item{costras}{RasterLayer cost raster}
+\item{costras}{RasterLayer cost raster}
 
-  \item{range}{numeric. Range of interpolation
-  neighborhood}
+\item{range}{numeric. Range of interpolation neighborhood}
 
-  \item{yearmon}{character. String specifying the name of
-  the spdf}
+\item{yearmon}{character. String specifying the name of the spdf}
 }
 \value{
 RasterStack object of path distances

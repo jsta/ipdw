@@ -8,21 +8,17 @@ ipdwInterp(spdf, rstack, paramlist, overlapped = FALSE, yearmon = "default",
   removefile = TRUE)
 }
 \arguments{
-  \item{spdf}{SpatialPointsDataFrame object}
+\item{spdf}{SpatialPointsDataFrame object}
 
-  \item{rstack}{RasterStack of path distances}
+\item{rstack}{RasterStack of path distances}
 
-  \item{paramlist}{chacter. String representing parameter
-  names}
+\item{paramlist}{chacter. String representing parameter names}
 
-  \item{overlapped}{logical. Default is FALSE, specify TRUE
-  if some points lie on top of barriers}
+\item{overlapped}{logical. Default is FALSE, specify TRUE if some points lie on top of barriers}
 
-  \item{yearmon}{character. String specifying the name of
-  the spdf}
+\item{yearmon}{character. String specifying the name of the spdf}
 
-  \item{removefile}{logical. Remove files after
-  processing?}
+\item{removefile}{logical. Remove files after processing?}
 }
 \value{
 RasterLayer

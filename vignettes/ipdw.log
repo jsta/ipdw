@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.7)  30 DEC 2014 10:10
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.7.7)  8 MAY 2015 08:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -680,26 +680,26 @@ Environment Schunk is already defined, stay with former definition) (./ipdw.aux
 )
 \openout1 = `ipdw.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 32.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 31.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 31.
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 32.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
-LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -730,7 +730,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box30
-Package hyperref Info: Link coloring ON on input line 32.
+Package hyperref Info: Link coloring ON on input line 31.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -740,21 +740,21 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count117
 )
-LaTeX Info: Redefining \ref on input line 32.
-LaTeX Info: Redefining \pageref on input line 32.
-LaTeX Info: Redefining \nameref on input line 32.
+LaTeX Info: Redefining \ref on input line 31.
+LaTeX Info: Redefining \pageref on input line 31.
+LaTeX Info: Redefining \nameref on input line 31.
 
 (./ipdw.out) (./ipdw.out)
 \@outlinefile=\write4
 \openout4 = `ipdw.out'.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 32.
+(Font)              <10.95> on input line 31.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 32.
+(Font)              <8> on input line 31.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 32.
-LaTeX Font Info:    Try loading font information for T1+aess on input line 32.
+(Font)              <6> on input line 31.
+LaTeX Font Info:    Try loading font information for T1+aess on input line 31.
  (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aess.fd
 File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
 )
@@ -762,7 +762,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
  (./ipdw-concordance.tex)
-LaTeX Font Info:    Try loading font information for T1+aett on input line 40.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 39.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
@@ -774,7 +774,7 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
  []
 
 [2]
-Overfull \hbox (5.46094pt too wide) in paragraph at lines 124--125
+Overfull \hbox (5.46094pt too wide) in paragraph at lines 123--124
 []\T1/aer/m/n/10.95 Next, we save the train-ing and val-i-da-tion datasets as o
 b-jects of class \T1/aett/m/n/10.95 SpatialPointsDataFrame\T1/aer/m/n/10.95 .
  []
@@ -787,13 +787,22 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 [3] <ipdw-figure0.pdf, id=74, 433.62pt x 361.35pt>
 File: ipdw-figure0.pdf Graphic file (type pdf)
  <use ipdw-figure0.pdf>
-Package pdftex.def Info: ipdw-figure0.pdf used on input line 143.
+Package pdftex.def Info: ipdw-figure0.pdf used on input line 142.
 (pdftex.def)             Requested size: 354.12434pt x 295.11795pt.
 
-<ipdw-figure1.pdf, id=75, 433.62pt x 361.35pt>
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+\T1/aer/m/n/10.95 4 []
+ []
+
+[4 <./ipdw-figure0.pdf>]
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+[] \T1/aer/m/n/10.95 5
+ []
+
+[5] <ipdw-figure1.pdf, id=93, 433.62pt x 361.35pt>
 File: ipdw-figure1.pdf Graphic file (type pdf)
  <use ipdw-figure1.pdf>
-Package pdftex.def Info: ipdw-figure1.pdf used on input line 163.
+Package pdftex.def Info: ipdw-figure1.pdf used on input line 250.
 (pdftex.def)             Requested size: 354.12434pt x 295.11795pt.
 
 
@@ -801,14 +810,13 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
-\T1/aer/m/n/10.95 4 []
+\T1/aer/m/n/10.95 6 []
  []
 
-[4 <./ipdw-figure0.pdf>] <ipdw-figure2.pdf, id=93, 722.7pt x 361.35pt>
+[6] <ipdw-figure2.pdf, id=101, 722.7pt x 361.35pt>
 File: ipdw-figure2.pdf Graphic file (type pdf)
-
-<use ipdw-figure2.pdf>
-Package pdftex.def Info: ipdw-figure2.pdf used on input line 186.
+ <use ipdw-figure2.pdf>
+Package pdftex.def Info: ipdw-figure2.pdf used on input line 273.
 (pdftex.def)             Requested size: 354.12434pt x 177.06305pt.
 
 
@@ -816,44 +824,44 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
-[] \T1/aer/m/n/10.95 5
- []
-
-[5 <./ipdw-figure1.pdf>] <ipdw-figure3.pdf, id=113, 578.16pt x 361.35pt>
-File: ipdw-figure3.pdf Graphic file (type pdf)
-
-<use ipdw-figure3.pdf>
-Package pdftex.def Info: ipdw-figure3.pdf used on input line 207.
-(pdftex.def)             Requested size: 354.12434pt x 221.32744pt.
-
-Overfull \hbox (5.47499pt too wide) has occurred while \output is active
-\T1/aer/m/n/10.95 6 []
- []
-
-[6 <./ipdw-figure2.pdf> <./ipdw-figure3.pdf>] (./ipdw.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 223.
-
-Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 7
  []
 
-[7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 223.
+[7 <./ipdw-figure1.pdf>] <ipdw-figure3.pdf, id=122, 578.16pt x 361.35pt>
+File: ipdw-figure3.pdf Graphic file (type pdf)
+
+<use ipdw-figure3.pdf>
+Package pdftex.def Info: ipdw-figure3.pdf used on input line 294.
+(pdftex.def)             Requested size: 354.12434pt x 221.32744pt.
+
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+\T1/aer/m/n/10.95 8 []
+ []
+
+[8 <./ipdw-figure2.pdf> <./ipdw-figure3.pdf>] (./ipdw.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 310.
+
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+[] \T1/aer/m/n/10.95 9
+ []
+
+[9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 310.
  (./ipdw.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 223.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 223.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 310.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 310.
 Package rerunfilecheck Info: File `ipdw.out' has not changed.
 (rerunfilecheck)             Checksum: A0730CFF96080D0304B3A6BB4F368982;318.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 223.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 310.
  ) 
 Here is how much of TeX's memory you used:
- 8384 strings out of 495028
- 124823 string characters out of 6181498
- 206571 words of memory out of 5000000
+ 8386 strings out of 495028
+ 124835 string characters out of 6181498
+ 207571 words of memory out of 5000000
  11401 multiletter control sequences out of 15000+600000
  41366 words of font info for 77 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 44i,9n,42p,1073b,402s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,9n,42p,1073b,469s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texli
@@ -863,10 +871,10 @@ f-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texlive/texmf-dist
 ts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmtt10.pfb>
-Output written on ipdw.pdf (7 pages, 255744 bytes).
+Output written on ipdw.pdf (9 pages, 258978 bytes).
 PDF statistics:
- 196 PDF objects out of 1000 (max. 8388607)
- 153 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
+ 204 PDF objects out of 1000 (max. 8388607)
+ 159 compressed objects within 2 object streams
+ 33 named destinations out of 1000 (max. 500000)
  57 words of extra memory for PDF output out of 10000 (max. 10000000)
 
