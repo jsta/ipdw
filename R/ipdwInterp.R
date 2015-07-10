@@ -35,7 +35,7 @@
 'ipdwInterp'<-function(spdf,rstack,paramlist,overlapped=FALSE,yearmon="default",removefile=TRUE){
   
   for(k in 1:length(paramlist)){
-    
+    #k<-1
     tr.names<-names(spdf)
     param.ind<-which(tr.names==paramlist[k])
     
@@ -51,13 +51,11 @@
     #raster sum
     #rstack.sum<-sum(rstack,na.rm=TRUE) #need to set na.rm = TRUE if points are on land
     if(overlapped==TRUE){
-      
-      rstack.sum<-sum(rstack,na.rm=TRUE) 
+      rstack.sum<-raster::calc(rstack,fun=function(x){sum(x,na.rm=TRUE)})
       rstack.sum<-reclassify(rstack.sum,cbind(0,NA))
       
     }else{
-    
-    rstack.sum<-sum(rstack,na.rm=FALSE) 
+    rstack.sum<-raster::calc(rstack,fun=function(x){sum(x,na.rm = TRUE)}) 
     rstack.sum<-reclassify(rstack.sum,cbind(0,NA))
     }
     
@@ -84,10 +82,10 @@
     rstack.mult<-stack(raster_data)
     
     if(overlapped==TRUE){
-        finalraster<-sum(rstack.mult,na.rm=T)
+        finalraster<-raster::calc(rstack.mult,fun=function(x){sum(x,na.rm=TRUE)})
         finalraster<-reclassify(finalraster,cbind(0,NA))
     }else{
-      finalraster<-sum(rstack.mult,na.rm=F) #this is the correct on for kattegat
+        finalraster<-raster::calc(rstack.mult,fun=function(x){sum(x,na.rm=TRUE)}) #this is the correct for kattegat example
     }
           
     #finalraster<-sum(rstack.mult,na.rm=T) #this is the correct one for dflow

@@ -40,6 +40,7 @@ costras[,i]<-costras[,i]+i
 }
 
 rstack<-pathdistGen(spdf,costras,100)
+print(class(rstack))
 final.raster<-ipdwInterp(spdf,rstack,paramlist=c("rnorm.2."))
 plot(final.raster)
 }
