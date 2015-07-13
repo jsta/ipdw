@@ -44,7 +44,7 @@
     if(length(param.na2)>=1){
       param.na<-as.numeric(row.names(spdf[which(is.na(spdf@data[,param.ind])),]))
       spdf<-spdf[-which(is.na(spdf@data[,param.ind])),]  
-      rstack<-dropLayer(rstack,param.na)
+      rstack<-raster::dropLayer(rstack,param.na)
       }    
     
      
@@ -52,11 +52,11 @@
     #rstack.sum<-sum(rstack,na.rm=TRUE) #need to set na.rm = TRUE if points are on land
     if(overlapped==TRUE){
       rstack.sum<-raster::calc(rstack,fun=function(x){sum(x,na.rm=TRUE)})
-      rstack.sum<-reclassify(rstack.sum,cbind(0,NA))
+      rstack.sum<-raster::reclassify(rstack.sum,cbind(0,NA))
       
     }else{
     rstack.sum<-raster::calc(rstack,fun=function(x){sum(x,na.rm = TRUE)}) 
-    rstack.sum<-reclassify(rstack.sum,cbind(0,NA))
+    rstack.sum<-raster::reclassify(rstack.sum,cbind(0,NA))
     }
     
     #calculate the weight of the individual rasters 
@@ -68,7 +68,7 @@
       param.value2<-as.vector(unlist(param.value[1]))
       ras.mult<-ras.weight*param.value2
       
-      rf<-writeRaster(ras.mult,filename=file.path(tempdir(),paste(paramlist[k],"A5ras",i,".grd",sep="")),overwrite=T)
+      rf<-raster::writeRaster(ras.mult,filename=file.path(tempdir(),paste(paramlist[k],"A5ras",i,".grd",sep="")),overwrite=T)
       #rf<-writeRaster(ras.mult,filename=paste("DF_Surfaces/",yearmon,"/",paramlist[k],"A5ras",i,".grd",sep=""),overwrite=T)
     }
     
@@ -79,18 +79,18 @@
     raster_data<-raster_data[order(fileNum)]
     
     #sum rasters to get final surface
-    rstack.mult<-stack(raster_data)
+    rstack.mult<-raster::stack(raster_data)
     
     if(overlapped==TRUE){
         finalraster<-raster::calc(rstack.mult,fun=function(x){sum(x,na.rm=TRUE)})
-        finalraster<-reclassify(finalraster,cbind(0,NA))
+        finalraster<-raster::reclassify(finalraster,cbind(0,NA))
     }else{
         finalraster<-raster::calc(rstack.mult,fun=function(x){sum(x,na.rm=TRUE)}) #this is the correct for kattegat example
     }
           
     #finalraster<-sum(rstack.mult,na.rm=T) #this is the correct one for dflow
      
-    r <- rasterize(spdf, rstack[[1]], paramlist[k])
+    r <- raster::rasterize(spdf, rstack[[1]], paramlist[k])
     finalraster<-cover(r,finalraster)
     
     file.remove(raster_data_full)

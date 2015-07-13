@@ -59,12 +59,12 @@ nrow<-ymx-ymn
 ncol<-xmx-xmn
   
 #generate cost raster####
-  r<-raster(nrow=nrow,ncol=ncol,crs=projstr,xmn=xmn,xmx=xmx,ymn=ymn,ymx=ymx)
+  r<-raster::raster(nrow=nrow,ncol=ncol,crs=projstr,xmn=xmn,xmx=xmx,ymn=ymn,ymx=ymx)
   costras<-rasterize(pols,r,silent=TRUE)
   m <- c(0, +Inf, 10000)
   rclmat <- matrix(m, ncol=3, byrow=TRUE)
-  costras2<-reclassify(costras,rclmat)
-  costras3<-reclassify(costras2,cbind(NA,1))
+  costras2<-raster::reclassify(costras,rclmat)
+  costras3<-raster::reclassify(costras2,cbind(NA,1))
   
   return(costras3)  
 }

@@ -25,10 +25,10 @@
 
 'errorGen'<-function(finalraster,validation.spdf,validation.data,plot=FALSE,title=""){
   
-  predicted<-extract(finalraster,validation.spdf)
+  predicted<-raster::extract(finalraster,validation.spdf)
   
   mvp<-data.frame(cbind(validation.data,predicted))
-  fit<-lm(mvp[,2]~mvp[,1])
+  fit<-stats::lm(mvp[,2]~mvp[,1])
   r2<-round(summary(fit)$r.squared,2)
   rmse<-round(sqrt(mean((mvp[,1]-mvp[,2])^2,na.rm=TRUE)),2)
   logmse<-round(log(mean((mvp[,1]-mvp[,2])^2,na.rm=TRUE)),2)
@@ -42,8 +42,8 @@
   #optional plotting
   if(plot==TRUE){
     plot(mvp[,1],mvp[,2],ylim=range(mvp[,2],na.rm=T),xlim=range(mvp[,1],na.rm=T),ylab="Interpolated",xlab="Measured",main=title)
-    abline(fit,col="red")
-    abline(a=0,b=1)
+    graphics::abline(fit,col="red")
+    graphics::abline(a=0,b=1)
   }
   
   return(stats)
