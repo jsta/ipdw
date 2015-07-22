@@ -41,11 +41,14 @@
     
     #exclude NA values for param from spdf and rstack.sum
     param.na2<-which(is.na(spdf@data[,param.ind]))
+    
     if(length(param.na2)>=1){
       param.na<-as.numeric(row.names(spdf[which(is.na(spdf@data[,param.ind])),]))
       spdf<-spdf[-which(is.na(spdf@data[,param.ind])),]  
-      rstack<-raster::dropLayer(rstack,param.na)
+      rstack<-raster::dropLayer(rstack,param.na2)
       }    
+    
+    #identical(print(dim(rstack)[3]),nrow(spdf))
     
      
     #raster sum
@@ -62,6 +65,7 @@
     #calculate the weight of the individual rasters 
     
     i=1
+    
     for(i in 1:dim(rstack)[3])  {
       ras.weight<-rstack[[i]]/rstack.sum
       param.value<-data.frame(spdf[i,paramlist[k]])
@@ -91,7 +95,7 @@
     #finalraster<-sum(rstack.mult,na.rm=T) #this is the correct one for dflow
      
     r <- raster::rasterize(spdf, rstack[[1]], paramlist[k])
-    finalraster<-cover(r,finalraster)
+    finalraster<-raster::cover(r,finalraster)
     
     file.remove(raster_data_full)
     return(finalraster)
