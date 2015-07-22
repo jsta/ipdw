@@ -30,7 +30,7 @@
 'pathdistGen'<-function(spdf,costras,range,yearmon="default"){
   
   
-  ipdw.range<-range/res(costras)[1]/2 #this is a per cell distance
+  ipdw.range<-range/raster::res(costras)[1]/2 #this is a per cell distance
   #print(ipdw.range)
   
   #start interpolation#####

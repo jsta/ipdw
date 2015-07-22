@@ -1,8 +1,8 @@
 Package: ipdw
 Title: Spatial Interpolation by Inverse Path Distance Weighting
 Description: Functions are provided to interpolate georeferenced point data via Inverse Path Distance Weighting. Useful for coastal marine applications where barriers in the landscape preclude interpolation with Euclidean distances.
-Version: 0.2-2
-Date: 2015-07-13
+Version: 0.2-3
+Date: 2015-07-22
 Author: Joseph Stachelek <jstachel@sfwmd.gov>
 Maintainer: Joseph Stachelek <jstachel@sfwmd.gov>
 Depends:
