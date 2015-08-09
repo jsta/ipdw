@@ -48,8 +48,7 @@
       rstack<-raster::dropLayer(rstack,param.na2)
       }    
     
-    #identical(print(dim(rstack)[3]),nrow(spdf))
-    
+    #print(identical(dim(rstack)[3],nrow(spdf)))
      
     #raster sum
     #rstack.sum<-sum(rstack,na.rm=TRUE) #need to set na.rm = TRUE if points are on land
@@ -58,13 +57,12 @@
       rstack.sum<-raster::reclassify(rstack.sum,cbind(0,NA))
       
     }else{
-    rstack.sum<-raster::calc(rstack,fun=function(x){sum(x,na.rm = TRUE)}) 
-    rstack.sum<-raster::reclassify(rstack.sum,cbind(0,NA))
+      rstack.sum<-raster::calc(rstack,fun=function(x){sum(x,na.rm = TRUE)}) 
+      rstack.sum<-raster::reclassify(rstack.sum,cbind(0,NA))
     }
     
     #calculate the weight of the individual rasters 
     
-    i=1
     
     for(i in 1:dim(rstack)[3])  {
       ras.weight<-rstack[[i]]/rstack.sum

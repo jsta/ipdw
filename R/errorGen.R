@@ -33,11 +33,12 @@
   rmse<-round(sqrt(mean((mvp[,1]-mvp[,2])^2,na.rm=TRUE)),2)
   logmse<-round(log(mean((mvp[,1]-mvp[,2])^2,na.rm=TRUE)),2)
   pe<-round(100*mean(mvp[,1]/mvp[,2],na.rm=TRUE),2)
-  stats<-data.frame(c("r2",r2,"rmse", rmse,"pe",pe,"logmse",logmse))
-  names(stats)<-c("validation stats")
+  stats<-data.frame(r2,rmse,pe,logmse)
+  names(stats)<-c("r2","rmse","pe","logmse")
+  #stats<-data.frame(c("r2",r2,"rmse", rmse,"pe",pe,"logmse",logmse))
+  #names(stats)<-c("validation stats")
   
   stats<-list(stats,mvp)
-  
   
   #optional plotting
   if(plot==TRUE){
