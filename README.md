@@ -2,6 +2,7 @@ ipdw
 ======
 
 ![ipdw Downloads](http://cranlogs.r-pkg.org/badges/ipdw)
+[![Build status](https://ci.appveyor.com/api/projects/status/5vb8krkx50r1qhbp?svg=true)](https://ci.appveyor.com/project/jsta/ipdw)
 
 The `R` package [ipdw](http://jsta.github.io/public/stachmadden2015am.pdf)  provides the functionality to perform interpolation of georeferenced point data using inverse path distance weighting. Interpolation is accomplished in two steps. First, path distances are calculated from each georeferenced (measurement) point to each prediction point. Path distances, which honor barriers in the landscape, are calculated based on cell-to-cell movement through an underlying `Raster` object that represents movement cost. These path distances are subsequently used as interpolation weights. The two-step routine follows the order of operations described in Suominen et al. (2010) substituting the ESRI path distance algorithm with the `gdistance` wrapped version of the `igraph` adjacency algorithm.    
 
