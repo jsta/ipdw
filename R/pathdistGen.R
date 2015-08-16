@@ -8,6 +8,7 @@
 #'@return RasterStack object of path distances
 #'@import raster
 #'@import gdistance
+#'@importFrom utils setTxtProgressBar
 #'@export
 #'@examples
 #'spdf<-data.frame(rnorm(2))
