@@ -47,7 +47,7 @@
     dist=ipdw.range    
   }
   
-  pb<-txtProgressBar(max=nrow(spdf),style=3)
+  pb<-utils::txtProgressBar(max=nrow(spdf),style=3)
   
     for(i in 1:nrow(spdf)){
       coord<-spdf[i,]

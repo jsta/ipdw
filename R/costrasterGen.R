@@ -42,10 +42,10 @@ if(!identical(projstr,projection(pols))&&class(xymat)!="matrix"){
 
 #define spatial domain based on pnts or polys
 if(extent=="polys"){
-  xmn<-min(bbox(pols)[1,])
-  xmx<-max(bbox(pols)[1,])
-  ymn<-min(bbox(pols)[2,])
-  ymx<-max(bbox(pols)[2,])
+  xmn<-min(sp::bbox(pols)[1,])
+  xmx<-max(sp::bbox(pols)[1,])
+  ymn<-min(sp::bbox(pols)[2,])
+  ymx<-max(sp::bbox(pols)[2,])
 }
 
 if(extent=="points"|extent=="pnts"){
