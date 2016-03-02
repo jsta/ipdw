@@ -42,8 +42,9 @@
     xymat <- coordinates(xymat)
   }
   
+  browser()
   #add check to see if projstr and projection(pols) match
-  if(!identical(projstr, sp::proj4string(pols)) && class(xymat) != "matrix"){
+  if(!identical(projstr, sp::proj4string(pols))){
     message("Warning, the projection of polygons does not match projstr. See rgdal::spTransform")
   }
   
@@ -70,9 +71,9 @@
   costras <- raster::rasterize(pols, r, silent = TRUE)
   m <- c(0, +Inf, 10000)
   rclmat <- matrix(m, ncol = 3, byrow = TRUE)
-  costras2 <- raster::reclassify(costras, rclmat)
-  costras3 <- raster::reclassify(costras2, cbind(NA, 1))
+  costras <- raster::reclassify(costras, rclmat)
+  costras <- raster::reclassify(costras, cbind(NA, 1))
   
-  return(costras3)  
+  return(costras)  
 }
 
