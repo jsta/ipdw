@@ -59,7 +59,7 @@
     
     #calculate the weight of the individual rasters 
     
-    for(i in 1:dim(rstack)[3])  {
+    for(i in 1:dim(rstack)[3]){
       ras.weight <- rstack[[i]] / rstack.sum
       param.value <- data.frame(spdf[i, paramlist[k]])
       param.value2 <- as.vector(unlist(param.value[1]))
