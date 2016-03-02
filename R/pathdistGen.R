@@ -1,5 +1,6 @@
 #'@name pathdistGen
 #'@title Generate a stack of path distance raster objects
+#'@description Generate a stack of path accumulated distance raster objects
 #'@author Joseph Stachelek
 #'@param spdf SpatialPointsDataFrame object
 #'@param costras RasterLayer cost raster
@@ -26,13 +27,13 @@
 #'
 #'rstack <- pathdistGen(spdf, costras, 100)
 
-'pathdistGen'<-function(spdf, costras, range, yearmon = "default"){
+'pathdistGen' <- function(spdf, costras, range, yearmon = "default"){
   
-  if(class(spdf)!="SpatialPointsDataFrame"){
+  if(class(spdf) != "SpatialPointsDataFrame"){
     stop("spdf object must be of class SpatialPointsDataFrame")
   }
   
-  ipdw.range <- range/raster::res(costras)[1] / 2 #this is a per cell distance
+  ipdw_range <- range / raster::res(costras)[1] / 2 #this is a per cell distance
   
   #start interpolation
   #calculate conductances hence 1/max(x)
@@ -41,9 +42,9 @@
   coord <- spdf[i,]
   costsurf <- gdistance::accCost(trans, coord)
   
-  dist <- hist(costsurf, plot = F)$breaks[2]
-  if(dist < ipdw.range){
-    dist <- ipdw.range    
+  ipdw_dist <- hist(costsurf, plot = F)$breaks[2]
+  if(ipdw_dist < ipdw_range){
+    ipdw_dist <- ipdw_range    
   }
   
   pb <- utils::txtProgressBar(max = nrow(spdf), style = 3)
@@ -51,8 +52,8 @@
     for(i in 1:nrow(spdf)){
       coord <- spdf[i,]
       costsurf <- gdistance::accCost(trans, coord)
-      costsurf_reclass <- raster::reclassify(costsurf, c(dist, +Inf, NA, ipdw.range, dist, ipdw.range)) #raster cells are 1 map unit
-      costsurf_scaled <- ((ipdw.range/costsurf_reclass)^2)
+      costsurf_reclass <- raster::reclassify(costsurf, c(ipdw_dist, +Inf, NA, ipdw_range, ipdw_dist, ipdw_range)) #raster cells are 1 map unit
+      costsurf_scaled <- ((ipdw_range/costsurf_reclass)^2)
       costsurf_scaled_reclass <- raster::reclassify(costsurf_scaled, c(-Inf, 1, 0))
       
       #check output with - zoom(A4,breaks=seq(from=0,to=5,by=1),col=rainbow(5))

@@ -1,6 +1,6 @@
 #'@name ipdw
 #'@title Inverse Path Distance Weighting
-#'@description Interpolate geo-referenced point data using inverse path distance weighting
+#'@description Interpolate geo-referenced point data using inverse path distance weighting.
 #'@author Joseph Stachelek
 #'@param spdf SpatialPointsDataFrame object
 #'@param costras RasterLayer. Cost raster
@@ -26,20 +26,17 @@
 #'@examples
 #' #see vignette
 
-
-###this is the highest level function that combines path distance generation with interpolation
-
-'ipdw'<-function(spdf,costras,range,paramlist,overlapped=FALSE,yearmon="default",removefile=TRUE,step=16){
+'ipdw' <- function(spdf, costras, range, paramlist, overlapped = FALSE, yearmon = "default", removefile = TRUE, step = 16){
   
-  if(!identical(projection(spdf),projection(costras))){
+  if(!identical(projection(spdf), projection(costras))){
     stop("Point data projection and cost raster projections do not match, see rgdal::spTransform")
   }
   
   #pathdistGen
-  pathdists<-pathdistGen(spdf,costras,range,step)
+  pathdists <- pathdistGen(spdf, costras, range, step)
   
   #ipdwInterp
-  final.ipdw<-ipdwInterp(spdf,pathdists,paramlist,yearmon,removefile=TRUE)
+  final.ipdw <- ipdwInterp(spdf, pathdists, paramlist, yearmon, removefile = TRUE)
   
   return(final.ipdw)  
   

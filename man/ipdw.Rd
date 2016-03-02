@@ -28,7 +28,7 @@ ipdw(spdf, costras, range, paramlist, overlapped = FALSE,
 RasterLayer
 }
 \description{
-Interpolate geo-referenced point data using inverse path distance weighting
+Interpolate geo-referenced point data using inverse path distance weighting.
 }
 \details{
 This is a high level function that interpolates a 
