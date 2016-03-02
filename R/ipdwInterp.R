@@ -26,25 +26,16 @@
 #'}
 #'
 #'rstack <- pathdistGen(spdf, costras, 100)
-#'final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."))
+#'final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
 #'plot(final.raster)
 
 'ipdwInterp' <- function(spdf, rstack, paramlist, overlapped = FALSE, yearmon = "default", removefile = TRUE){
   
   for(k in 1:length(paramlist)){
-    param_index <- which(names(spdf) == paramlist[k])
-    
-    #exclude NA values for param from spdf and rstack.sum
-    param_na <- which(is.na(spdf@data[,param_index]))
-    
-    if(length(param_na) >= 1){
-      param_na <- as.numeric(row.names(spdf[which(is.na(spdf@data[,param_index])),]))
-      spdf <- spdf[-which(is.na(spdf@data[,param_index])),]  
-      rstack <- raster::dropLayer(rstack, param_na)
-    }    
-    
-    #print(identical(dim(rstack)[3],nrow(spdf)))
-     
+  	points_layers <- rm_na_pointslayers(param_name = paramlist[k], spdf = spdf, rstack = rstack)
+  	spdf <- points_layers$spdf
+  	rstack <- points_layers$rstack
+  	
     #if(overlapped == TRUE){ #need to set na.rm = TRUE if points are on land?
     rstack.sum <- raster::calc(rstack, fun = function(x){sum(x, na.rm = TRUE)})
     rstack.sum <- raster::reclassify(rstack.sum, cbind(0, NA))
@@ -66,7 +57,6 @@
     
     #sum rasters to get final surface
     rstack.mult <- raster::stack(raster_data)
-    
     finalraster <- raster::calc(rstack.mult, fun = function(x){sum(x, na.rm = TRUE)})
     
     if(overlapped == TRUE){
@@ -85,4 +75,23 @@
     file.remove(list.files(path = file.path(tempdir()), pattern = paste(yearmon, "A4ras*", sep = "")))
     file.remove(list.files(path = file.path(tempdir()), pattern = paste(paramlist[k], "A5ras*", sep = ""), full.names = T))
   }
+}
+
+#'@name rm_na_pointslayers
+#'@title Remove NA SpatialPointsDataFrame features and drop correspoding raster stack layers
+#'@description Remove NA SpatialPointsDataFrame features and drop correspoding raster stack layers
+#'@param param_name character name of data column
+#'@param spdf SpatialPointsDataFrame object
+#'@param rstack RasterStack or RasterBrick
+#'@export
+
+rm_na_pointslayers <- function(param_name, spdf, rstack){
+	param_index_x <- which(names(spdf) == param_name)
+	param_na_y <- which(is.na(spdf@data[,param_index_x]))
+	
+	if(length(param_na_y) > 0){
+		spdf <- spdf[-which(is.na(spdf@data[,param_index_x])),]  
+		rstack <- raster::dropLayer(rstack, param_na_y)
+	}
+	list(spdf = spdf, rstack = rstack)
 }

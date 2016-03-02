@@ -40,7 +40,7 @@ for(i in 1:nrow(costras)){
 }
 
 rstack <- pathdistGen(spdf, costras, 100)
-final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."))
+final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
 plot(final.raster)
 }
 \author{
