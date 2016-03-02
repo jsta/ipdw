@@ -36,7 +36,7 @@
 #'points(xymat)
 #'}
 
-'costrasterGen'<-function(xymat, pols, extent = "polys", projstr){
+'costrasterGen' <- function(xymat, pols, extent = "polys", projstr){
   
   if(class(xymat) == "SpatialPointsDataFrame" | class(xymat) == "SpatialPoints"){
     xymat <- coordinates(xymat)
