@@ -4,7 +4,7 @@
 \alias{pathdistGen}
 \title{Generate a stack of path distance raster objects}
 \usage{
-pathdistGen(spdf, costras, range, yearmon = "default")
+pathdistGen(spdf, costras, range, yearmon = "default", progressbar = TRUE)
 }
 \arguments{
 \item{spdf}{SpatialPointsDataFrame object}
@@ -14,6 +14,8 @@ pathdistGen(spdf, costras, range, yearmon = "default")
 \item{range}{numeric. Range of interpolation neighborhood}
 
 \item{yearmon}{character. String specifying the name of the spdf}
+
+\item{progressbar}{logical show progressbar during processing?}
 }
 \value{
 RasterStack object of path distances

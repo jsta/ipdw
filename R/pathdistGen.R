@@ -6,6 +6,7 @@
 #'@param costras RasterLayer cost raster
 #'@param range numeric. Range of interpolation neighborhood
 #'@param yearmon character. String specifying the name of the spdf
+#'@param progressbar logical show progressbar during processing?
 #'@return RasterStack object of path distances
 #'@import raster
 #'@import gdistance
@@ -27,7 +28,7 @@
 #'
 #'rstack <- pathdistGen(spdf, costras, 100)
 
-'pathdistGen' <- function(spdf, costras, range, yearmon = "default"){
+'pathdistGen' <- function(spdf, costras, range, yearmon = "default", progressbar = TRUE){
   
   if(class(spdf) != "SpatialPointsDataFrame"){
     stop("spdf object must be of class SpatialPointsDataFrame")
@@ -47,7 +48,7 @@
     ipdw_dist <- ipdw_range    
   }
   
-  pb <- utils::txtProgressBar(max = nrow(spdf), style = 3)
+  if(progressbar == TRUE){pb <- utils::txtProgressBar(max = nrow(spdf), style = 3)}
   
     for(i in 1:nrow(spdf)){
       coord <- spdf[i,]
@@ -60,9 +61,9 @@
       #showTmpFiles()
       
       raster::writeRaster(costsurf_scaled_reclass, filename = file.path(tempdir(), paste(yearmon, "A4ras", i, ".grd", sep = "")), overwrite = T, NAflag = -99999)
-      setTxtProgressBar(pb, i)      
+      if(progressbar == TRUE){setTxtProgressBar(pb, i)}      
     }
-  close(pb)
+  if(progressbar == TRUE){close(pb)}
      
   
   #create raster stack
