@@ -30,6 +30,9 @@
 
 'pathdistGen'<-function(spdf,costras,range,yearmon="default"){
   
+  if(class(spdf)!="SpatialPointsDataFrame"){
+    stop("spdf object must be of class SpatialPointsDataFrame")
+  }
   
   ipdw.range<-range/raster::res(costras)[1]/2 #this is a per cell distance
   #print(ipdw.range)
