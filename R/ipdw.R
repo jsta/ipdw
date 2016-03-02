@@ -36,7 +36,7 @@
   pathdists <- pathdistGen(spdf, costras, range, step)
   
   #ipdwInterp
-  final.ipdw <- ipdwInterp(spdf, pathdists, paramlist, yearmon, removefile = TRUE)
+  final.ipdw <- ipdwInterp(spdf, pathdists, paramlist, yearmon, removefile = TRUE, overlapped = overlapped)
   
   return(final.ipdw)  
   
