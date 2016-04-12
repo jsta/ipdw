@@ -16,7 +16,7 @@ The ipdw package was developed with coastal marine applications in mind where pa
   ```
 
 ##Examples
-**see vignette**
+**see** [vignette](https://cdn.rawgit.com/jsta/ipdw/master/inst/doc/ipdw.pdf)
 
 ##References
 **Joseph Stachelek and Christopher J. Madden (2015)**. Application of Inverse Path Distance weighting for high density spatial mapping of coastal water quality patterns.
