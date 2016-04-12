@@ -1,7 +1,7 @@
 environment:
   R_CHECK_ARGS: --no-build-vignettes --no-manual
   R_VERSION: stable
-  GCC_PATH: mingw_32
+  USE_RTOOLS: true
 
 init:
   ps: |
