@@ -37,7 +37,7 @@
 #'}
 
 'costrasterGen' <- function(xymat, pols, extent = "polys", projstr){
-  
+  # browser()
   if(class(xymat) == "SpatialPointsDataFrame" | class(xymat) == "SpatialPoints"){
     xymat <- coordinates(xymat)
   }
@@ -66,7 +66,8 @@
   ncol <- xmx - xmn
   
   #generate cost raster
-  r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn, xmx = xmx, ymn = ymn, ymx = ymx)
+  r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn,
+  										xmx = xmx, ymn = ymn, ymx = ymx)
   costras <- raster::rasterize(pols, r, silent = TRUE)
   m <- c(0, +Inf, 10000)
   rclmat <- matrix(m, ncol = 3, byrow = TRUE)

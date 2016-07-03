@@ -25,7 +25,8 @@
 #' title = "Validation Plot")
 #'valid.stats
 
-'errorGen' <- function(finalraster, validation.spdf, validation.data, plot = FALSE, title = ""){
+'errorGen' <- function(finalraster, validation.spdf, validation.data,
+											 plot = FALSE, title = ""){
   
   predicted <- raster::extract(finalraster, validation.spdf)
   
@@ -42,7 +43,9 @@
   
   #optional plotting
   if(plot == TRUE){
-    plot(mvp[,1], mvp[,2], ylim = range(mvp[,2], na.rm = TRUE), xlim = range(mvp[,1], na.rm = TRUE), ylab = "Interpolated", xlab = "Measured", main = title)
+    plot(mvp[,1], mvp[,2], ylim = range(mvp[,2], na.rm = TRUE),
+    		 xlim = range(mvp[,1], na.rm = TRUE), ylab = "Interpolated",
+    		 xlab = "Measured", main = title)
     graphics::abline(fit, col = "red")
     graphics::abline(a = 0, b = 1)
   }
