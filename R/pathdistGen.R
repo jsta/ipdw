@@ -60,20 +60,20 @@
       #check output with - zoom(A4,breaks=seq(from=0,to=5,by=1),col=rainbow(5))
       #showTmpFiles()
       
-      raster::writeRaster(costsurf_scaled_reclass, filename = file.path(tempdir(), paste(yearmon, "A4ras", i, ".grd", sep = "")), overwrite = T, NAflag = -99999)
+      raster::writeRaster(costsurf_scaled_reclass, filename = file.path(tempdir(), paste(yearmon, "A4ras", i, ".grd", sep = "")), overwrite = TRUE, NAflag = -99999)
       if(progressbar == TRUE){setTxtProgressBar(pb, i)}      
     }
   if(progressbar == TRUE){close(pb)}
      
   
   #create raster stack
-  raster_flist <- list.files(path = file.path(tempdir()), pattern = paste(yearmon, "A4ras*", sep = ""), full.names = T)
-  raster_flist <- raster_flist[grep(".grd", raster_flist, fixed = T)]
+  raster_flist <- list.files(path = file.path(tempdir()), pattern = paste(yearmon, "A4ras*", sep = ""), full.names = TRUE)
+  raster_flist <- raster_flist[grep(".grd", raster_flist, fixed = TRUE)]
   as.numeric(gsub('.*A4ras([0123456789]*)\\.grd$', '\\1', raster_flist)) -> fileNum
   raster_flist <- raster_flist[order(fileNum)]
   rstack <- raster::stack(raster_flist)
   rstack <- raster::reclassify(rstack, cbind(-99999, NA))
-  file.remove(list.files(path = file.path(tempdir()), pattern = paste(yearmon, "A4ras*", sep = ""), full.names = T))
+  file.remove(list.files(path = file.path(tempdir()), pattern = paste(yearmon, "A4ras*", sep = ""), full.names = TRUE))
   
   return(rstack)
 }

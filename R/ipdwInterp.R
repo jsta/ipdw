@@ -47,11 +47,11 @@
       param.value2 <- as.vector(unlist(param.value[1]))
       ras.mult <- ras.weight * param.value2
       
-      rf <- raster::writeRaster(ras.mult, filename = file.path(tempdir(), paste(paramlist[k], "A5ras", i, ".grd", sep = "")), overwrite = T)
+      rf <- raster::writeRaster(ras.mult, filename = file.path(tempdir(), paste(paramlist[k], "A5ras", i, ".grd", sep = "")), overwrite = TRUE)
     }
     
-    raster_data_full <- list.files(path = file.path(tempdir()), pattern = paste(paramlist[k], "A5ras*", sep = ""), full.names = T)
-    raster_data <- raster_data_full[grep(".grd", raster_data_full, fixed = T)]
+    raster_data_full <- list.files(path = file.path(tempdir()), pattern = paste(paramlist[k], "A5ras*", sep = ""), full.names = TRUE)
+    raster_data <- raster_data_full[grep(".grd", raster_data_full, fixed = TRUE)]
     as.numeric(gsub('.*A5ras([0123456789]*)\\.grd$', '\\1', raster_data)) -> fileNum
     raster_data <- raster_data[order(fileNum)]
     
@@ -73,7 +73,7 @@
 
   if(removefile == TRUE){
     file.remove(list.files(path = file.path(tempdir()), pattern = paste(yearmon, "A4ras*", sep = "")))
-    file.remove(list.files(path = file.path(tempdir()), pattern = paste(paramlist[k], "A5ras*", sep = ""), full.names = T))
+    file.remove(list.files(path = file.path(tempdir()), pattern = paste(paramlist[k], "A5ras*", sep = ""), full.names = TRUE))
   }
 }
 
