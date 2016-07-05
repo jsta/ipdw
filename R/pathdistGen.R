@@ -43,7 +43,7 @@
   coord <- spdf[i,]
   costsurf <- gdistance::accCost(trans, coord)
   
-  ipdw_dist <- hist(costsurf, plot = F)$breaks[2]
+  ipdw_dist <- hist(costsurf, plot = FALSE)$breaks[2]
   if(ipdw_dist < ipdw_range){
     ipdw_dist <- ipdw_range    
   }

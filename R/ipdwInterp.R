@@ -29,10 +29,12 @@
 #'final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
 #'plot(final.raster)
 
-'ipdwInterp' <- function(spdf, rstack, paramlist, overlapped = FALSE, yearmon = "default", removefile = TRUE){
+'ipdwInterp' <- function(spdf, rstack, paramlist, overlapped = FALSE,
+												 yearmon = "default", removefile = TRUE){
   
   for(k in 1:length(paramlist)){
-  	points_layers <- rm_na_pointslayers(param_name = paramlist[k], spdf = spdf, rstack = rstack)
+  	points_layers <- rm_na_pointslayers(param_name = paramlist[k],
+  																			spdf = spdf, rstack = rstack)
   	spdf <- points_layers$spdf
   	rstack <- points_layers$rstack
   	
