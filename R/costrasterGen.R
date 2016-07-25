@@ -44,8 +44,8 @@
   
   #add check to see if projstr and projection(pols) match
   if(!identical(projstr, sp::proj4string(pols))){
-    message("Warning, the projection of polygons does not match projstr.
-    				See rgdal::spTransform")
+    message("Warning, the projection of polygons does not
+    				match projstr. See rgdal::spTransform")
   }
   
   #define spatial domain based on pnts or polys
