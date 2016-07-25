@@ -26,17 +26,20 @@
 #'@examples
 #' #see vignette
 
-'ipdw' <- function(spdf, costras, range, paramlist, overlapped = FALSE, yearmon = "default", removefile = TRUE, step = 16){
+'ipdw' <- function(spdf, costras, range, paramlist, overlapped = FALSE,
+					yearmon = "default", removefile = TRUE, step = 16){
   
   if(!identical(projection(spdf), projection(costras))){
-    stop("Point data projection and cost raster projections do not match, see rgdal::spTransform")
+    stop("Point data projection and cost raster projections do not match,
+    		 see rgdal::spTransform")
   }
   
   #pathdistGen
   pathdists <- pathdistGen(spdf, costras, range, step)
   
   #ipdwInterp
-  final.ipdw <- ipdwInterp(spdf, pathdists, paramlist, yearmon, removefile = TRUE, overlapped = overlapped)
+  final.ipdw <- ipdwInterp(spdf, pathdists, paramlist, yearmon,
+  							removefile = TRUE, overlapped = overlapped)
   
   return(final.ipdw)  
   

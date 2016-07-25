@@ -23,7 +23,8 @@ test_that("returns correct class and warn on bad projection", {
   sp::proj4string(pols) <- sp::CRS(latlonproj)
   
   expect_is(costrasterGen(xymat, pols, projstr = latlonproj), "RasterLayer")
-  expect_message(costrasterGen(xymat, pols, projstr = NULL), "Warning, the projection of polygons does not
+  expect_message(costrasterGen(xymat, pols, projstr = NULL),
+"Warning, the projection of polygons does not
     				match projstr. See rgdal::spTransform")
   
 })
