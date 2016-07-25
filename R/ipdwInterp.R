@@ -32,7 +32,7 @@
 'ipdwInterp' <- function(spdf, rstack, paramlist, overlapped = FALSE,
 												 yearmon = "default", removefile = TRUE){
   
-  for(k in 1:length(paramlist)){
+	for(k in seq_len(length(paramlist))){
   	points_layers <- rm_na_pointslayers(param_name = paramlist[k],
   																			spdf = spdf, rstack = rstack)
   	spdf <- points_layers$spdf

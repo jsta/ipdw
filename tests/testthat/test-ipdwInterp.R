@@ -13,7 +13,7 @@ test_that("ipdwInterp works", {
 	costras[] <- NA
 	
 	costras[] <- runif(ncell(costras), min = 1, max = 10)
-	for(i in 1:nrow(costras)){
+	for(i in seq_len(nrow(costras))){
 	  costras[i,] <- costras[i,] + i
 	  costras[,i] <- costras[,i] + i
 	}

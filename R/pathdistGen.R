@@ -52,8 +52,8 @@
   
   if(progressbar == TRUE){pb <- utils::txtProgressBar(max = nrow(spdf),
   															style = 3)}
-  
-    for(i in 1:nrow(spdf)){
+ 
+    for(i in seq_len(nrow(spdf))){
       coord <- spdf[i,]
       costsurf <- gdistance::accCost(trans, coord)
       costsurf_reclass <- raster::reclassify(costsurf, c(ipdw_dist, +Inf, NA,
