@@ -53,14 +53,18 @@
     for(i in 1:nrow(spdf)){
       coord <- spdf[i,]
       costsurf <- gdistance::accCost(trans, coord)
-      costsurf_reclass <- raster::reclassify(costsurf, c(ipdw_dist, +Inf, NA, ipdw_range, ipdw_dist, ipdw_range)) #raster cells are 1 map unit
+      costsurf_reclass <- raster::reclassify(costsurf, c(ipdw_dist, +Inf, NA,
+      										ipdw_range, ipdw_dist, ipdw_range)) 
+      										#raster cells are 1 map unit
       costsurf_scaled <- ((ipdw_range/costsurf_reclass)^2)
       costsurf_scaled_reclass <- raster::reclassify(costsurf_scaled, c(-Inf, 1, 0))
       
       #check output with - zoom(A4,breaks=seq(from=0,to=5,by=1),col=rainbow(5))
       #showTmpFiles()
       
-      raster::writeRaster(costsurf_scaled_reclass, filename = file.path(tempdir(), paste(yearmon, "A4ras", i, ".grd", sep = "")), overwrite = TRUE, NAflag = -99999)
+      raster::writeRaster(costsurf_scaled_reclass, filename = file.path(tempdir(),
+      paste(yearmon, "A4ras", i, ".grd", sep = "")), overwrite = TRUE,
+      NAflag = -99999)
       if(progressbar == TRUE){setTxtProgressBar(pb, i)}      
     }
   if(progressbar == TRUE){close(pb)}
@@ -73,7 +77,8 @@
   raster_flist <- raster_flist[order(fileNum)]
   rstack <- raster::stack(raster_flist)
   rstack <- raster::reclassify(rstack, cbind(-99999, NA))
-  file.remove(list.files(path = file.path(tempdir()), pattern = paste(yearmon, "A4ras*", sep = ""), full.names = TRUE))
+  file.remove(list.files(path = file.path(tempdir()), pattern = paste(yearmon,
+  	"A4ras*", sep = ""), full.names = TRUE))
   
   return(rstack)
 }
