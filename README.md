@@ -13,6 +13,7 @@ The ipdw package was developed with coastal marine applications in mind where pa
 ### Stable version from CRAN
   ```R
   install.packages("ipdw")
+  
 	```
 ### or development version from GitHub
 	```R
