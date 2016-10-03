@@ -12,12 +12,12 @@ The ipdw package was developed with coastal marine applications in mind where pa
 ## Installation
 ### Stable version from CRAN
 
-  ```{r}
-  install.packages("ipdw")
-  ```
+```{r}
+install.packages("ipdw")
+```
 
 ### or development version from GitHub
-	```r
+```r
 	install.packages('devtools')  # package devtools needed
 	devtools::install_github("jsta/ipdw")
 ```
