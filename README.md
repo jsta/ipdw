@@ -9,10 +9,15 @@ The `R` package [ipdw](http://jsta.github.io/public/stachmadden2015am.pdf)  prov
 
 The ipdw package was developed with coastal marine applications in mind where path distances (as the fish swims) rather than Euclidean (as the crow flies) distances more accurately represent spatial connectivity. Interpolation of sparse grids in coastal areas otherwise end up bleeding through land areas.
 
-##Installation
+## Installation
+### Stable version from CRAN
   ```R
   install.packages("ipdw")
+	```
+### or development version from GitHub
+	```R
   install.packages('devtools')  # package devtools needed
+  
   devtools::install_github('jsta/ipdw')
   ```
 
