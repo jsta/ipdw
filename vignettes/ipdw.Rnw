@@ -22,9 +22,9 @@ The \proglang{R} package \pkg{ipdw} provides functions for interpolation of geor
 
 \Address{
   Joseph Stachelek\\
-  South Florida Water Management District\\
-  West Palm Beach, FL, USA\\
-  E-mail: \email{jstachel@sfwmd.gov}\\
+  Michigan State University\\
+  East Lansing, MI, USA\\
+  E-mail: \email{stachel2@msu.edu}\\
 }
 
 \begin{document}
