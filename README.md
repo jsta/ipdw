@@ -18,11 +18,10 @@ The ipdw package was developed with coastal marine applications in mind where pa
 
 ### or development version from GitHub
 
-	```R
+	```{r}
   install.packages('devtools')  # package devtools needed
   
   devtools::install_github('jsta/ipdw')
-  
   ```
 
 ##Examples
