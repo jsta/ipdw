@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+appveyor.yml
+TODO
+kenworthy_newriver
+Dockerfile
+docs
