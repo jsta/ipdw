@@ -10,7 +10,7 @@ citEntry(entry = "Manual",
          author = personList(as.person("Joseph Stachelek")),
          year = year,
          note = note,
-         url = "http://CRAN.R-project.org/package=ipdw",
+         url = "https://cran.r-project.org/package=ipdw",
 
          textVersion = paste("Joseph Stachelek (", year, 
              "). ipdw: spatial interpolation by Inverse Path Distance Weighting. ",
