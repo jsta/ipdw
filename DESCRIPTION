@@ -5,9 +5,6 @@ Description: Functions are provided to interpolate georeferenced point data via
     barriers in the landscape preclude interpolation with Euclidean distances.
 Version: 0.2-6
 Author: Joseph Stachelek <stachel2@msu.edu>
-Authors@R: c(
-    person("Joseph", "Stachelek", role = c("aut","cre"), email = "stachel2@msu.edu")
-  )
 URL: http://www.github.com/jsta/ipdw
 BugReports: http://www.github.com/jsta/ipdw/issues
 Maintainer: Joseph Stachelek <stachel2@msu.edu>
