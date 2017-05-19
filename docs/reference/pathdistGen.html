@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -76,21 +78,32 @@
     <p>Generate a stack of path accumulated distance raster objects</p>
     
 
-    <pre><span class='fu'>pathdistGen</span>(<span class='no'>spdf</span>, <span class='no'>costras</span>, <span class='no'>range</span>, <span class='kw'>yearmon</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>progressbar</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>pathdistGen</span>(<span class='no'>spdf</span>, <span class='no'>costras</span>, <span class='no'>range</span>, <span class='kw'>yearmon</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>progressbar</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>spdf</dt>
-      <dd>SpatialPointsDataFrame object</dd>
-      <dt>costras</dt>
-      <dd>RasterLayer cost raster</dd>
-      <dt>range</dt>
-      <dd>numeric. Range of interpolation neighborhood</dd>
-      <dt>yearmon</dt>
-      <dd>character. String specifying the name of the spdf</dd>
-      <dt>progressbar</dt>
-      <dd>logical show progressbar during processing?</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>spdf</th>
+      <td><p>SpatialPointsDataFrame object</p></td>
+    </tr>
+    <tr>
+      <th>costras</th>
+      <td><p>RasterLayer cost raster</p></td>
+    </tr>
+    <tr>
+      <th>range</th>
+      <td><p>numeric. Range of interpolation neighborhood</p></td>
+    </tr>
+    <tr>
+      <th>yearmon</th>
+      <td><p>character. String specifying the name of the spdf</p></td>
+    </tr>
+    <tr>
+      <th>progressbar</th>
+      <td><p>logical show progressbar during processing?</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

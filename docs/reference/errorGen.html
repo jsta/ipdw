@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -76,22 +78,33 @@
     <p>Generate error statistics from validation point datasets overlaid on a raster surface</p>
     
 
-    <pre><span class='fu'>errorGen</span>(<span class='no'>finalraster</span>, <span class='no'>validation.spdf</span>, <span class='no'>validation.data</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>errorGen</span>(<span class='no'>finalraster</span>, <span class='no'>validation.spdf</span>, <span class='no'>validation.data</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>finalraster</dt>
-      <dd>RasterLayer object</dd>
-      <dt>validation.spdf</dt>
-      <dd>SpatialPointsDataFrame</dd>
-      <dt>validation.data</dt>
-      <dd>data.frame</dd>
-      <dt>plot</dt>
-      <dd>logical. Plot comparison?</dd>
-      <dt>title</dt>
-      <dd>Plot labels</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>finalraster</th>
+      <td><p>RasterLayer object</p></td>
+    </tr>
+    <tr>
+      <th>validation.spdf</th>
+      <td><p>SpatialPointsDataFrame</p></td>
+    </tr>
+    <tr>
+      <th>validation.data</th>
+      <td><p>data.frame</p></td>
+    </tr>
+    <tr>
+      <th>plot</th>
+      <td><p>logical. Plot comparison?</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>Plot labels</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

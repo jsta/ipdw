@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -76,24 +78,37 @@
     <p>This function takes a rasterstack of pathdistances and generates surfaces by weighting parameter values by these distances</p>
     
 
-    <pre><span class='fu'>ipdwInterp</span>(<span class='no'>spdf</span>, <span class='no'>rstack</span>, <span class='no'>paramlist</span>, <span class='kw'>overlapped</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>yearmon</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+    <pre class="usage"><span class='fu'>ipdwInterp</span>(<span class='no'>spdf</span>, <span class='no'>rstack</span>, <span class='no'>paramlist</span>, <span class='kw'>overlapped</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>yearmon</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
   <span class='kw'>removefile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>spdf</dt>
-      <dd>SpatialPointsDataFrame object</dd>
-      <dt>rstack</dt>
-      <dd>RasterStack of path distances</dd>
-      <dt>paramlist</dt>
-      <dd>chacter. String representing parameter names</dd>
-      <dt>overlapped</dt>
-      <dd>logical. Default is FALSE, specify TRUE if some points lie on top of barriers</dd>
-      <dt>yearmon</dt>
-      <dd>character. String specifying the name of the spdf</dd>
-      <dt>removefile</dt>
-      <dd>logical. Remove files after processing?</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>spdf</th>
+      <td><p>SpatialPointsDataFrame object</p></td>
+    </tr>
+    <tr>
+      <th>rstack</th>
+      <td><p>RasterStack of path distances</p></td>
+    </tr>
+    <tr>
+      <th>paramlist</th>
+      <td><p>chacter. String representing parameter names</p></td>
+    </tr>
+    <tr>
+      <th>overlapped</th>
+      <td><p>logical. Default is FALSE, specify TRUE if some points lie on top of barriers</p></td>
+    </tr>
+    <tr>
+      <th>yearmon</th>
+      <td><p>character. String specifying the name of the spdf</p></td>
+    </tr>
+    <tr>
+      <th>removefile</th>
+      <td><p>logical. Remove files after processing?</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
