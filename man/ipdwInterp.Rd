@@ -12,7 +12,7 @@ ipdwInterp(spdf, rstack, paramlist, overlapped = FALSE, yearmon = "default",
 
 \item{rstack}{RasterStack of path distances}
 
-\item{paramlist}{chacter. String representing parameter names}
+\item{paramlist}{character. String representing parameter names}
 
 \item{overlapped}{logical. Default is FALSE, specify TRUE if some points lie on top of barriers}
 
