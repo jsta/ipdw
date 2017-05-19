@@ -22,10 +22,10 @@ install.packages("ipdw")
 	devtools::install_github("jsta/ipdw")
 ```
 
-##Examples
+## Examples
 **see** [vignette](https://cdn.rawgit.com/jsta/ipdw/master/inst/doc/ipdw.pdf)
 
-##References
+## References
 **Joseph Stachelek and Christopher J. Madden (2015)**. Application of Inverse Path Distance weighting for high density spatial mapping of coastal water quality patterns.
 *International Journal of Geographical Information Science*
 [preprint](http://jsta.github.io/public/stachmadden2015am.pdf) | [journal](http://dx.doi.org/10.1080/13658816.2015.1018833)
