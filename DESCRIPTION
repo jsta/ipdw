@@ -17,7 +17,10 @@ Imports:
     sp,raster
 Suggests:
     geoR,gstat,gdata,spatstat,rgdal,
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 License: GPL (>= 2)
 LazyData: true
 RoxygenNote: 5.0.1
+VignetteBuilder: knitr
