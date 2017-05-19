@@ -5,3 +5,4 @@ TODO
 kenworthy_newriver
 Dockerfile
 docs
+^cran-comments\.md$
