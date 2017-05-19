@@ -3,7 +3,7 @@ Title: Spatial Interpolation by Inverse Path Distance Weighting
 Description: Functions are provided to interpolate georeferenced point data via
     Inverse Path Distance Weighting. Useful for coastal marine applications where
     barriers in the landscape preclude interpolation with Euclidean distances.
-Version: 0.2-5
+Version: 0.2-6
 Author: Joseph Stachelek <stachel2@msu.edu>
 Authors@R: c(
     person("Joseph", "Stachelek", role = c("aut","cre"), email = "stachel2@msu.edu")
