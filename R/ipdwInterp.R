@@ -9,8 +9,7 @@
 #'@param yearmon character. String specifying the name of the spdf
 #'@param removefile logical. Remove files after processing?
 #'@return RasterLayer
-#'@import raster
-#'@import gdistance
+#'@importFrom raster calc reclassify writeRaster stack rasterize cover
 #'@export
 #'@examples
 #'spdf <- data.frame(rnorm(2))
@@ -90,7 +89,7 @@
 
 #'@name rm_na_pointslayers
 #'@title Remove NA SpatialPointsDataFrame features and drop correspoding raster stack layers
-#'@description Remove NA SpatialPointsDataFrame features and drop correspoding raster stack layers
+#'@description Remove NA SpatialPointsDataFrame features and drop corresponding raster stack layers
 #'@param param_name character name of data column
 #'@param spdf SpatialPointsDataFrame object
 #'@param rstack RasterStack or RasterBrick

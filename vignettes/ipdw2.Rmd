@@ -27,7 +27,7 @@ The `ipdw` package was developed with coastal marine applications in mind where 
 
 To begin, we load the Kattegat dataset.This dataset contains several slots representing the coordinates of point data, the data values, and polylines representing portions of the Kattegat coastline.
 
-```{r create polygons, message = FALSE}
+```{r create_polygons, message = FALSE}
 library("ipdw")
 library("geoR")
 data(kattegat)
@@ -52,7 +52,7 @@ pols <- SpatialPolygons(list(pols1, pols2, pols3, pols4, pols5, pols6,
  
 Each polyline is converted seperately to an object of class `Polygons`. Next, all 12 objects are combined into a `SpatialPolygons` object. We can use this `SpatialPolygons` object to create a cost raster defining travel through land areas with a very high cost. As a result, interpolation neighborhoods will be defined based on in-water rather than Euclidean distances. Cost raster creation is accomplished with the `ipdw` function `costrasterGen`. By default, open water areas are set to a per unit travel cost of 1 whereas land areas are set to a per unit travel cost of 10,000. Note that a projection is defined for the `costrasterGen` function by the `projstr` parameter. It is critical to check the resolution of the cost raster before proceeding. The resolution of the cost raster will determine the resolution of the interpolated output. If the resolution is too fine, this will result in very long processing times. If neccesary, coarsen the cost raster with the `raster` function `aggregate`. 
 
-```{r create costraster}
+```{r create_costraster}
 projection(pols) <- katproj
 costras <- costrasterGen(kattegat$coords, pols, extent = "pnts", katproj)
 #insert contiguous barrier
@@ -62,7 +62,7 @@ costras[160:170,1:80] <- 10000
 In order to evaulate the utility of IPDW, we split the dataset into seperate training and validation datasets. The training dataset is created in a spatially balanced manner by building a grid and randomly selecting one measurement point per grid cell. In the following code block, the size of this grid is defined as 2 times the average distance among measurement points. Average distance is computed using the `spatstat` package [@bad2005]. Random selection is accomplished with the `gdata` function `resample` [@warn2014]. Subsetting the full dataset is not required to run `ipdw`. Alternative means of estimating interpolation errors, such as leave-one-out cross validation, are in development.
 
 
-```{r message = FALSE}
+```{r avg_nearest_neigh, message = FALSE}
 #find average nearest neighbor
 library(spatstat)
 W <- owin(range(kattegat$coords[,1]), range(kattegat$coords[,2]))
@@ -86,10 +86,10 @@ fulldataset.over <- cbind(data.frame(fulldataset.over), data.frame(kat.df))
 #grid selection
 set.seed(2)
 gridlev <- unique(fulldataset.over$value)
-for(i in 1:length(gridlev)){
+for(i in seq_along(gridlev)){
   activesub <- subset(fulldataset.over, fulldataset.over$value == gridlev[i])
-  selectnum <- gdata::resample(1:nrow(activesub), 1)
-  if(i==1){
+  selectnum <- gdata::resample(seq_len(nrow(activesub)), 1)
+  if(i == 1){
     training <- activesub[selectnum,]
   }
   else{
@@ -101,7 +101,7 @@ for(i in 1:length(gridlev)){
 Next, we save the training and validation datasets as objects of class `SpatialPointsDataFrame`. Note that the projection of the training and validation datasets matches the cost raster we created previously. Calculations within the `ipdw` package require projected datasets. More about `R` projections can be found from the PROJ.4 documentation at the Open Source Geospatial Foundation (http://trac.osgeo.org/proj/).
 
 
-```{r split training and validation sets}
+```{r split_training_validation}
 validate <- fulldataset.over[!(row.names(fulldataset.over) %in% 
 															 	row.names(training)),]
 xy <- cbind(training$x.utm, training$y.utm)
@@ -112,7 +112,7 @@ projection(training) <- katproj
 projection(validate) <- katproj
 ```
 
-```{r plot cost raster, fig.cap = "<strong>Figure 1: Cost raster representing the high cost of travel through land areas. Training and validation points are shown in black and red respectively.</strong>", fig.height = 6, fig.width = 5}
+```{r plot_cost_raster, fig.cap = "<strong>Figure 1: Cost raster representing the high cost of travel through land areas. Training and validation points are shown in black and red respectively.</strong>", fig.height = 6, fig.width = 5}
 
 plot(costras)
 points(training)
@@ -124,13 +124,13 @@ points(validate, col = "red")
 We have assembled an object of class `SpatialPointsDataFrame` to be interpolated and an underlying cost raster of class `Raster`. We can either proceed in a single step using the high-level `ipdw` function `ipdw` or in two steps using calls to the `pathdistGen` and `ipdwInterp` functions. For simplicity, the single step option, `ipdw`, is shown below. The two step option would be useful for the case where we want interpolate multiple parameters of the same `SpatialPointsDataFrame` object using a single `RasterStack` of path distances.
 
 
-```{r interpolate, cache = TRUE, message = FALSE, results = 'hide'}
+```{r interpolate, cache = FALSE, message = FALSE, results = 'hide'}
 paramlist <- c("data")
 final.ipdw <- ipdw(training, costras, range = mean.neighdist * 10, paramlist,
 									 overlapped = TRUE)
 ```
 
-```{r plot interpolation, fig.cap = "<strong>Figure 2: Interpolated salinity surface by IPDW.</strong>", fig.height = 6, fig.width = 5}
+```{r plot_interpolation, fig.cap = "<strong>Figure 2: Interpolated salinity surface by IPDW.</strong>", fig.height = 6, fig.width = 5}
 plot(final.ipdw, main = "Kattegat salinity (ppt)")
 ```
 
@@ -138,15 +138,15 @@ plot(final.ipdw, main = "Kattegat salinity (ppt)")
 
 We can evaluate the benefits of IPDW by comparing its output against Inverse Distance Weighting with Euclidean distances. The following section generates an interpolated surface via IDW. First, prediction points are generated. Then the `gstat` [@peb2004] IDW functionality is called with the same inputs as the previous section above. Differences between the outputs of two methodologies are shown in Figure 2.
 
-```{r create idw}
+```{r create_idw}
 idw.grid <- rasterToPoints(costras, fun = function(x){x<10000}, spatial = TRUE)
-gridded(idw.grid) = TRUE
+gridded(idw.grid) <- TRUE
 kat.idw <- gstat::idw(data~1, training, idw.grid, maxdist = mean.neighdist*10,
 											debug.level = 0)
 final.idw <- raster(kat.idw)
 ```
 
-```{r plot ipdw vs idw, fig.cap = "<strong>Figure 3: Comparison between IPDW and IDW outputs. Note the overestimation of salinity on the upstream (south) side of the contiguous barrier.</strong>", fig.width = 6, fig.height = 4}
+```{r plot_ipdw_vs_idw, fig.cap = "<strong>Figure 3: Comparison between IPDW and IDW outputs. Note the overestimation of salinity on the upstream (south) side of the contiguous barrier.</strong>", fig.width = 6, fig.height = 4}
 par(mfrow = c(1, 3), mar = c(5.1, 4.1, 4.1, 5.1))
 plot(final.ipdw, main = "IPDW")
 plot(final.idw, main = "IDW")
@@ -155,7 +155,7 @@ plot(final.idw-final.ipdw,  main = "IDW versus IPDW")
 
 We can compare interpolation errors quantitatively using the `errorGen` function. Figure 3 shows a plot of the validation dataset against the interpolated estimates at those points. The validation dataset enters into the function both as a `SpatialPointsDataFrame` object and as the underlying values contained in the data slot.  
 
-```{r generate validation}
+```{r generate_validation}
 measured.spdf <- data.frame(validate$data)
 coordinates(measured.spdf) <- coordinates(validate)
 
@@ -163,7 +163,7 @@ valid.ipdw <- errorGen(final.ipdw,measured.spdf, measured.spdf@data)
 valid.idw <- errorGen(final.idw, measured.spdf, measured.spdf@data)
 ```
 
-```{r plot validation, fig.cap = "<strong>Figure 4: Comparison between IPDW and IDW interpolation error.  A one-to-one line and best-fit line are shown in black and red respectively.</strong>", fig.width = 8, fig.height = 5}
+```{r plot_validation, fig.cap = "<strong>Figure 4: Comparison between IPDW and IDW interpolation error.  A one-to-one line and best-fit line are shown in black and red respectively.</strong>", fig.width = 8, fig.height = 5}
 par(mfrow = c(1, 2))
 valid.ipdw <- errorGen(final.ipdw, measured.spdf, measured.spdf@data, 
 											 plot = TRUE, title = "IPDW")

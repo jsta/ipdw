@@ -9,8 +9,8 @@
 #'@details Ensure that the projection of the xymat coordinates and pols match. This can be accomplished by running the \code{projection} command on both inputs. If they do not match use the \code{spTransform} command.
 #'@seealso \code{\link[rgdal]{spTransform-methods}}, \code{\link[raster]{rasterize}}
 #'@return RasterLayer
-#'@import raster
-#'@import sp
+#'@importFrom raster raster rasterize reclassify 
+#'@importFrom sp proj4string coordinates bbox 
 #'@export
 #'@examples \dontrun{
 #'Sr1 <- Polygon(cbind(c(0, 0, 1, 1, 0), c(0, 12, 12, 0, 0)))
@@ -39,7 +39,7 @@
 'costrasterGen' <- function(xymat, pols, extent = "polys", projstr){
   if(class(xymat) == "SpatialPointsDataFrame" |
   	 class(xymat) == "SpatialPoints"){
-    xymat <- coordinates(xymat)
+    xymat <- sp::coordinates(xymat)
   }
   
   #add check to see if projstr and projection(pols) match

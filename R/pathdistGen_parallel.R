@@ -7,8 +7,6 @@
 #'@param step numeric. Number of sub loops to manage memory during raster processing.
 #'@param yearmon character. String specifying the name of the spdf
 #'@return RasterStack object of path distances
-#'@import raster
-#'@import gdistance
 #'@export
 #'@examples
 #'spdf<-data.frame(rnorm(2))

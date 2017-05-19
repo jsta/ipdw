@@ -20,16 +20,15 @@
 #'with a large sized cost rasters (grain x extent). In these cases, the 
 #'value of land areas should be increased to ensure that it is always 
 #'greater than the maximum accumulated cost path distance of any given geo-referenced point.
-#'@import raster
-#'@import gdistance
 #'@export
+#'@importFrom raster projection
 #'@examples
 #' #see vignette
 
 'ipdw' <- function(spdf, costras, range, paramlist, overlapped = FALSE,
 					yearmon = "default", removefile = TRUE, step = 16){
   
-  if(!identical(projection(spdf), projection(costras))){
+  if(!identical(raster::projection(spdf), raster::projection(costras))){
     stop("Point data projection and cost raster projections do not match,
     		 see rgdal::spTransform")
   }

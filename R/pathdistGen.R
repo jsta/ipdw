@@ -8,8 +8,8 @@
 #'@param yearmon character. String specifying the name of the spdf
 #'@param progressbar logical show progressbar during processing?
 #'@return RasterStack object of path distances
-#'@import raster
-#'@import gdistance
+#'@importFrom raster res reclassify writeRaster stack hist
+#'@importFrom gdistance transition accCost
 #'@importFrom utils setTxtProgressBar
 #'@export
 #'@examples
@@ -45,7 +45,7 @@
   coord <- spdf[i,]
   costsurf <- gdistance::accCost(trans, coord)
   
-  ipdw_dist <- hist(costsurf, plot = FALSE)$breaks[2]
+  ipdw_dist <- raster::hist(costsurf, plot = FALSE)$breaks[2]
   if(ipdw_dist < ipdw_range){
     ipdw_dist <- ipdw_range    
   }
