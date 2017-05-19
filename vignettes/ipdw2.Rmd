@@ -13,165 +13,166 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Introduction
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.pos = 'center')
+```
 
-This vignette describes `ipdw`, an `R` package which provides the functionality to perform interpolation of georeferenced point data using inverse path distance weighting \citep{suominen2010}. Interpolation is accomplished in two steps. First, path distances are calculated from each georeferenced (measurement) point to each prediction point. Path distances, which honor barriers in the landscape, are calculated based on cell-to-cell movement through an underlying  `Raster` object \citep{hij2014} that represents movement cost. These path distances are subsequently used as interpolation weights. The two-step routine follows the order of operations described in \citet{suominen2010} substituting the ESRI path distance algorithm \citep{mitchell2012} with the `gdistance` \citep{etten2014} wrapped version of the `igraph` \citep{csardi2006} adjacency algorithm.
+## Introduction
 
-The `ipdw` package was developed with coastal marine applications in mind where path distances (as the fish swims) rather than Euclidean (as the crow flies) distances more accurately represent spatial connectivity \citep{little1997}. Interpolation of sparse grids in coastal areas otherwise end up bleeding through land areas. The remainder of this vignette provides an example of such a situation using the Kattegat salinity dataset \citep{diggle2006} found within the `geoR` package.
+This vignette describes `ipdw`, an `R` package which provides the functionality to perform interpolation of georeferenced point data using inverse path distance weighting [@suominen2010]. Interpolation is accomplished in two steps. First, path distances are calculated from each georeferenced (measurement) point to each prediction point. Path distances, which honor barriers in the landscape, are calculated based on cell-to-cell movement through an underlying  `Raster` object [@hij2014] that represents movement cost. These path distances are subsequently used as interpolation weights. The two-step routine follows the order of operations described in @suominen2010 substituting the ESRI path distance algorithm @mitchell2012 with the `gdistance` [@etten2014] wrapped version of the `igraph` [@csardi2006] adjacency algorithm.
 
-# Data Preparation
+The `ipdw` package was developed with coastal marine applications in mind where path distances (as the fish swims) rather than Euclidean (as the crow flies) distances more accurately represent spatial connectivity [@little1997]. Interpolation of sparse grids in coastal areas otherwise end up bleeding through land areas. The remainder of this vignette provides an example of such a situation using the Kattegat salinity dataset [@diggle2006] found within the `geoR` package.
+
+## Data Preparation
 
 To begin, we load the Kattegat dataset.This dataset contains several slots representing the coordinates of point data, the data values, and polylines representing portions of the Kattegat coastline.
 
-```{r eval = FALSE}
+```{r create polygons, message = FALSE}
 library("ipdw")
 library("geoR")
 data(kattegat)
-katproj<-c("+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs")
+katproj <- c("+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs")
 
-pols1<-Polygons(list(Polygon(kattegat$dk[1])),"pol1")
-pols2<-Polygons(list(Polygon(kattegat$dk[2])),"pol2")
-pols3<-Polygons(list(Polygon(kattegat$dk[3])),"pol3")
-pols4<-Polygons(list(Polygon(kattegat$dk[4])),"pol4")
-pols5<-Polygons(list(Polygon(kattegat$dk[5])),"pol5")
-pols6<-Polygons(list(Polygon(kattegat$dk[6])),"pol6")
-pols7<-Polygons(list(Polygon(kattegat$dk[7])),"pol7")
-pols8<-Polygons(list(Polygon(kattegat$dk[8])),"pol8")
-pols9<-Polygons(list(Polygon(kattegat$dk[9])),"pol9")
-pols10<-Polygons(list(Polygon(kattegat$dk[10])),"pol10")
-pols11<-Polygons(list(Polygon(kattegat$dk[11])),"pol11")
-pols12<-Polygons(list(Polygon(kattegat$dk[12])),"pol12")
-pols<-SpatialPolygons(list(pols1,pols2,pols3,pols4,pols5,pols6,
-                           pols7,pols8,pols9,pols10,pols11,pols12),1:12)
+pols1 <- Polygons(list(Polygon(kattegat$dk[1])), "pol1")
+pols2 <- Polygons(list(Polygon(kattegat$dk[2])), "pol2")
+pols3 <- Polygons(list(Polygon(kattegat$dk[3])), "pol3")
+pols4 <- Polygons(list(Polygon(kattegat$dk[4])), "pol4")
+pols5 <- Polygons(list(Polygon(kattegat$dk[5])), "pol5")
+pols6 <- Polygons(list(Polygon(kattegat$dk[6])), "pol6")
+pols7 <- Polygons(list(Polygon(kattegat$dk[7])), "pol7")
+pols8 <- Polygons(list(Polygon(kattegat$dk[8])), "pol8")
+pols9 <- Polygons(list(Polygon(kattegat$dk[9])), "pol9")
+pols10 <- Polygons(list(Polygon(kattegat$dk[10])), "pol10")
+pols11 <- Polygons(list(Polygon(kattegat$dk[11])), "pol11")
+pols12 <- Polygons(list(Polygon(kattegat$dk[12])), "pol12")
+pols <- SpatialPolygons(list(pols1, pols2, pols3, pols4, pols5, pols6, 
+                           pols7, pols8, pols9, pols10, pols11, pols12), 1:12)
 ```
 
  
 Each polyline is converted seperately to an object of class `Polygons`. Next, all 12 objects are combined into a `SpatialPolygons` object. We can use this `SpatialPolygons` object to create a cost raster defining travel through land areas with a very high cost. As a result, interpolation neighborhoods will be defined based on in-water rather than Euclidean distances. Cost raster creation is accomplished with the `ipdw` function `costrasterGen`. By default, open water areas are set to a per unit travel cost of 1 whereas land areas are set to a per unit travel cost of 10,000. Note that a projection is defined for the `costrasterGen` function by the `projstr` parameter. It is critical to check the resolution of the cost raster before proceeding. The resolution of the cost raster will determine the resolution of the interpolated output. If the resolution is too fine, this will result in very long processing times. If neccesary, coarsen the cost raster with the `raster` function `aggregate`. 
 
-```{r eval = FALSE}
-projection(pols)<-katproj
-costras<-costrasterGen(kattegat$coords,pols,extent="pnts",katproj)
+```{r create costraster}
+projection(pols) <- katproj
+costras <- costrasterGen(kattegat$coords, pols, extent = "pnts", katproj)
 #insert contiguous barrier
 costras[160:170,1:80] <- 10000
 ```
 
-In order to evaulate the utility of IPDW, we split the dataset into seperate training and validation datasets. The training dataset is created in a spatially balanced manner by building a grid and randomly selecting one measurement point per grid cell. In the following code block, the size of this grid is defined as 2 times the average distance among measurement points. Average distance is computed using the `spatstat` package \citep{bad2005}. Random selection is accomplished with the `gdata` function `resample` \citep{warn2014}. Subsetting the full dataset is not required to run `ipdw`. Alternative means of estimating interpolation errors, such as leave-one-out cross validation, are in development.
+In order to evaulate the utility of IPDW, we split the dataset into seperate training and validation datasets. The training dataset is created in a spatially balanced manner by building a grid and randomly selecting one measurement point per grid cell. In the following code block, the size of this grid is defined as 2 times the average distance among measurement points. Average distance is computed using the `spatstat` package [@bad2005]. Random selection is accomplished with the `gdata` function `resample` [@warn2014]. Subsetting the full dataset is not required to run `ipdw`. Alternative means of estimating interpolation errors, such as leave-one-out cross validation, are in development.
 
 
-```{r eval = FALSE}
+```{r message = FALSE}
 #find average nearest neighbor
 library(spatstat)
-W=owin(range(kattegat$coords[,1]),range(kattegat$coords[,2]))
-kat.pp<-ppp(kattegat$coords[,1],kattegat$coords[,2],window=W)
-mean.neighdist<-mean(nndist(kat.pp))
+W <- owin(range(kattegat$coords[,1]), range(kattegat$coords[,2]))
+kat.pp <- ppp(kattegat$coords[,1], kattegat$coords[,2], window = W)
+mean.neighdist <- mean(nndist(kat.pp))
 
 #grid building
-gridsize<-mean.neighdist*2
-grainscale.fac<-gridsize/res(costras)[1]
-gridras<-aggregate(costras,fact=grainscale.fac)
-gridpol<-rasterToPolygons(gridras)
-gridpol$value<-row.names(gridpol)
+gridsize <- mean.neighdist*2
+grainscale.fac <- gridsize/res(costras)[1]
+gridras <- aggregate(costras, fact = grainscale.fac)
+gridpol <- rasterToPolygons(gridras)
+gridpol$value <- row.names(gridpol)
 
 #spatial join
-kat.df<-data.frame(kattegat)
-coordinates(kat.df)<-~x.utm+y.utm
-projection(kat.df)<-katproj
-fulldataset.over<-over(kat.df,gridpol)
-fulldataset.over<-cbind(data.frame(fulldataset.over),data.frame(kat.df))
+kat.df <- data.frame(kattegat)
+coordinates(kat.df) <- ~x.utm + y.utm
+projection(kat.df) <- katproj
+fulldataset.over <- over(kat.df, gridpol)
+fulldataset.over <- cbind(data.frame(fulldataset.over), data.frame(kat.df))
 
 #grid selection
 set.seed(2)
-gridlev<-unique(fulldataset.over$value)
+gridlev <- unique(fulldataset.over$value)
 for(i in 1:length(gridlev)){
-  activesub<-subset(fulldataset.over,fulldataset.over$value==gridlev[i])
-  selectnum<-gdata::resample(1:nrow(activesub),1)
+  activesub <- subset(fulldataset.over, fulldataset.over$value == gridlev[i])
+  selectnum <- gdata::resample(1:nrow(activesub), 1)
   if(i==1){
-    training<-activesub[selectnum,]
+    training <- activesub[selectnum,]
   }
   else{
-    training<-rbind(training,activesub[selectnum,])
+    training <- rbind(training, activesub[selectnum,])
   }
 }
 ```
 
-Next, we save the training and validation datasets as objects of class `SpatialPointsDataFrame`. Note that the projection of the training and validation datasets matches the cost raster we created previously. Calculations within the `ipdw` package require projected datasets. More about `R} projections can be found from the PROJ.4 documentation at the Open Source Geospatial Foundation (http://trac.osgeo.org/proj/).
+Next, we save the training and validation datasets as objects of class `SpatialPointsDataFrame`. Note that the projection of the training and validation datasets matches the cost raster we created previously. Calculations within the `ipdw` package require projected datasets. More about `R` projections can be found from the PROJ.4 documentation at the Open Source Geospatial Foundation (http://trac.osgeo.org/proj/).
 
 
-```{r eval = FALSE}
-validate<-fulldataset.over[!(row.names(fulldataset.over) %in% row.names(training)),]
-xy<-cbind(training$x.utm,training$y.utm)
-training<-SpatialPointsDataFrame(xy,training)
-xy<-cbind(validate$x.utm,validate$y.utm)
-validate<-SpatialPointsDataFrame(xy,validate)
-projection(training)<-katproj
-projection(validate)<-katproj
+```{r split training and validation sets}
+validate <- fulldataset.over[!(row.names(fulldataset.over) %in% 
+															 	row.names(training)),]
+xy <- cbind(training$x.utm, training$y.utm)
+training <- SpatialPointsDataFrame(xy, training)
+xy <- cbind(validate$x.utm, validate$y.utm)
+validate <- SpatialPointsDataFrame(xy, validate)
+projection(training) <- katproj
+projection(validate) <- katproj
 ```
 
-<!-- <<label=figure0,fig=TRUE, width=6, height=5, echo=FALSE, include=FALSE>>= -->
-```{r fig.cap="Cost raster representing the high cost of travel through land areas. Training and validation points are shown in black and red respectively.", eval = FALSE}
+```{r plot cost raster, fig.cap = "<strong>Figure 1: Cost raster representing the high cost of travel through land areas. Training and validation points are shown in black and red respectively.</strong>", fig.height = 6, fig.width = 5}
+
 plot(costras)
 points(training)
-points(validate,col="red")
+points(validate, col = "red")
 ```
 
-# Interpolation
+## Interpolation
 
 We have assembled an object of class `SpatialPointsDataFrame` to be interpolated and an underlying cost raster of class `Raster`. We can either proceed in a single step using the high-level `ipdw` function `ipdw` or in two steps using calls to the `pathdistGen` and `ipdwInterp` functions. For simplicity, the single step option, `ipdw`, is shown below. The two step option would be useful for the case where we want interpolate multiple parameters of the same `SpatialPointsDataFrame` object using a single `RasterStack` of path distances.
 
 
-```{r eval = FALSE}
+```{r interpolate, cache = TRUE, message = FALSE, results = 'hide'}
 paramlist <- c("data")
 final.ipdw <- ipdw(training, costras, range = mean.neighdist * 10, paramlist,
 									 overlapped = TRUE)
 ```
 
-
-<!-- <<label=figure1,fig=TRUE, width=6, height=5, echo=FALSE >>= -->
-```{r fig.cap = "Interpolated salinity surface by IPDW.", eval = FALSE}
+```{r plot interpolation, fig.cap = "<strong>Figure 2: Interpolated salinity surface by IPDW.</strong>", fig.height = 6, fig.width = 5}
 plot(final.ipdw, main = "Kattegat salinity (ppt)")
 ```
 
-# Comparison with Inverse Distance Weighting
+## Comparison with Inverse Distance Weighting
 
-We can evaluate the benefits of IPDW by comparing its output against Inverse Distance Weighting with Euclidean distances. The following section generates an interpolated surface via IDW. First, prediction points are generated. Then the `gstat} \citep{peb2004} IDW functionality is called with the same inputs as the previous section above. Differences between the outputs of two methodologies are shown in Figure~\ref{fig:two}.
+We can evaluate the benefits of IPDW by comparing its output against Inverse Distance Weighting with Euclidean distances. The following section generates an interpolated surface via IDW. First, prediction points are generated. Then the `gstat` [@peb2004] IDW functionality is called with the same inputs as the previous section above. Differences between the outputs of two methodologies are shown in Figure 2.
 
-```{r eval = FALSE}
-idw.grid<-rasterToPoints(costras,fun=function(x){x<10000},spatial=TRUE)
-gridded(idw.grid)=TRUE
-kat.idw<-gstat::idw(data~1,training,idw.grid,maxdist=mean.neighdist*10,debug.level=0)
-final.idw<-raster(kat.idw)
+```{r create idw}
+idw.grid <- rasterToPoints(costras, fun = function(x){x<10000}, spatial = TRUE)
+gridded(idw.grid) = TRUE
+kat.idw <- gstat::idw(data~1, training, idw.grid, maxdist = mean.neighdist*10,
+											debug.level = 0)
+final.idw <- raster(kat.idw)
 ```
 
-<!-- <<label=figure2,fig=TRUE, width=10, height=5, echo=FALSE >>= -->
-```{r fig.cap = "Comparison between IPDW and IDW outputs. Note the overestimation of salinity on the upstream (south) side of the contiguous barrier.", eval = FALSE}
-par(mfrow=c(1,3))
-plot(final.ipdw,main="IPDW")
-plot(final.idw,main="IDW")
-plot(final.idw-final.ipdw,main="IDW versus IPDW")
+```{r plot ipdw vs idw, fig.cap = "<strong>Figure 3: Comparison between IPDW and IDW outputs. Note the overestimation of salinity on the upstream (south) side of the contiguous barrier.</strong>", fig.width = 6, fig.height = 4}
+par(mfrow = c(1, 3), mar = c(5.1, 4.1, 4.1, 5.1))
+plot(final.ipdw, main = "IPDW")
+plot(final.idw, main = "IDW")
+plot(final.idw-final.ipdw,  main = "IDW versus IPDW")
 ```
 
-We can compare interpolation errors quantitatively using the `errorGen` function. Figure~\ref{fig:three} shows a plot of the validation dataset against the interpolated estimates at those points. The validation dataset enters into the function both as a `SpatialPointsDataFrame} object and as the underlying values contained in the data slot.  
+We can compare interpolation errors quantitatively using the `errorGen` function. Figure 3 shows a plot of the validation dataset against the interpolated estimates at those points. The validation dataset enters into the function both as a `SpatialPointsDataFrame` object and as the underlying values contained in the data slot.  
 
-```{r eval = FALSE}
-measured.spdf<-data.frame(validate$data)
-coordinates(measured.spdf)<-coordinates(validate)
+```{r generate validation}
+measured.spdf <- data.frame(validate$data)
+coordinates(measured.spdf) <- coordinates(validate)
 
-valid.ipdw<-errorGen(final.ipdw,measured.spdf,measured.spdf@data)
-valid.idw<-errorGen(final.idw,measured.spdf,measured.spdf@data)
+valid.ipdw <- errorGen(final.ipdw,measured.spdf, measured.spdf@data)
+valid.idw <- errorGen(final.idw, measured.spdf, measured.spdf@data)
 ```
 
-<!-- <<label=figure3,fig=TRUE, width=8, height=5, echo=FALSE >>= -->
-```{r fig.cap = "Comparison between IPDW and IDW interpolation error.  A one-to-one line and best-fit line are shown in black and red respectively.", eval = FALSE}
-par(mfrow=c(1,2))
-valid.ipdw<-errorGen(final.ipdw,measured.spdf,measured.spdf@data,plot=TRUE,title="IPDW")
-valid.idw<-errorGen(final.idw,measured.spdf,measured.spdf@data,plot=TRUE,title="IDW")
+```{r plot validation, fig.cap = "<strong>Figure 4: Comparison between IPDW and IDW interpolation error.  A one-to-one line and best-fit line are shown in black and red respectively.</strong>", fig.width = 8, fig.height = 5}
+par(mfrow = c(1, 2))
+valid.ipdw <- errorGen(final.ipdw, measured.spdf, measured.spdf@data, 
+											 plot = TRUE, title = "IPDW")
+valid.idw <- errorGen(final.idw, measured.spdf, measured.spdf@data, 
+											plot = TRUE, title = "IDW")
 ```
 
-Results from IDW and IPDW appear similar because no validation points are present in the area downstream (south) of the contiguous barrier (Figure~\ref{fig:one},Figure~\ref{fig:two}) . Up to this point, we have seen a simple implementation of IPDW requiring only a `SpatialPointsDataFrame` and a cost `Raster`. 
+Results from IDW and IPDW appear similar because no validation points are present in the area downstream (south) of the contiguous barrier (Figure 1, 2). Up to this point, we have seen a simple implementation of IPDW requiring only a `SpatialPointsDataFrame` and a cost `Raster`. 
 
-Test comparisons between the `ipdw` and the ESRI \citep{mitchell2012,suominen2010} implementations of IPDW found `ipdw` to be much faster and more flexible. In particular, the high-level function `ipdw` provides the ability to run IPDW in one step while the lower-level function `ipdwInterp` can be called multiple times following `pathdistGen` in order to interpolate multiple parameters of a single `SpatialPointsDataFrame`. This is accomplished by saving the output from `pathdistGen`.
+Test comparisons between the `ipdw` and the ESRI [@mitchell2012; @suominen2010] implementations of IPDW found `ipdw` to be much faster and more flexible. In particular, the high-level function `ipdw` provides the ability to run IPDW in one step while the lower-level function `ipdwInterp` can be called multiple times following `pathdistGen` in order to interpolate multiple parameters of a single `SpatialPointsDataFrame`. This is accomplished by saving the output from `pathdistGen`.
 
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+## References
