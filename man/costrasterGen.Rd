@@ -48,10 +48,9 @@ plot(costras)
 points(xymat)
 }
 }
-\author{
-Joseph Stachelek
-}
 \seealso{
 \code{\link[rgdal]{spTransform-methods}}, \code{\link[raster]{rasterize}}
 }
-
+\author{
+Joseph Stachelek
+}

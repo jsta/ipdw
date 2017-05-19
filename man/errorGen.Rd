@@ -43,4 +43,3 @@ valid.stats
 \author{
 Joseph Stachelek
 }
-

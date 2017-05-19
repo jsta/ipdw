@@ -47,4 +47,3 @@ greater than the maximum accumulated cost path distance of any given geo-referen
 \author{
 Joseph Stachelek
 }
-

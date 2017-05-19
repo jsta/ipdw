@@ -46,4 +46,3 @@ plot(final.raster)
 \author{
 Joseph Stachelek
 }
-

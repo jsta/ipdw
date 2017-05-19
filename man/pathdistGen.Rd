@@ -42,4 +42,3 @@ rstack <- pathdistGen(spdf, costras, 100)
 \author{
 Joseph Stachelek
 }
-

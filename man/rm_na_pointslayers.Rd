@@ -16,4 +16,3 @@ rm_na_pointslayers(param_name, spdf, rstack)
 \description{
 Remove NA SpatialPointsDataFrame features and drop correspoding raster stack layers
 }
-
