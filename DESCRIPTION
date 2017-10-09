@@ -4,10 +4,11 @@ Description: Functions are provided to interpolate geo-referenced point data via
     Inverse Path Distance Weighting. Useful for coastal marine applications where
     barriers in the landscape preclude interpolation with Euclidean distances.
 Version: 0.2-6
-Author: Joseph Stachelek <stachel2@msu.edu>
+Authors@R: person("Joseph", "Stachelek", role = c("aut", "cre"), 
+ email = "stachel2@msu.edu", 
+ comment = c(ORCID = "0000-0002-5924-2464"))
 URL: https://www.github.com/jsta/ipdw
 BugReports: https://www.github.com/jsta/ipdw/issues
-Maintainer: Joseph Stachelek <stachel2@msu.edu>
 Depends:
     R (>= 3.0.2),gdistance
 Imports:
