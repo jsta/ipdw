@@ -1,3 +1,7 @@
+# ipdw 0.2-7
+
+* Added argument for direct control of `costRasterGen` output resolution
+
 # ipdw 0.2-6
 
 * Converted vignette to html
