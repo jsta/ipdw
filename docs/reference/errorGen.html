@@ -18,11 +18,21 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Generate interpolation error stats from validation datasets — errorGen" />
+
+<meta property="og:description" content="Generate error statistics from validation point datasets overlaid on a raster surface" />
+<meta name="twitter:card" content="summary" />
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,24 +56,44 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">ipdw</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">ipdw</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/ipdw2.html">Spatial Interpolation via Inverse Path Distance Weighting</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -71,20 +101,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate interpolation error stats from validation datasets</h1>
+    
+    <div class="hidden name"><code>errorGen.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Generate error statistics from validation point datasets overlaid on a raster surface</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>errorGen</span>(<span class='no'>finalraster</span>, <span class='no'>validation.spdf</span>, <span class='no'>validation.data</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -127,7 +161,7 @@
 <span class='no'>out.ras</span>[] <span class='kw'>&lt;-</span> <span class='no'>validation.data</span> + <span class='fu'>rnorm</span>(<span class='fu'>ncell</span>(<span class='no'>out.ras</span>), <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)
 
 <span class='no'>valid.stats</span> <span class='kw'>&lt;-</span> <span class='fu'>errorGen</span>(<span class='no'>out.ras</span>, <span class='no'>validation.spdf</span>, <span class='no'>validation.data</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Validation Plot"</span>)</div><img src='errorGen-2.png' alt='' width='540' height='400' /><div class='input'><span class='no'>valid.stats</span></div><div class='output co'>#&gt; [[1]]
+<span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Validation Plot"</span>)</div><div class='img'><img src='errorGen-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>valid.stats</span></div><div class='output co'>#&gt; [[1]]
 #&gt;     r2 rmse   pe logmse
 #&gt; 1 0.96 0.22 52.4  -2.99
 #&gt; 
@@ -168,11 +202,14 @@ Joseph Stachelek
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
