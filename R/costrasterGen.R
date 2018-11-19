@@ -37,7 +37,7 @@
 #'points(xymat)
 #'}
 
-'costrasterGen' <- function(xymat, pols, extent = "polys", resolution = 1, projstr){
+'costrasterGen' <- function(xymat, pols, extent = "polys", projstr, resolution = 1){
   if(class(xymat) == "SpatialPointsDataFrame" |
   	 class(xymat) == "SpatialPoints"){
     xymat <- sp::coordinates(xymat)
@@ -70,7 +70,7 @@
   #generate cost raster
   r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn,
   										xmx = xmx, ymn = ymn, ymx = ymx)
-  if(resoltion != 1){
+  if(resolution != 1){
   	r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn,
   											xmx = xmx, ymn = ymn, ymx = ymx, resolution = resolution)
   }
