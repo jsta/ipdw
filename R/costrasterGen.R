@@ -5,6 +5,7 @@
 #'@param xymat Matrix of coordinates or a \code{SpatialPointsDataFrame} object
 #'@param pols SpatialPolygons object
 #'@param extent Define extent based on extent of xymat/xyspdf (points) or pols (polys). Default is polys.
+#'@param resolution Numeric defaults to 1. See \code{\link[raster]{raster}}.
 #'@param projstr proj4 string defining the inherent projection
 #'@details Ensure that the projection of the xymat coordinates and pols match. This can be accomplished by running the \code{projection} command on both inputs. If they do not match use the \code{spTransform} command.
 #'@seealso \code{\link[rgdal]{spTransform-methods}}, \code{\link[raster]{rasterize}}
@@ -36,7 +37,7 @@
 #'points(xymat)
 #'}
 
-'costrasterGen' <- function(xymat, pols, extent = "polys", projstr){
+'costrasterGen' <- function(xymat, pols, extent = "polys", resolution = 1, projstr){
   if(class(xymat) == "SpatialPointsDataFrame" |
   	 class(xymat) == "SpatialPoints"){
     xymat <- sp::coordinates(xymat)

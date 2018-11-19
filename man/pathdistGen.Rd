@@ -4,7 +4,8 @@
 \alias{pathdistGen}
 \title{Generate a stack of path distance raster objects}
 \usage{
-pathdistGen(spdf, costras, range, yearmon = "default", progressbar = TRUE)
+pathdistGen(spdf, costras, range, yearmon = "default",
+  progressbar = TRUE)
 }
 \arguments{
 \item{spdf}{SpatialPointsDataFrame object}
