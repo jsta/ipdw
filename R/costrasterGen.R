@@ -70,6 +70,10 @@
   #generate cost raster
   r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn,
   										xmx = xmx, ymn = ymn, ymx = ymx)
+  if(resoltion != 1){
+  	r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn,
+  											xmx = xmx, ymn = ymn, ymx = ymx, resolution = resolution)
+  }
   costras <- raster::rasterize(pols, r, silent = TRUE)
   m <- c(0, +Inf, 10000)
   rclmat <- matrix(m, ncol = 3, byrow = TRUE)
