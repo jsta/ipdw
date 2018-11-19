@@ -31,6 +31,10 @@
 'ipdwInterp' <- function(spdf, rstack, paramlist, overlapped = FALSE,
 												 yearmon = "default", removefile = TRUE){
   
+	if(missing(paramlist)){
+		stop("Must pass a specific column name to the paramlist argument.")
+	}
+	
 	for(k in seq_len(length(paramlist))){
   	points_layers <- rm_na_pointslayers(param_name = paramlist[k],
   																			spdf = spdf, rstack = rstack)
