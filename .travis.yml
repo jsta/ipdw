@@ -25,6 +25,3 @@ deploy:
      branch: master
      condition:
        - $TRAVIS_PULL_REQUEST = false
-       - $TRAVIS_EVENT_TYPE != cron
-			 - $TRAVIS_R_VERSION_STRING = release
-			 
