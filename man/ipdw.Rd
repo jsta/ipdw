@@ -45,7 +45,7 @@ value of land areas should be increased to ensure that it is always
 greater than the maximum accumulated cost path distance of any given geo-referenced point.
 }
 \examples{
-#see vignette
+# see vignette
 }
 \author{
 Joseph Stachelek

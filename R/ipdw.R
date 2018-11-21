@@ -1,4 +1,5 @@
 #'@name ipdw
+#'
 #'@title Inverse Path Distance Weighting
 #'@description Interpolate geo-referenced point data using inverse path distance weighting.
 #'@author Joseph Stachelek
@@ -24,7 +25,7 @@
 #'@export
 #'@importFrom raster projection
 #'@examples
-#' #see vignette
+#' # see vignette
 
 'ipdw' <- function(spdf, costras, range, paramlist, overlapped = FALSE,
 					yearmon = "default", removefile = TRUE, step = 16, dist_power = 1){
