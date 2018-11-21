@@ -35,7 +35,7 @@
 #'   costras[,i] <- costras[,i] + i
 #' }
 #'
-#' rstack <- pathdistGen(spdf, costras, 100)
+#' rstack <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
 #' final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
 #' plot(final.raster)
 
