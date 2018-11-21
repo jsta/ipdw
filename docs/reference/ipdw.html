@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ipdw</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7</span>
       </span>
     </div>
 
@@ -116,7 +116,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>ipdw</span>(<span class='no'>spdf</span>, <span class='no'>costras</span>, <span class='no'>range</span>, <span class='no'>paramlist</span>, <span class='kw'>overlapped</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>yearmon</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>removefile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>step</span> <span class='kw'>=</span> <span class='fl'>16</span>)</pre>
+  <span class='kw'>yearmon</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>removefile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>step</span> <span class='kw'>=</span> <span class='fl'>16</span>,
+  <span class='kw'>dist_power</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,6 +154,10 @@
       <th>step</th>
       <td><p>numeric. Number of sub loops to manage memory during raster processing.</p></td>
     </tr>
+    <tr>
+      <th>dist_power</th>
+      <td><p>numeric. Distance decay power (p).</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -161,13 +166,13 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This is a high level function that interpolates a 
+    <p>This is a high level function that interpolates a
 SpatialPointsDataFrame object in a single pass.</p>
-<p>Points must be located within a single contiguous area. The presence of "landlocked" 
-points will cause errors. It may be necessary to increase the value 
-assigned to land areas when using a large range value in combination 
-with a large sized cost rasters (grain x extent). In these cases, the 
-value of land areas should be increased to ensure that it is always 
+<p>Points must be located within a single contiguous area. The presence of "landlocked"
+points will cause errors. It may be necessary to increase the value
+assigned to land areas when using a large range value in combination
+with a large sized cost rasters (grain x extent). In these cases, the
+value of land areas should be increased to ensure that it is always
 greater than the maximum accumulated cost path distance of any given geo-referenced point.</p>
     
 

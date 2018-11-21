@@ -10,6 +10,7 @@
 #'@param yearmon character. String specifying the name of the spdf
 #'@param removefile logical. Remove files after processing?
 #'@param step numeric. Number of sub loops to manage memory during raster processing.
+#'@param dist_power numeric. Distance decay power (p).
 #'@return RasterLayer
 #'@details This is a high level function that interpolates a 
 #'SpatialPointsDataFrame object in a single pass. 
@@ -26,7 +27,7 @@
 #' #see vignette
 
 'ipdw' <- function(spdf, costras, range, paramlist, overlapped = FALSE,
-					yearmon = "default", removefile = TRUE, step = 16){
+					yearmon = "default", removefile = TRUE, step = 16, dist_power = 1){
   
   if(!identical(raster::projection(spdf), raster::projection(costras))){
     stop("Point data projection and cost raster projections do not match,
@@ -38,7 +39,8 @@
   
   #ipdwInterp
   final.ipdw <- ipdwInterp(spdf, pathdists, paramlist, yearmon,
-  							removefile = TRUE, overlapped = overlapped)
+  							removefile = TRUE, overlapped = overlapped, 
+  							dist_power = dist_power)
   
   return(final.ipdw)  
   

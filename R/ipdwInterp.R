@@ -1,4 +1,5 @@
 #'@name ipdwInterp
+#'
 #'@title Inverse Distance Weighting with custom distances
 #'@description This function takes a rasterstack of pathdistances and generates surfaces by weighting parameter values by these distances
 #'@author Joseph Stachelek
@@ -8,28 +9,38 @@
 #'@param overlapped logical. Default is FALSE, specify TRUE if some points lie on top of barriers
 #'@param yearmon character. String specifying the name of the spdf
 #'@param removefile logical. Remove files after processing?
+#'@param dist_power numeric. Distance decay power (p).
+#'
+#'@details Under the hood, this function evaluates: 
+#' \deqn{V = \frac{\sum\limits_{i=1}^n v_i \frac{1}{d_i^p}}{\sum\limits_{i=1}^n \frac{1}{d_i^p}}}
+#' where `d` is the distance between prediction and measurement points, 
+#' `v_i` is the measured parameter value, and `p` is a power parameter.
+#'
 #'@return RasterLayer
+#'
 #'@importFrom raster calc reclassify writeRaster stack rasterize cover
 #'@export
-#'@examples
-#'spdf <- data.frame(rnorm(2))
-#'xy <- data.frame(x = c(4, 2), y = c(8, 4))
-#'coordinates(spdf) <- xy
-#'m <- matrix(NA, 10, 10)
-#'costras <- raster(m, xmn = 0, xmx = ncol(m), ymn = 0, ymx = nrow(m))
-#'#introduce spatial gradient
-#'costras[] <- runif(ncell(costras), min = 1, max = 10)
-#'for(i in 1:nrow(costras)){
-#'  costras[i,] <- costras[i,] + i
-#'  costras[,i] <- costras[,i] + i
-#'}
 #'
-#'rstack <- pathdistGen(spdf, costras, 100)
-#'final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
-#'plot(final.raster)
+#'@examples
+#' spdf <- data.frame(rnorm(2))
+#' xy   <- data.frame(x = c(4, 2), y = c(8, 4))
+#' coordinates(spdf) <- xy
+#' m <- matrix(NA, 10, 10)
+#' costras <- raster(m, xmn = 0, xmx = ncol(m), ymn = 0, ymx = nrow(m))
+#' 
+#' # introduce spatial gradient
+#' costras[] <- runif(ncell(costras), min = 1, max = 10)
+#' for(i in 1:nrow(costras)){
+#'   costras[i,] <- costras[i,] + i
+#'   costras[,i] <- costras[,i] + i
+#' }
+#'
+#' rstack <- pathdistGen(spdf, costras, 100)
+#' final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
+#' plot(final.raster)
 
 'ipdwInterp' <- function(spdf, rstack, paramlist, overlapped = FALSE,
-												 yearmon = "default", removefile = TRUE){
+												 yearmon = "default", removefile = TRUE, dist_power = 1){
   
 	if(missing(paramlist)){
 		stop("Must pass a specific column name to the paramlist argument.")
@@ -38,19 +49,22 @@
 	for(k in seq_len(length(paramlist))){
   	points_layers <- rm_na_pointslayers(param_name = paramlist[k],
   																			spdf = spdf, rstack = rstack)
-  	spdf <- points_layers$spdf
+  	spdf   <- points_layers$spdf
   	rstack <- points_layers$rstack
   	
     #if(overlapped == TRUE){ #need to set na.rm = TRUE if points are on land?
-    rstack.sum <- raster::calc(rstack, fun = function(x){sum(x, na.rm = TRUE)})
+    rstack.sum <- raster::calc(rstack, fun = function(x){
+    		sum(x^dist_power, na.rm = TRUE)
+    	})
     rstack.sum <- raster::reclassify(rstack.sum, cbind(0, NA))
       
-    #calculate the weight of the individual rasters 
+    # calculate the weight of the individual rasters 
     for(i in 1:dim(rstack)[3]){
-      ras.weight <- rstack[[i]] / rstack.sum
-      param.value <- data.frame(spdf[i, paramlist[k]])
+    	# add power in numerator of below line
+      ras.weight   <- rstack[[i]]^dist_power / rstack.sum
+      param.value  <- data.frame(spdf[i, paramlist[k]])
       param.value2 <- as.vector(unlist(param.value[1]))
-      ras.mult <- ras.weight * param.value2
+      ras.mult     <- ras.weight * param.value2
       
       rf <- raster::writeRaster(ras.mult, 
       			filename = file.path(tempdir(), paste(paramlist[k],
@@ -66,22 +80,23 @@
     								raster_data)) -> fileNum
     raster_data <- raster_data[order(fileNum)]
     
-    #sum rasters to get final surface
+    # sum rasters to get final surface
     rstack.mult <- raster::stack(raster_data)
-    finalraster <- raster::calc(rstack.mult, fun = function(x){sum(x,
-    							 na.rm = TRUE)})
+    finalraster <- raster::calc(rstack.mult, fun = function(x){
+    		sum(x, na.rm = TRUE)
+    	})
     
     if(overlapped == TRUE){
     	finalraster <- raster::reclassify(finalraster, cbind(0, NA))
     }
      
-    r <- raster::rasterize(spdf, rstack[[1]], paramlist[k])
+    r           <- raster::rasterize(spdf, rstack[[1]], paramlist[k])
     finalraster <- raster::cover(r, finalraster)
     
     file.remove(raster_data_full)
     return(finalraster)
   }
-#optional removal of path distances
+	# optional removal of path distances
 
   if(removefile == TRUE){
     file.remove(list.files(path = file.path(tempdir()),
@@ -92,6 +107,7 @@
 }
 
 #'@name rm_na_pointslayers
+#'
 #'@title Remove NA SpatialPointsDataFrame features and drop corresponding raster stack layers
 #'@description Remove NA SpatialPointsDataFrame features and drop corresponding raster stack layers
 #'@param param_name character name of data column
@@ -101,10 +117,10 @@
 
 rm_na_pointslayers <- function(param_name, spdf, rstack){
 	param_index_x <- which(names(spdf) == param_name)
-	param_na_y <- which(is.na(spdf@data[,param_index_x]))
+	param_na_y    <- which(is.na(spdf@data[,param_index_x]))
 	
 	if(length(param_na_y) > 0){
-		spdf <- spdf[-which(is.na(spdf@data[,param_index_x])),]  
+		spdf   <- spdf[-which(is.na(spdf@data[,param_index_x])),]  
 		rstack <- raster::dropLayer(rstack, param_na_y)
 	}
 	list(spdf = spdf, rstack = rstack)

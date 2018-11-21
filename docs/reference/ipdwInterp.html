@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ipdw</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.7</span>
       </span>
     </div>
 
@@ -116,7 +116,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>ipdwInterp</span>(<span class='no'>spdf</span>, <span class='no'>rstack</span>, <span class='no'>paramlist</span>, <span class='kw'>overlapped</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>yearmon</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>removefile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>yearmon</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>removefile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dist_power</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,24 +145,36 @@
       <th>removefile</th>
       <td><p>logical. Remove files after processing?</p></td>
     </tr>
+    <tr>
+      <th>dist_power</th>
+      <td><p>numeric. Distance decay power (p).</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>RasterLayer</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Under the hood, this function evaluates:
+$$V = \frac{\sum\limits_{i=1}^n v_i \frac{1}{d_i^p}}{\sum\limits_{i=1}^n \frac{1}{d_i^p}}$$
+where <code>d</code> is the distance between prediction and measurement points,
+<code>v_i</code> is the measured parameter value, and <code>p</code> is a power parameter.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>spdf</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='fu'>rnorm</span>(<span class='fl'>2</span>))
-<span class='no'>xy</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>4</span>, <span class='fl'>2</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>8</span>, <span class='fl'>4</span>))
+<span class='no'>xy</span>   <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>4</span>, <span class='fl'>2</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>8</span>, <span class='fl'>4</span>))
 <span class='fu'>coordinates</span>(<span class='no'>spdf</span>) <span class='kw'>&lt;-</span> <span class='no'>xy</span>
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>10</span>)
 <span class='no'>costras</span> <span class='kw'>&lt;-</span> <span class='fu'>raster</span>(<span class='no'>m</span>, <span class='kw'>xmn</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>xmx</span> <span class='kw'>=</span> <span class='fu'>ncol</span>(<span class='no'>m</span>), <span class='kw'>ymn</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>ymx</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>m</span>))
-<span class='co'>#introduce spatial gradient</span>
+
+<span class='co'># introduce spatial gradient</span>
 <span class='no'>costras</span>[] <span class='kw'>&lt;-</span> <span class='fu'>runif</span>(<span class='fu'>ncell</span>(<span class='no'>costras</span>), <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fu'>nrow</span>(<span class='no'>costras</span>)){
- <span class='no'>costras</span>[<span class='no'>i</span>,] <span class='kw'>&lt;-</span> <span class='no'>costras</span>[<span class='no'>i</span>,] + <span class='no'>i</span>
- <span class='no'>costras</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>costras</span>[,<span class='no'>i</span>] + <span class='no'>i</span>
+  <span class='no'>costras</span>[<span class='no'>i</span>,] <span class='kw'>&lt;-</span> <span class='no'>costras</span>[<span class='no'>i</span>,] + <span class='no'>i</span>
+  <span class='no'>costras</span>[,<span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='no'>costras</span>[,<span class='no'>i</span>] + <span class='no'>i</span>
 }
 
 <span class='no'>rstack</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pathdistGen.html'>pathdistGen</a></span>(<span class='no'>spdf</span>, <span class='no'>costras</span>, <span class='fl'>100</span>)</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%</div><div class='input'><span class='no'>final.raster</span> <span class='kw'>&lt;-</span> <span class='fu'>ipdwInterp</span>(<span class='no'>spdf</span>, <span class='no'>rstack</span>, <span class='kw'>paramlist</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"rnorm.2."</span>), <span class='kw'>overlapped</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -174,6 +186,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

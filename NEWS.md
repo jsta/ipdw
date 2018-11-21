@@ -1,6 +1,7 @@
 # ipdw 0.2-7
 
-* Added argument for direct control of `costRasterGen` output resolution
+* Added argument for direct control of `costRasterGen` output resolution (#8)
+* Added argument for adjusting distance decay power (#11)
 
 # ipdw 0.2-6
 

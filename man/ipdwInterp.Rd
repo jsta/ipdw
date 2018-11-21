@@ -5,7 +5,7 @@
 \title{Inverse Distance Weighting with custom distances}
 \usage{
 ipdwInterp(spdf, rstack, paramlist, overlapped = FALSE,
-  yearmon = "default", removefile = TRUE)
+  yearmon = "default", removefile = TRUE, dist_power = 1)
 }
 \arguments{
 \item{spdf}{SpatialPointsDataFrame object}
@@ -19,6 +19,8 @@ ipdwInterp(spdf, rstack, paramlist, overlapped = FALSE,
 \item{yearmon}{character. String specifying the name of the spdf}
 
 \item{removefile}{logical. Remove files after processing?}
+
+\item{dist_power}{numeric. Distance decay power (p).}
 }
 \value{
 RasterLayer
@@ -26,17 +28,24 @@ RasterLayer
 \description{
 This function takes a rasterstack of pathdistances and generates surfaces by weighting parameter values by these distances
 }
+\details{
+Under the hood, this function evaluates:
+\deqn{V = \frac{\sum\limits_{i=1}^n v_i \frac{1}{d_i^p}}{\sum\limits_{i=1}^n \frac{1}{d_i^p}}}
+where \code{d} is the distance between prediction and measurement points,
+\code{v_i} is the measured parameter value, and \code{p} is a power parameter.
+}
 \examples{
 spdf <- data.frame(rnorm(2))
-xy <- data.frame(x = c(4, 2), y = c(8, 4))
+xy   <- data.frame(x = c(4, 2), y = c(8, 4))
 coordinates(spdf) <- xy
 m <- matrix(NA, 10, 10)
 costras <- raster(m, xmn = 0, xmx = ncol(m), ymn = 0, ymx = nrow(m))
-#introduce spatial gradient
+
+# introduce spatial gradient
 costras[] <- runif(ncell(costras), min = 1, max = 10)
 for(i in 1:nrow(costras)){
- costras[i,] <- costras[i,] + i
- costras[,i] <- costras[,i] + i
+  costras[i,] <- costras[i,] + i
+  costras[,i] <- costras[,i] + i
 }
 
 rstack <- pathdistGen(spdf, costras, 100)
