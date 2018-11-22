@@ -26,5 +26,3 @@ deploy:
    script: R -q -e 'tic::deploy()'
    on:
      branch: master
-     condition:
-       - $TRAVIS_PULL_REQUEST = false
