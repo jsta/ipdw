@@ -38,7 +38,7 @@ for(i in 1:nrow(costras)){
  costras[,i] <- costras[,i] + i
 }
 
-rstack <- pathdistGen(spdf, costras, 100)
+rstack <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
 }
 \author{
 Joseph Stachelek

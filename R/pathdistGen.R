@@ -26,7 +26,7 @@
 #'  costras[,i] <- costras[,i] + i
 #'}
 #'
-#'rstack <- pathdistGen(spdf, costras, 100)
+#'rstack <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
 
 'pathdistGen' <- function(spdf, costras, range, yearmon = "default",
 								 progressbar = TRUE){
