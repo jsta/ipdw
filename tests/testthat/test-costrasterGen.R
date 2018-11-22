@@ -1,9 +1,6 @@
 context("costrasterGen")
 
 test_that("returns correct class and warn on bad projection", {
-  skip_on_cran()
-  skip_on_travis()
-  skip_on_appveyor()
   
   Sr1 <- Polygon(cbind(c(0, 0, 1, 1, 0), c(0, 12, 12, 0, 0)))
   Sr4 <- Polygon(cbind(c(9, 9, 10, 10, 9), c(0, 12, 12, 0, 0)))

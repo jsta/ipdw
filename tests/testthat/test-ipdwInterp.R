@@ -1,13 +1,12 @@
 context("ipdwInterp")
 
 test_that("ipdwInterp works", {
-	skip_on_cran()
-  
 	spdf                  <- data.frame(aa = rnorm(2))
 	xy                    <- data.frame(x = c(4, 2), y = c(8, 4))
 	sp::coordinates(spdf) <- xy
 	m                     <- matrix(NA, 10, 5)
-	costras               <- raster::raster(xmn = 0, xmx = ncol(m), ymn = 0, ymx = nrow(m))
+	costras               <- raster::raster(xmn = 0, xmx = ncol(m), 
+																					ymn = 0, ymx = nrow(m))
 	costras[]             <- 1
 	
 	costras[]     <- runif(raster::ncell(costras), min = 1, max = 10)
