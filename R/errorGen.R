@@ -1,14 +1,19 @@
 #'@name errorGen
+#'
 #'@title Generate interpolation error stats from validation datasets
 #'@description Generate error statistics from validation point datasets overlaid on a raster surface
 #'@author Joseph Stachelek
+#'
 #'@param finalraster RasterLayer object
 #'@param validation.spdf SpatialPointsDataFrame
 #'@param validation.data data.frame
 #'@param plot logical. Plot comparison?
 #'@param title Plot labels
+#'
 #'@return List of error statistics
+#'
 #'@export
+#'
 #'@examples
 #'validation.data <- data.frame(rnorm(10, mean = 0.2, sd = 1))
 #'names(validation.data) <- c("validation")
@@ -25,7 +30,7 @@
 #' title = "Validation Plot")
 #'valid.stats
 
-'errorGen' <- function(finalraster, validation.spdf, validation.data,
+errorGen <- function(finalraster, validation.spdf, validation.data,
 											 plot = FALSE, title = ""){
   
   predicted <- raster::extract(finalraster, validation.spdf)

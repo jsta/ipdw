@@ -1,17 +1,22 @@
 #'@name pathdistGen
+#'
 #'@title Generate a stack of path distance raster objects
 #'@description Generate a stack of path accumulated distance raster objects
 #'@author Joseph Stachelek
+#'
 #'@param spdf SpatialPointsDataFrame object
 #'@param costras RasterLayer cost raster
 #'@param range numeric. Range of interpolation neighborhood
 #'@param yearmon character. String specifying the name of the spdf
 #'@param progressbar logical show progressbar during processing?
+#'
 #'@return RasterStack object of path distances
+#'
 #'@importFrom raster res reclassify writeRaster stack hist
 #'@importFrom gdistance transition accCost
 #'@importFrom utils setTxtProgressBar
 #'@export
+#'
 #'@examples
 #'spdf <- data.frame(rnorm(2))
 #'xy <- data.frame(x = c(4, 2), y = c(8, 4))
@@ -28,7 +33,7 @@
 #'
 #'rstack <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
 
-'pathdistGen' <- function(spdf, costras, range, yearmon = "default",
+pathdistGen <- function(spdf, costras, range, yearmon = "default",
 								 progressbar = TRUE){
   
   if(class(spdf) != "SpatialPointsDataFrame"){

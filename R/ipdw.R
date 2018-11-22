@@ -3,6 +3,7 @@
 #'@title Inverse Path Distance Weighting
 #'@description Interpolate geo-referenced point data using inverse path distance weighting.
 #'@author Joseph Stachelek
+#'
 #'@param spdf SpatialPointsDataFrame object
 #'@param costras RasterLayer. Cost raster
 #'@param range numeric. Range of interpolation neighborhood
@@ -12,7 +13,9 @@
 #'@param removefile logical. Remove files after processing?
 #'@param step numeric. Number of sub loops to manage memory during raster processing.
 #'@param dist_power numeric. Distance decay power (p).
+#'
 #'@return RasterLayer
+#'
 #'@details This is a high level function that interpolates a 
 #'SpatialPointsDataFrame object in a single pass. 
 #'
@@ -22,12 +25,14 @@
 #'with a large sized cost rasters (grain x extent). In these cases, the 
 #'value of land areas should be increased to ensure that it is always 
 #'greater than the maximum accumulated cost path distance of any given geo-referenced point.
+#'
 #'@export
 #'@importFrom raster projection
+#'
 #'@examples
 #' # see vignette
 
-'ipdw' <- function(spdf, costras, range, paramlist, overlapped = FALSE,
+ipdw <- function(spdf, costras, range, paramlist, overlapped = FALSE,
 					yearmon = "default", removefile = TRUE, step = 16, dist_power = 1){
   
   if(!identical(raster::projection(spdf), raster::projection(costras))){
@@ -44,5 +49,4 @@
   							dist_power = dist_power)
   
   return(final.ipdw)  
-  
 }

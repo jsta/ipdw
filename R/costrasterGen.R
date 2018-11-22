@@ -1,18 +1,24 @@
 #'@name costrasterGen
+#'
 #'@title Generate a cost Raster
 #'@description Generate a cost raster from an object of class \code{SpatialPolygons}, \code{matrix}, or \code{SpatialPointsDataFrame}
 #'@author Joseph Stachelek
+#'
 #'@param xymat Matrix of coordinates or a \code{SpatialPointsDataFrame} object
 #'@param pols SpatialPolygons object
 #'@param extent Define extent based on extent of xymat/xyspdf (points) or pols (polys). Default is polys.
 #'@param resolution Numeric defaults to 1. See \code{\link[raster]{raster}}.
 #'@param projstr proj4 string defining the inherent projection
+#'
 #'@details Ensure that the projection of the xymat coordinates and pols match. This can be accomplished by running the \code{projection} command on both inputs. If they do not match use the \code{spTransform} command.
 #'@seealso \code{\link[rgdal]{spTransform-methods}}, \code{\link[raster]{rasterize}}
+#'
 #'@return RasterLayer
+#'
 #'@importFrom raster raster rasterize reclassify 
 #'@importFrom sp proj4string coordinates bbox 
 #'@export
+#'
 #'@examples \dontrun{
 #'Sr1 <- Polygon(cbind(c(0, 0, 1, 1, 0), c(0, 12, 12, 0, 0)))
 #'Sr4 <- Polygon(cbind(c(9, 9, 10, 10, 9), c(0, 12, 12, 0, 0)))
@@ -37,7 +43,8 @@
 #'points(xymat)
 #'}
 
-'costrasterGen' <- function(xymat, pols, extent = "polys", projstr, resolution = 1){
+costrasterGen <- function(xymat, pols, extent = "polys", projstr, 
+														resolution = 1){
   if(class(xymat) == "SpatialPointsDataFrame" |
   	 class(xymat) == "SpatialPoints"){
     xymat <- sp::coordinates(xymat)

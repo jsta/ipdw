@@ -39,7 +39,7 @@
 #' final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
 #' plot(final.raster)
 
-'ipdwInterp' <- function(spdf, rstack, paramlist, overlapped = FALSE,
+ipdwInterp <- function(spdf, rstack, paramlist, overlapped = FALSE,
 												 yearmon = "default", removefile = TRUE, dist_power = 1){
   
 	if(missing(paramlist)){
