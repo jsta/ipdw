@@ -24,4 +24,4 @@ deploy:
    provider: script
    script: R -q -e 'tic::deploy()'
    on:
-     branch: master
+     branch: gh-pages
