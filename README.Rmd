@@ -5,7 +5,7 @@ output: github_document
 ipdw
 ======
 
-[![CRAN status](https://www.r-pkg.org/badges/version/ipdw)](https://cran.r-project.org/package=ipdw)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ipdw)](https://cran.r-project.org/package=ipdw)
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 ![ipdw Downloads](http://cranlogs.r-pkg.org/badges/ipdw)
 [![Travis build status](https://travis-ci.org/jsta/ipdw.svg?branch=master)](https://travis-ci.org/jsta/ipdw)

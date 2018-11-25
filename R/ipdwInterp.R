@@ -9,7 +9,8 @@
 #'@param overlapped logical. Default is FALSE, specify TRUE if some points lie on top of barriers
 #'@param yearmon character. String specifying the name of the spdf
 #'@param removefile logical. Remove files after processing?
-#'@param dist_power numeric. Distance decay power (p).
+#'@param dist_power numeric. Distance decay power (p)
+#'@param trim_rstack logical. Trim the raster stack by the convex hull of spdf
 #'
 #'@details Under the hood, this function evaluates: 
 #' \deqn{V = \frac{\sum\limits_{i=1}^n v_i \frac{1}{d_i^p}}{\sum\limits_{i=1}^n \frac{1}{d_i^p}}}
@@ -19,6 +20,7 @@
 #'@return RasterLayer
 #'
 #'@importFrom raster calc reclassify writeRaster stack rasterize cover
+#'@importFrom rgeos gConvexHull
 #'@export
 #'
 #'@examples
@@ -38,12 +40,18 @@
 #' rstack <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
 #' final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
 #' plot(final.raster)
+#' plot(spdf, add = TRUE)
 
 ipdwInterp <- function(spdf, rstack, paramlist, overlapped = FALSE,
-												 yearmon = "default", removefile = TRUE, dist_power = 1){
+											 yearmon = "default", removefile = TRUE, dist_power = 1, 
+											 trim_rstack = FALSE){
   
 	if(missing(paramlist)){
 		stop("Must pass a specific column name to the paramlist argument.")
+	}
+	
+	if(trim_rstack){
+		rstack <- raster::mask(rstack, rgeos::gConvexHull(spdf), inverse = FALSE)
 	}
 	
 	for(k in seq_len(length(paramlist))){

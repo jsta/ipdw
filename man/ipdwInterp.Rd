@@ -5,7 +5,8 @@
 \title{Inverse Distance Weighting with custom distances}
 \usage{
 ipdwInterp(spdf, rstack, paramlist, overlapped = FALSE,
-  yearmon = "default", removefile = TRUE, dist_power = 1)
+  yearmon = "default", removefile = TRUE, dist_power = 1,
+  trim_rstack = FALSE)
 }
 \arguments{
 \item{spdf}{SpatialPointsDataFrame object}
@@ -20,7 +21,9 @@ ipdwInterp(spdf, rstack, paramlist, overlapped = FALSE,
 
 \item{removefile}{logical. Remove files after processing?}
 
-\item{dist_power}{numeric. Distance decay power (p).}
+\item{dist_power}{numeric. Distance decay power (p)}
+
+\item{trim_rstack}{logical. Trim the raster stack by the convex hull of spdf}
 }
 \value{
 RasterLayer
@@ -51,6 +54,7 @@ for(i in 1:nrow(costras)){
 rstack <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
 final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
 plot(final.raster)
+plot(spdf, add = TRUE)
 }
 \author{
 Joseph Stachelek

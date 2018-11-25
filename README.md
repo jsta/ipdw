@@ -1,8 +1,7 @@
 
 # ipdw
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/ipdw)](https://cran.r-project.org/package=ipdw)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ipdw)](https://cran.r-project.org/package=ipdw)
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
