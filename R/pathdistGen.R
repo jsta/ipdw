@@ -91,5 +91,9 @@ pathdistGen <- function(spdf, costras, range, yearmon = "default",
   file.remove(list.files(path = file.path(tempdir()),
   	pattern = paste(yearmon, "A4ras*", sep = ""), full.names = TRUE))
   
+  rstack <- pathDist(rstack, range = range)
   return(rstack)
 }
+
+pathDist   <- setClass("pathDist", 
+											 slots = c(range = "numeric"), contains = "RasterBrick")

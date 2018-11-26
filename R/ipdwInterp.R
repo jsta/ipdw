@@ -21,6 +21,7 @@
 #'
 #'@importFrom raster calc reclassify writeRaster stack rasterize cover
 #'@importFrom rgeos gConvexHull
+#'@importFrom methods new slot
 #'@export
 #'
 #'@examples
@@ -101,6 +102,10 @@ ipdwInterp <- function(spdf, rstack, paramlist, overlapped = FALSE,
     r           <- raster::rasterize(spdf, rstack[[1]], paramlist[k])
     finalraster <- raster::cover(r, finalraster)
     
+    finalraster <- ipdwResult(finalraster, 
+    													range = slot(rstack, "range"), 
+    													dist_power = dist_power)
+    
     file.remove(raster_data_full)
     return(finalraster)
   }
@@ -133,3 +138,7 @@ rm_na_pointslayers <- function(param_name, spdf, rstack){
 	}
 	list(spdf = spdf, rstack = rstack)
 }
+
+ipdwResult <- setClass("ipdwResult", 
+											 slots = c(range = "numeric", dist_power = "numeric"), 
+											 contains = "RasterLayer")
