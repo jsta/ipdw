@@ -42,8 +42,8 @@ install.packages("ipdw")
 ### or development version from GitHub
 
 ``` r
-    install.packages('devtools')  # package devtools needed
-    devtools::install_github("jsta/ipdw")
+install.packages('devtools')  # package devtools needed
+devtools::install_github("jsta/ipdw")
 ```
 
 ## Examples
