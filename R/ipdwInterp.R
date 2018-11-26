@@ -51,6 +51,8 @@ ipdwInterp <- function(spdf, rstack, paramlist, overlapped = FALSE,
 		stop("Must pass a specific column name to the paramlist argument.")
 	}
 	
+	range <- slot(rstack, "range")
+	
 	if(trim_rstack){
 		rstack <- raster::mask(rstack, rgeos::gConvexHull(spdf), inverse = FALSE)
 	}
@@ -101,10 +103,9 @@ ipdwInterp <- function(spdf, rstack, paramlist, overlapped = FALSE,
      
     r           <- raster::rasterize(spdf, rstack[[1]], paramlist[k])
     finalraster <- raster::cover(r, finalraster)
-    
-    finalraster <- ipdwResult(finalraster, 
-    													range = slot(rstack, "range"), 
-    													dist_power = dist_power)
+    finalraster <- new("ipdwResult", finalraster, 
+    									 range = range, 
+    									 dist_power = dist_power)
     
     file.remove(raster_data_full)
     return(finalraster)
