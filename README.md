@@ -14,7 +14,7 @@ status](https://ci.appveyor.com/api/projects/status/5vb8krkx50r1qhbp?svg=true)](
 release)](https://img.shields.io/github/commits-since/jsta/ipdw/latest.svg)]()
 
 The `R` package
-[ipdw](http://jsta.github.io/public/stachmadden2015am.pdf) provides the
+[ipdw](https://jsta.github.io/public/stachmadden2015am.pdf) provides the
 functionality to perform interpolation of georeferenced point data using
 inverse path distance weighting. Interpolation is accomplished in two
 steps. First, path distances are calculated from each georeferenced
@@ -58,10 +58,10 @@ install.packages("ipdw")
 Inverse Path Distance weighting for high density spatial mapping of
 coastal water quality patterns. *International Journal of Geographical
 Information Science*
-[preprint](http://jsta.github.io/public/stachmadden2015am.pdf) |
-[journal](http://dx.doi.org/10.1080/13658816.2015.1018833)
+[preprint](https://jsta.github.io/public/stachmadden2015am.pdf) |
+[journal](https://dx.doi.org/10.1080/13658816.2015.1018833)
 
 **Tapio Suominen, Harri Tolvanen, and Risto Kalliola (2010)**. Surface
 layer salinity gradients and flow patterns in the archipelago coast of
 SW Finland, northern Baltic Sea. *Marine Environmental Research*
-[journal](http://dx.doi.org/10.1016/j.marenvres.2009.10.009)
+[journal](https://dx.doi.org/10.1016/j.marenvres.2009.10.009)
