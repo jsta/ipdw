@@ -3,6 +3,7 @@
 * Added argument for direct control of `costRasterGen` output resolution (#8)
 * Added argument for adjusting distance decay power (#11)
 * Added argument to avoid extrapolation by trimming output  (#12)
+* Range and distance decay parameters are saved in output object (#13)
 
 # ipdw 0.2-6
 
