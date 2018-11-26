@@ -10,8 +10,6 @@ build
 status](https://travis-ci.org/jsta/ipdw.svg?branch=master)](https://travis-ci.org/jsta/ipdw)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/5vb8krkx50r1qhbp?svg=true)](https://ci.appveyor.com/project/jsta/ipdw)
-[![Github commits (since latest
-release)](https://img.shields.io/github/commits-since/jsta/ipdw/latest.svg)]()
 
 The `R` package
 [ipdw](https://jsta.github.io/public/stachmadden2015am.pdf) provides the
