@@ -29,7 +29,7 @@ The `ipdw` package was developed with coastal marine applications in mind where 
 library(ipdw)
 ```
 
-To begin, we need to load an object representing point observations as either a matrix of coordinates or a `SpatialPointsDataFrame` object and an object representing a coastline as a `SpatialPolygonsDataFrame` object. The data this demonstration come from a built-in dataset in the `geoR` package for the Kattegat basin of Denmark (see `?geoR::kattegat`). 
+To begin, we need to load an object representing point observations as either a matrix of coordinates or a `SpatialPointsDataFrame` object and an object representing a coastline as a `SpatialPolygonsDataFrame` object. The data for this demonstration come from a built-in dataset in the `geoR` package for the Kattegat basin of Denmark (see `?geoR::kattegat`). 
 
 ```{r load_data, message = FALSE, results='hide'}
 library(rgdal)
