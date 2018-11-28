@@ -14,7 +14,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.pos = 'center')
+knitr::opts_chunk$set(echo = TRUE, fig.pos = 'center', fig.align = 'center')
 ```
 
 ## Introduction
@@ -31,7 +31,7 @@ library(ipdw)
 
 To begin, we need to load an object representing point observations as either a matrix of coordinates or a `SpatialPointsDataFrame` object and an object representing a coastline as a `SpatialPolygonsDataFrame` object. The data this demonstration come from a built-in dataset in the `geoR` package for the Kattegat basin of Denmark (see `?geoR::kattegat`). 
 
-```{r load_data, message = FALSE}
+```{r load_data, message = FALSE, results='hide'}
 library(rgdal)
 pols <- readOGR(system.file("extdata/kattegat_coast.gpkg", package = "ipdw"))
 pnts <- readOGR(system.file("extdata/kattegat_pnts.gpkg", package = "ipdw"))
@@ -42,34 +42,34 @@ We can use this `SpatialPolygons` object to create a cost raster defining travel
 ```{r create_costraster}
 costras <- costrasterGen(pnts, pols, extent = "pnts", 
 												 projstr = projection(pols))
-#insert contiguous barrier
+# insert contiguous barrier
 costras[160:170,1:80] <- 10000
 ```
 
 In order to evaulate the utility of IPDW, we split the dataset into seperate training and validation datasets. The training dataset is created in a spatially balanced manner by building a grid and randomly selecting one measurement point per grid cell. In the following code block, the size of this grid is defined as 2 times the average distance among measurement points. Average distance is computed using the `spatstat` package [@bad2005]. Random selection is accomplished with the `gdata` function `resample` [@warn2014]. Subsetting the full dataset is not required to run `ipdw`. Alternative means of estimating interpolation errors, such as leave-one-out cross validation, are in development.
 
 ```{r avg_nearest_neigh, message = FALSE}
-#find average nearest neighbor
+# find average nearest neighbor
 library(spatstat)
 
 W              <- owin(range(coordinates(pnts)[,1]), range(coordinates(pnts)[,2]))
 kat.pp         <- ppp(coordinates(pnts)[,1], coordinates(pnts)[,2], window = W)
 mean.neighdist <- mean(nndist(kat.pp))
 
-#grid building
+# grid building
 gridsize       <- mean.neighdist * 2
 grainscale.fac <- gridsize / res(costras)[1]
 gridras        <- aggregate(costras, fact = grainscale.fac)
 gridpol        <- rasterToPolygons(gridras)
 gridpol$value  <- row.names(gridpol)
 
-#spatial join
+# spatial join
 fulldataset.over    <- over(pnts, gridpol)
 fulldataset.over    <- cbind(data.frame(fulldataset.over), 
-														 setNames(data.frame(pnts), 
-														 				 c("id", "salinity", "x.utm", "y.utm", "optional")))
+	setNames(data.frame(pnts), 
+	c("id", "salinity", "x.utm", "y.utm", "optional")))
 
-#grid selection
+# grid selection
 set.seed(2)
 gridlev <- unique(fulldataset.over$value)
 for(i in seq_along(gridlev)){
