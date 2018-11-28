@@ -25,8 +25,8 @@ The `ipdw` package was developed with coastal marine applications in mind where 
 
 ## Data Preparation
 
-```{r  load_package}
-library("ipdw")
+```{r  load_package, message=FALSE, warning=FALSE}
+library(ipdw)
 ```
 
 To begin, we need to load an object representing point observations as either a matrix of coordinates or a `SpatialPointsDataFrame` object and an object representing a coastline as a `SpatialPolygonsDataFrame` object. The data this demonstration come from a built-in dataset in the `geoR` package for the Kattegat basin of Denmark (see `?geoR::kattegat`). 
@@ -37,17 +37,16 @@ pols <- readOGR(system.file("extdata/kattegat_coast.gpkg", package = "ipdw"))
 pnts <- readOGR(system.file("extdata/kattegat_pnts.gpkg", package = "ipdw"))
 ```
 
- 
-Each polyline is converted seperately to an object of class `Polygons`. Next, all 12 objects are combined into a `SpatialPolygons` object. We can use this `SpatialPolygons` object to create a cost raster defining travel through land areas with a very high cost. As a result, interpolation neighborhoods will be defined based on in-water rather than Euclidean distances. Cost raster creation is accomplished with the `ipdw` function `costrasterGen`. By default, open water areas are set to a per unit travel cost of 1 whereas land areas are set to a per unit travel cost of 10,000. Note that a projection is defined for the `costrasterGen` function by the `projstr` parameter. It is critical to check the resolution of the cost raster before proceeding. The resolution of the cost raster will determine the resolution of the interpolated output. If the resolution is too fine, this will result in very long processing times. If neccesary, coarsen the cost raster with the `raster` function `aggregate`. 
+We can use this `SpatialPolygons` object to create a cost raster defining travel through land areas with a very high cost. As a result, interpolation neighborhoods will be defined based on in-water rather than Euclidean distances. Cost raster creation is accomplished with the `ipdw` function `costrasterGen`. By default, open water areas are set to a per unit travel cost of 1 whereas land areas are set to a per unit travel cost of 10,000. Note that a projection is defined for the `costrasterGen` function by the `projstr` parameter. It is critical to check the resolution of the cost raster before proceeding. The resolution of the cost raster will determine the resolution of the interpolated output. If the resolution is too fine, this will result in very long processing times. If neccesary, coarsen the cost raster with the `raster` function `aggregate`. 
 
 ```{r create_costraster}
-costras <- costrasterGen(pnts, pols, extent = "pnts", projection(pols))
+costras <- costrasterGen(pnts, pols, extent = "pnts", 
+												 projstr = projection(pols))
 #insert contiguous barrier
 costras[160:170,1:80] <- 10000
 ```
 
 In order to evaulate the utility of IPDW, we split the dataset into seperate training and validation datasets. The training dataset is created in a spatially balanced manner by building a grid and randomly selecting one measurement point per grid cell. In the following code block, the size of this grid is defined as 2 times the average distance among measurement points. Average distance is computed using the `spatstat` package [@bad2005]. Random selection is accomplished with the `gdata` function `resample` [@warn2014]. Subsetting the full dataset is not required to run `ipdw`. Alternative means of estimating interpolation errors, such as leave-one-out cross validation, are in development.
-
 
 ```{r avg_nearest_neigh, message = FALSE}
 #find average nearest neighbor
