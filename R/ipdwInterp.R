@@ -51,6 +51,14 @@ ipdwInterp <- function(spdf, rstack, paramlist, overlapped = FALSE,
 		stop("Must pass a specific column name to the paramlist argument.")
 	}
 	
+	if(any(!(paramlist %in% names(spdf)))){
+		stop(
+			paste0("Variable(s) '",
+				paste0(paramlist[!(paramlist %in% names(spdf))], 
+					collapse = "', '"), "' does not exist in spdf object."))
+	}
+	
+	
 	range <- slot(rstack, "range")
 	
 	if(trim_rstack){

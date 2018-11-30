@@ -39,6 +39,11 @@ pathdistGen <- function(spdf, costras, range, yearmon = "default",
   if(class(spdf) != "SpatialPointsDataFrame"){
     stop("spdf object must be of class SpatialPointsDataFrame")
   }
+	
+	if(!identical(raster::projection(spdf), raster::projection(costras))){
+		stop("Point data projection and cost raster projections do not match,
+    		 see rgdal::spTransform")
+	}
   
   ipdw_range <- range / raster::res(costras)[1] / 2 #this is a per cell distance
   

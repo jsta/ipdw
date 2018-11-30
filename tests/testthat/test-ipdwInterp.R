@@ -7,6 +7,7 @@ test_that("ipdwInterp works", {
 	m                     <- matrix(NA, 10, 5)
 	costras               <- raster::raster(xmn = 0, xmx = ncol(m), 
 																					ymn = 0, ymx = nrow(m))
+	projection(costras)   <- NA
 	costras[]             <- 1
 	
 	costras[]     <- runif(raster::ncell(costras), min = 1, max = 10)
@@ -18,19 +19,19 @@ test_that("ipdwInterp works", {
 	}
 	
 	rstack       <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
-	
 	pointslayers <- rm_na_pointslayers(param_name = "rnorm.2.", spdf = spdf,
 									rstack = rstack)
-	
 	rstack       <- pointslayers$rstack
 	spdf         <- pointslayers$spdf
+	res          <- ipdwInterp(spdf, rstack, "aa")
+	
 	expect_identical(dim(rstack)[3], nrow(spdf))
-	
-	res <- ipdwInterp(spdf, rstack, "aa")
 	expect_s4_class(res, "RasterLayer")
-	
 	expect_error(ipdwInterp(spdf, rstack), 
 							 "Must pass a specific column name to the paramlist argument.")
+	
+	expect_error(ipdwInterp(spdf, rstack, "bb"), 
+							 "Variable(s) 'bb' does not exist in spdf object.", fixed = TRUE)
 })
 
 # test_that("raster should not given warning", {
