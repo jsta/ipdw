@@ -12,7 +12,8 @@
 #'@param yearmon character. String specifying the name of the spdf
 #'@param removefile logical. Remove files after processing?
 #'@param step numeric. Number of sub loops to manage memory during raster processing.
-#'@param dist_power numeric. Distance decay power (p).
+#'@param dist_power numeric. Distance decay power (p)
+#'@param trim_rstack logical. Trim the raster output by the convex hill of spdf
 #'
 #'@return RasterLayer
 #'
@@ -33,13 +34,14 @@
 #' # see vignette
 
 ipdw <- function(spdf, costras, range, paramlist, overlapped = FALSE,
-					yearmon = "default", removefile = TRUE, step = 16, dist_power = 1){
+					yearmon = "default", removefile = TRUE, step = 16, dist_power = 1, 
+					trim_rstack = FALSE){
   
 	pathdists <- pathdistGen(spdf, costras, range, step)
   
   final.ipdw <- ipdwInterp(spdf, pathdists, paramlist, yearmon,
   							removefile = TRUE, overlapped = overlapped, 
-  							dist_power = dist_power)
+  							dist_power = dist_power, trim_rstack = trim_rstack)
   
   return(final.ipdw)  
 }
