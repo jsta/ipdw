@@ -47,17 +47,23 @@ costrasterGen <- function(xymat, pols, extent = "polys", projstr,
 														resolution = 1){
   if(class(xymat) == "SpatialPointsDataFrame" |
   	 class(xymat) == "SpatialPoints"){
+  	
+  	if(!identical(projstr, sp::proj4string(xymat))){
+  		message("Warning, the projection of xymat does not
+    			match projstr. See rgdal::spTransform")
+  	}
+  	
     xymat <- sp::coordinates(xymat)
   }
   
-  #add check to see if projstr and projection(pols) match
+	# add check to see if projstr and projection(pols) match
   if(!identical(projstr, sp::proj4string(pols))){
     message("Warning, the projection of polygons does not
     				match projstr. See rgdal::spTransform")
   }
   
-  #define spatial domain based on pnts or polys
-  if(extent == "polys"){
+  # define spatial domain based on pnts or polys
+  if(extent == "polys" | extent == "pols"){
     xmn <- min(sp::bbox(pols)[1,])
     xmx <- max(sp::bbox(pols)[1,])
     ymn <- min(sp::bbox(pols)[2,])
@@ -74,13 +80,15 @@ costrasterGen <- function(xymat, pols, extent = "polys", projstr,
   nrow <- ymx - ymn
   ncol <- xmx - xmn
   
-  #generate cost raster
-  r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn,
-  										xmx = xmx, ymn = ymn, ymx = ymx)
+  # generate cost raster
   if(resolution != 1){
   	r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn,
   											xmx = xmx, ymn = ymn, ymx = ymx, resolution = resolution)
+  }else{
+  	r <- raster::raster(nrow = nrow, ncol = ncol, crs = projstr, xmn = xmn,
+  											xmx = xmx, ymn = ymn, ymx = ymx)
   }
+  
   costras <- raster::rasterize(pols, r, silent = TRUE)
   m <- c(0, +Inf, 10000)
   rclmat <- matrix(m, ncol = 3, byrow = TRUE)
