@@ -13,7 +13,7 @@ costrasterGen(xymat, pols, extent = "polys", projstr, resolution = 1)
 
 \item{extent}{Define extent based on extent of xymat/xyspdf (points) or pols (polys). Default is polys.}
 
-\item{projstr}{proj4 string defining the inherent projection}
+\item{projstr}{proj4 string defining the output projection. An error will be thrown if projstr does not match the projection of the extent target. Pass NULL for non-geographic grids.}
 
 \item{resolution}{Numeric defaults to 1. See \code{\link[raster]{raster}}.}
 }
