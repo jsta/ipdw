@@ -1,6 +1,7 @@
 # ipdw 0.2-8
 
 * Fixed class checks that will throw errors in R version 4.0 (#20)
+* Better projection detection, handling, and docs (#15, #17)
 
 # ipdw 0.2-7
 
