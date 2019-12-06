@@ -17,6 +17,7 @@
 #'
 #'@importFrom raster raster rasterize reclassify 
 #'@importFrom sp proj4string coordinates bbox 
+#'@importFrom methods is
 #'@export
 #'
 #'@examples \dontrun{
@@ -45,8 +46,8 @@
 
 costrasterGen <- function(xymat, pols, extent = "polys", projstr, 
 														resolution = 1){
-  if(class(xymat) == "SpatialPointsDataFrame" |
-  	 class(xymat) == "SpatialPoints"){
+  if(is(xymat, "SpatialPointsDataFrame") |
+  	 is(xymat, "SpatialPoints")){
   	
   	if(!identical(projstr, sp::proj4string(xymat))){
   		message("Warning, the projection of xymat does not

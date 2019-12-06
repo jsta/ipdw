@@ -1,3 +1,7 @@
+# ipdw 0.2-8
+
+* Fixed class checks that will throw errors in R version 4.0 (#20)
+
 # ipdw 0.2-7
 
 * Added argument for direct control of `costRasterGen` output resolution (#8)
@@ -10,6 +14,3 @@
 * Converted vignette to html
 * More specific namespace handling
 * Added a `NEWS.md` file to track changes to the package.
-
-
-

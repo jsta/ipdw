@@ -26,3 +26,11 @@ test_that("returns correct class and warn on bad projection", {
   
 })
 
+test_that("SpatialPoints objects are handled correctly", {
+  library(rgdal)
+  pols <- readOGR(system.file("extdata/kattegat_coast.gpkg", package = "ipdw"))
+  pnts <- readOGR(system.file("extdata/kattegat_pnts.gpkg", package = "ipdw"))
+  costras <- costrasterGen(pnts, pols, extent = "pnts", 
+                           projstr = projection(pols))
+   
+})
