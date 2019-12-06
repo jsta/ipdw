@@ -4,9 +4,18 @@
 \alias{ipdw}
 \title{Inverse Path Distance Weighting}
 \usage{
-ipdw(spdf, costras, range, paramlist, overlapped = FALSE,
-  yearmon = "default", removefile = TRUE, step = 16,
-  dist_power = 1, trim_rstack = FALSE)
+ipdw(
+  spdf,
+  costras,
+  range,
+  paramlist,
+  overlapped = FALSE,
+  yearmon = "default",
+  removefile = TRUE,
+  step = 16,
+  dist_power = 1,
+  trim_rstack = FALSE
+)
 }
 \arguments{
 \item{spdf}{SpatialPointsDataFrame object}

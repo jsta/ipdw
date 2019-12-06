@@ -4,9 +4,16 @@
 \alias{ipdwInterp}
 \title{Inverse Distance Weighting with custom distances}
 \usage{
-ipdwInterp(spdf, rstack, paramlist, overlapped = FALSE,
-  yearmon = "default", removefile = TRUE, dist_power = 1,
-  trim_rstack = FALSE)
+ipdwInterp(
+  spdf,
+  rstack,
+  paramlist,
+  overlapped = FALSE,
+  yearmon = "default",
+  removefile = TRUE,
+  dist_power = 1,
+  trim_rstack = FALSE
+)
 }
 \arguments{
 \item{spdf}{SpatialPointsDataFrame object}

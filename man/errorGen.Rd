@@ -4,8 +4,13 @@
 \alias{errorGen}
 \title{Generate interpolation error stats from validation datasets}
 \usage{
-errorGen(finalraster, validation.spdf, validation.data, plot = FALSE,
-  title = "")
+errorGen(
+  finalraster,
+  validation.spdf,
+  validation.data,
+  plot = FALSE,
+  title = ""
+)
 }
 \arguments{
 \item{finalraster}{RasterLayer object}
