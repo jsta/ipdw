@@ -1,3 +1,7 @@
+# ipdw 0.2-9
+
+* Maintenance release to satisfy CRAN checks
+
 # ipdw 0.2-8
 
 * Fixed class checks that will throw errors in R version 4.0 (#20)
