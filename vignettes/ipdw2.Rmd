@@ -9,12 +9,15 @@ keywords: "geospatial analysis, connectivity, least-cost path, least-cost distan
 bibliography: ipdw2.bib
 vignette: >
   %\VignetteIndexEntry{Spatial Interpolation via Inverse Path Distance Weighting}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = 'center', fig.align = 'center')
+#, fig.path = "images/"
 ```
 
 ## Introduction
@@ -124,7 +127,7 @@ plot(final.ipdw, main = "Kattegat salinity (ppt)")
 
 We can evaluate the benefits of IPDW by comparing its output against Inverse Distance Weighting with Euclidean distances. The following section generates an interpolated surface via IDW. First, prediction points are generated. Then the `gstat` [@peb2004] IDW functionality is called with the same inputs as the previous section above. Differences between the outputs of two methodologies are shown in Figure 2.
 
-```{r create_idw}
+```{r create_idw, eval=FALSE}
 idw.grid <- rasterToPoints(costras, fun = function(x){ x < 10000}, spatial = TRUE)
 gridded(idw.grid) <- TRUE
 kat.idw <- gstat::idw(salinity~1, training, idw.grid, maxdist = mean.neighdist*10,
@@ -132,16 +135,20 @@ kat.idw <- gstat::idw(salinity~1, training, idw.grid, maxdist = mean.neighdist*1
 final.idw <- raster(kat.idw)
 ```
 
-```{r plot_ipdw_vs_idw, fig.cap = "<strong>Figure 3: Comparison between IPDW and IDW outputs. Note the overestimation of salinity on the upstream (south) side of the contiguous barrier.</strong>", fig.width = 6, fig.height = 4}
+```{r plot_ipdw_vs_idw, fig.cap = "<strong>Figure 3: Comparison between IPDW and IDW outputs. Note the overestimation of salinity on the upstream (south) side of the contiguous barrier.</strong>", fig.width = 6, fig.height = 4, eval=FALSE}
 par(mfrow = c(1, 3), mar = c(5.1, 4.1, 4.1, 5.1))
 plot(final.ipdw, main = "IPDW")
 plot(final.idw, main = "IDW")
 plot(final.idw-final.ipdw,  main = "IDW versus IPDW")
 ```
 
+```{r plot_ipdw_vs_idw_img, echo=FALSE}
+knitr::include_graphics("images/plot_ipdw_vs_idw-1.png")
+```
+
 We can compare interpolation errors quantitatively using the `errorGen` function. Figure 3 shows a plot of the validation dataset against the interpolated estimates at those points. The validation dataset enters into the function both as a `SpatialPointsDataFrame` object and as the underlying values contained in the data slot.  
 
-```{r generate_validation}
+```{r generate_validation, eval=FALSE}
 measured.spdf              <- data.frame(validate$salinity)
 coordinates(measured.spdf) <- coordinates(validate)
 
@@ -149,12 +156,16 @@ valid.ipdw <- errorGen(final.ipdw, measured.spdf, measured.spdf@data)
 valid.idw  <- errorGen(final.idw, measured.spdf, measured.spdf@data)
 ```
 
-```{r plot_validation, fig.cap = "<strong>Figure 4: Comparison between IPDW and IDW interpolation error.  A one-to-one line and best-fit line are shown in black and red respectively.</strong>", fig.width = 8, fig.height = 5}
+```{r plot_validation, fig.cap = "<strong>Figure 4: Comparison between IPDW and IDW interpolation error.  A one-to-one line and best-fit line are shown in black and red respectively.</strong>", fig.width = 8, fig.height = 5, eval=FALSE}
 par(mfrow = c(1, 2))
 valid.ipdw <- errorGen(final.ipdw, measured.spdf, measured.spdf@data, 
 											 plot = TRUE, title = "IPDW")
 valid.idw <- errorGen(final.idw, measured.spdf, measured.spdf@data, 
 											plot = TRUE, title = "IDW")
+```
+
+```{r plot_validation_img, echo=FALSE}
+knitr::include_graphics("images/plot_validation-1.png")
 ```
 
 Results from IDW and IPDW appear similar because no validation points are present in the area downstream (south) of the contiguous barrier (Figure 1, 2). Up to this point, we have seen a simple implementation of IPDW requiring only a `SpatialPointsDataFrame` and a cost `Raster`. 
