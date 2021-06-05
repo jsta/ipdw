@@ -2,7 +2,6 @@
 #'
 #' @title Generate a cost Raster
 #' @description Generate a cost raster from an object of class \code{SpatialPolygons}, \code{matrix}, or \code{SpatialPointsDataFrame}
-#' @author Joseph Stachelek
 #'
 #' @param xymat Matrix of coordinates or a \code{SpatialPointsDataFrame} object
 #' @param pols SpatialPolygons object

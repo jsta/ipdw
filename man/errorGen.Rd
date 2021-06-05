@@ -42,9 +42,6 @@ out.ras <- raster(m, xmn = 0, xmx = ncol(m), ymn = 0, ymx = nrow(m))
 out.ras[] <- validation.data + rnorm(ncell(out.ras), mean = 0.01, sd = 0.2)
 
 valid.stats <- errorGen(out.ras, validation.spdf, validation.data, plot = TRUE,
-title = "Validation Plot")
+  title = "Validation Plot")
 valid.stats
-}
-\author{
-Joseph Stachelek
 }

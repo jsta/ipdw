@@ -2,7 +2,6 @@
 #'
 #' @title Generate a stack of path distance raster objects
 #' @description Generate a stack of path accumulated distance raster objects
-#' @author Joseph Stachelek
 #'
 #' @param spdf SpatialPointsDataFrame object
 #' @param costras RasterLayer cost raster

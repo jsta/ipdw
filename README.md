@@ -21,7 +21,7 @@ honor barriers in the landscape, are calculated based on cell-to-cell
 movement through an underlying `Raster` object that represents movement
 cost. These path distances are subsequently used as interpolation
 weights. The two-step routine follows the order of operations described
-in Suominen et al. (2010) substituting the ESRI path distance algorithm
+in Suominen et al. (2010) substituting the ESRI path distance algorithm
 with the `gdistance` wrapped version of the `igraph` adjacency
 algorithm.
 
@@ -42,7 +42,7 @@ install.packages("ipdw")
 ### or development version from GitHub
 
 ``` r
-install.packages('devtools')  # package devtools needed
+install.packages("devtools")  # package devtools needed
 devtools::install_github("jsta/ipdw")
 ```
 
@@ -52,11 +52,11 @@ devtools::install_github("jsta/ipdw")
 
 ## References
 
-**Joseph Stachelek and Christopher J. Madden (2015)**. Application of
+**J. Stachelek and Christopher J. Madden (2015)**. Application of
 Inverse Path Distance weighting for high density spatial mapping of
 coastal water quality patterns. *International Journal of Geographical
 Information Science*
-[preprint](https://jsta.github.io/public/stachmadden2015am.pdf) |
+[preprint](https://jsta.github.io/public/stachmadden2015am.pdf) \|
 [journal](https://dx.doi.org/10.1080/13658816.2015.1018833)
 
 **Tapio Suominen, Harri Tolvanen, and Risto Kalliola (2010)**. Surface

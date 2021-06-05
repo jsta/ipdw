@@ -1,7 +1,7 @@
 ---
 title: "Spatial Interpolation via Inverse Path Distance Weighting"
 author: 
- - name: "Joseph Stachelek"
+ - name: "J. Stachelek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 abstract: "The `R` package `ipdw` provides functions for interpolation of georeferenced point data via Inverse Path Distance Weighting. Useful for coastal marine applications where barriers in the landscape preclude interpolation with Euclidean distances. This method of interpolation requires significant computation and is only practical for relatively small and coarse grids. The `ipdw` implementation may provide additional flexibility and greater speed relative to alternatives."

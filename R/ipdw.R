@@ -2,7 +2,6 @@
 #'
 #' @title Inverse Path Distance Weighting
 #' @description Interpolate geo-referenced point data using inverse path distance weighting.
-#' @author Joseph Stachelek
 #'
 #' @param spdf SpatialPointsDataFrame object
 #' @param costras RasterLayer. Cost raster

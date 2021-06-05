@@ -2,7 +2,6 @@
 #'
 #' @title Generate interpolation error stats from validation datasets
 #' @description Generate error statistics from validation point datasets overlaid on a raster surface
-#' @author Joseph Stachelek
 #'
 #' @param finalraster RasterLayer object
 #' @param validation.spdf SpatialPointsDataFrame

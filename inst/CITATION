@@ -7,11 +7,11 @@ note <- sprintf("R package version %s", meta$Version)
      
 citEntry(entry = "Manual",
          title = "ipdw: spatial interpolation by Inverse Path Distance Weighting. ",
-         author = personList(as.person("Joseph Stachelek")),
+         author = personList(as.person("Jemma Stachelek")),
          year = year,
          note = note,
          url = "https://cran.r-project.org/package=ipdw",
 
-         textVersion = paste("Joseph Stachelek (", year, 
+         textVersion = paste("Jemma Stachelek (", year, 
              "). ipdw: spatial interpolation by Inverse Path Distance Weighting. ",
              note, ".", sep=""))

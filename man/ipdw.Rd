@@ -58,6 +58,3 @@ greater than the maximum accumulated cost path distance of any given geo-referen
 \examples{
 # see vignette
 }
-\author{
-Joseph Stachelek
-}

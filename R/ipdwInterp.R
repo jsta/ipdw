@@ -2,7 +2,6 @@
 #'
 #' @title Inverse Distance Weighting with custom distances
 #' @description This function takes a rasterstack of pathdistances and generates surfaces by weighting parameter values by these distances
-#' @author Joseph Stachelek
 #' @param spdf SpatialPointsDataFrame object
 #' @param rstack RasterStack of path distances
 #' @param paramlist character. String representing parameter names
