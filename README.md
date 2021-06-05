@@ -5,11 +5,7 @@
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-![ipdw Downloads](https://cranlogs.r-pkg.org/badges/ipdw) [![Travis
-build
-status](https://travis-ci.org/jsta/ipdw.svg?branch=master)](https://travis-ci.org/jsta/ipdw)
-[![Build
-status](https://ci.appveyor.com/api/projects/status/5vb8krkx50r1qhbp?svg=true)](https://ci.appveyor.com/project/jsta/ipdw)
+![ipdw Downloads](https://cranlogs.r-pkg.org/badges/ipdw)
 
 The `R` package
 [ipdw](https://jsta.github.io/public/stachmadden2015am.pdf) provides the
