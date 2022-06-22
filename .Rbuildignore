@@ -14,3 +14,4 @@ docs
 ^cran-comments\.md$
 knudsen
 ipdw_docker
+.github

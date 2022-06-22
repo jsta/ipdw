@@ -14,12 +14,12 @@ Depends:
 Imports:
     sp,raster,rgeos,methods
 Suggests:
-    geoR,gstat,gdata,spatstat,rgdal,
+    gstat,gdata,spatstat,rgdal,
     testthat,
     knitr,
     rmarkdown
 License: GPL (>= 2)
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
