@@ -1,11 +1,12 @@
 
 # ipdw
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ipdw)](https://cran.r-project.org/package=ipdw)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ipdw)](https://cran.r-project.org/package=ipdw)
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 ![ipdw Downloads](https://cranlogs.r-pkg.org/badges/ipdw)
+[![R-CMD-check](https://github.com/jsta/ipdw/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/jsta/ipdw/actions/workflows/R-CMD-check.yml)
 
 The `R` package
 [ipdw](https://jsta.github.io/public/stachmadden2015am.pdf) provides the

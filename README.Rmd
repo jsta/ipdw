@@ -5,7 +5,7 @@ output: github_document
 ipdw
 ======
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ipdw)](https://cran.r-project.org/package=ipdw) [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![ipdw Downloads](https://cranlogs.r-pkg.org/badges/ipdw)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ipdw)](https://cran.r-project.org/package=ipdw) [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![ipdw Downloads](https://cranlogs.r-pkg.org/badges/ipdw) [![R-CMD-check](https://github.com/jsta/ipdw/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/jsta/ipdw/actions/workflows/R-CMD-check.yml)
 
 The `R` package [ipdw](https://jsta.github.io/public/stachmadden2015am.pdf)  provides the functionality to perform interpolation of georeferenced point data using inverse path distance weighting. Interpolation is accomplished in two steps. First, path distances are calculated from each georeferenced (measurement) point to each prediction point. Path distances, which honor barriers in the landscape, are calculated based on cell-to-cell movement through an underlying `Raster` object that represents movement cost. These path distances are subsequently used as interpolation weights. The two-step routine follows the order of operations described in Suominen et al. (2010) substituting the ESRI path distance algorithm with the `gdistance` wrapped version of the `igraph` adjacency algorithm.    
 
