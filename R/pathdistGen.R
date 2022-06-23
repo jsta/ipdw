@@ -34,7 +34,7 @@
 pathdistGen <- function(spdf, costras, range, yearmon = "default",
                         progressbar = TRUE) {
 
-  if (class(spdf) != "SpatialPointsDataFrame") {
+  if (!inherits(spdf, "SpatialPointsDataFrame")) {
     stop("spdf object must be of class SpatialPointsDataFrame")
   }
 
