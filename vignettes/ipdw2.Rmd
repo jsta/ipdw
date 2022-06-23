@@ -87,7 +87,7 @@ for (i in seq_along(gridlev)) {
 }
 ```
 
-Next, we save the training and validation datasets as objects of class `SpatialPointsDataFrame`. Note that the projection of the training and validation datasets matches the cost raster we created previously. Calculations within the `ipdw` package require projected datasets. More about `R` projections can be found from the PROJ.4 documentation at the Open Source Geospatial Foundation (https://trac.osgeo.org/proj/).
+Next, we save the training and validation datasets as objects of class `SpatialPointsDataFrame`. Note that the projection of the training and validation datasets matches the cost raster we created previously. Calculations within the `ipdw` package require projected datasets. More about `R` projections can be found from the PROJ.4 documentation at the Open Source Geospatial Foundation (https://proj4.org).
 
 
 ```{r split_training_validation}
