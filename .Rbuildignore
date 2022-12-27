@@ -7,7 +7,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 appveyor.yml
-TODO
+TODO.md
 kenworthy_newriver
 Dockerfile
 docs
@@ -17,3 +17,4 @@ ipdw_docker
 .github
 ^CRAN-SUBMISSION$
 README.html
+.gitignore
