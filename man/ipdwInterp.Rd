@@ -45,8 +45,9 @@ where \code{d} is the distance between prediction and measurement points,
 \code{v_i} is the measured parameter value, and \code{p} is a power parameter.
 }
 \examples{
+library(sf)
 sf_ob <- data.frame(rnorm(2))
-xy   <- data.frame(x = c(4, 2), y = c(8, 4))
+xy    <- data.frame(x = c(4, 2), y = c(8, 4))
 sf_ob <- st_as_sf(cbind(sf_ob, xy), coords = c("x", "y"))
 
 m <- matrix(NA, 10, 10)

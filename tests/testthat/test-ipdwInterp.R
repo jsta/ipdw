@@ -32,6 +32,8 @@ test_that("ipdwInterp works", {
 
   expect_error(ipdwInterp(sf_ob, rstack, "bb"),
     "Variable(s) 'bb' does not exist in sf_ob object.", fixed = TRUE)
+
+  expect_s4_class(ipdwInterp(sf_ob, rstack, "aa", trim_rstack = TRUE), "RasterLayer")
 })
 
 # test_that("raster should not given warning", {

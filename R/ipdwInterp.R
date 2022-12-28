@@ -19,14 +19,14 @@
 #' @return RasterLayer
 #'
 #' @importFrom raster calc reclassify writeRaster stack rasterize cover
-#' @importFrom rgeos gConvexHull
 #' @importFrom methods new slot
-#' @importFrom sf st_as_sf
+#' @importFrom sf st_as_sf st_convex_hull
 #' @export
 #'
 #' @examples
+#' library(sf)
 #' sf_ob <- data.frame(rnorm(2))
-#' xy   <- data.frame(x = c(4, 2), y = c(8, 4))
+#' xy    <- data.frame(x = c(4, 2), y = c(8, 4))
 #' sf_ob <- st_as_sf(cbind(sf_ob, xy), coords = c("x", "y"))
 #'
 #' m <- matrix(NA, 10, 10)
@@ -62,7 +62,7 @@ ipdwInterp <- function(sf_ob, rstack, paramlist, overlapped = FALSE,
   range <- slot(rstack, "range")
 
   if (trim_rstack) {
-    rstack <- raster::mask(rstack, rgeos::gConvexHull(sf_ob), inverse = FALSE)
+    rstack <- raster::mask(rstack, sf::st_convex_hull(sf_ob), inverse = FALSE)
   }
 
   for (k in seq_len(length(paramlist))) {
