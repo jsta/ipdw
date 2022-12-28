@@ -39,16 +39,6 @@
 #' }
 costrasterGen <- function(xymat, pols, extent = "polys", projstr,
                           resolution = 1) {
-  if (is(xymat, "SpatialPointsDataFrame") |
-    is(xymat, "SpatialPoints")) {
-
-    if (!identical(projstr, sp::proj4string(xymat))) {
-      message("Warning, the projection of xymat does not
-    			match projstr. See sf::st_transform")
-    }
-
-    xymat <- sp::coordinates(xymat)
-  }
 
   # add check to see if projstr and projection(pols) match
   if (!identical(projstr, st_crs(pols)$proj4string)) {
