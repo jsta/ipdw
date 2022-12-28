@@ -55,8 +55,9 @@ In order to evaluate the utility of IPDW, we split the dataset into seperate tra
 # find average nearest neighbor
 library(spatstat)
 
-W              <- owin(range(coordinates(pnts)[, 1]), range(coordinates(pnts)[, 2]))
-kat.pp         <- ppp(coordinates(pnts)[, 1], coordinates(pnts)[, 2], window = W)
+W              <- owin(range(c(st_bbox(pnts)["xmin"], st_bbox(pnts)["xmax"])),
+                       range(c(st_bbox(pnts)["ymin"], st_bbox(pnts)["ymax"])))
+kat.pp         <- ppp(st_coordinates(pnts)[,1], st_coordinates(pnts)[,2], window = W)
 mean.neighdist <- mean(nndist(kat.pp))
 
 # grid building
@@ -67,10 +68,7 @@ gridpol        <- rasterToPolygons(gridras)
 gridpol$value  <- row.names(gridpol)
 
 # spatial join
-fulldataset.over    <- over(pnts, gridpol)
-fulldataset.over    <- cbind(data.frame(fulldataset.over),
-  setNames(data.frame(pnts),
-    c("id", "salinity", "x.utm", "y.utm", "optional")))
+fulldataset.over <- sf::st_join(pnts, st_as_sf(gridpol))
 
 # grid selection
 set.seed(2)
@@ -80,8 +78,7 @@ for (i in seq_along(gridlev)) {
   selectnum <- gdata::resample(seq_len(nrow(activesub)), 1)
   if (i == 1) {
     training <- activesub[selectnum, ]
-  }
-  else {
+  } else {
     training <- rbind(training, activesub[selectnum, ])
   }
 }
@@ -93,19 +90,13 @@ Next, we save the training and validation datasets as objects of class `SpatialP
 ```{r split_training_validation}
 validate             <- fulldataset.over[!(row.names(fulldataset.over) %in%
   row.names(training)), ]
-xy                   <- cbind(training$x.utm, training$y.utm)
-training             <- SpatialPointsDataFrame(xy, training)
-xy                   <- cbind(validate$x.utm, validate$y.utm)
-validate             <- SpatialPointsDataFrame(xy, validate)
-projection(training) <- projection(pnts)
-projection(validate) <- projection(pnts)
 ```
 
 ```{r plot_cost_raster, fig.cap = "<strong>Figure 1: Cost raster representing the high cost of travel through land areas. Training and validation points are shown in black and red respectively.</strong>", fig.height = 6, fig.width = 5}
 
 plot(costras)
-points(training)
-points(validate, col = "red")
+plot(st_geometry(training), add = TRUE)
+plot(st_geometry(validate), col = "red", add = TRUE)
 ```
 
 ## Interpolation
@@ -130,11 +121,12 @@ We can evaluate the benefits of IPDW by comparing its output against Inverse Dis
 ```{r create_idw, eval=FALSE}
 idw.grid <- rasterToPoints(costras, fun = function(x) {
   x < 10000
-}, spatial = TRUE)
-gridded(idw.grid) <- TRUE
-kat.idw <- gstat::idw(salinity ~ 1, training, idw.grid, maxdist = mean.neighdist * 10,
-  debug.level = 0)
-final.idw <- raster(kat.idw)
+}, spatial = FALSE)
+idw.grid <- st_as_sf(data.frame(idw.grid), coords = c("x", "y"), crs = st_crs(training))
+kat.idw  <- gstat::idw(salinity ~ 1, training, idw.grid, maxdist = mean.neighdist * 10,
+  debug.level = 0)["var1.pred"]
+final.idw <- rasterize(as_Spatial(kat.idw), final.ipdw)
+final.idw <- raster::subset(final.idw, "var1.pred")
 ```
 
 ```{r plot_ipdw_vs_idw, fig.cap = "<strong>Figure 3: Comparison between IPDW and IDW outputs. Note the overestimation of salinity on the upstream (south) side of the contiguous barrier.</strong>", fig.width = 6, fig.height = 4, eval=FALSE}
@@ -152,17 +144,17 @@ We can compare interpolation errors quantitatively using the `errorGen` function
 
 ```{r generate_validation, eval=FALSE}
 measured.spdf              <- data.frame(validate$salinity)
-coordinates(measured.spdf) <- coordinates(validate)
+# coordinates(measured.spdf) <- coordinates(validate)
 
-valid.ipdw <- errorGen(final.ipdw, measured.spdf, measured.spdf@data)
-valid.idw  <- errorGen(final.idw, measured.spdf, measured.spdf@data)
+valid.ipdw <- errorGen(final.ipdw, validate["salinity"], measured.spdf)
+valid.idw  <- errorGen(final.idw, validate["salinity"], measured.spdf)
 ```
 
 ```{r plot_validation, fig.cap = "<strong>Figure 4: Comparison between IPDW and IDW interpolation error.  A one-to-one line and best-fit line are shown in black and red respectively.</strong>", fig.width = 8, fig.height = 5, eval=FALSE}
 par(mfrow = c(1, 2))
-valid.ipdw <- errorGen(final.ipdw, measured.spdf, measured.spdf@data,
+valid.ipdw <- errorGen(final.ipdw, validate["salinity"], measured.spdf,
   plot = TRUE, title = "IPDW")
-valid.idw <- errorGen(final.idw, measured.spdf, measured.spdf@data,
+valid.idw <- errorGen(final.idw, validate["salinity"], measured.spdf,
   plot = TRUE, title = "IDW")
 ```
 

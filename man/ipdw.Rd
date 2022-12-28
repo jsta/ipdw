@@ -5,7 +5,7 @@
 \title{Inverse Path Distance Weighting}
 \usage{
 ipdw(
-  spdf,
+  sf_ob,
   costras,
   range,
   paramlist,
@@ -18,7 +18,7 @@ ipdw(
 )
 }
 \arguments{
-\item{spdf}{SpatialPointsDataFrame object}
+\item{sf_ob}{sf object with point geometries}
 
 \item{costras}{RasterLayer. Cost raster}
 
@@ -28,7 +28,7 @@ ipdw(
 
 \item{overlapped}{logical. Default is FALSE, specify TRUE if some points lie on top of barriers}
 
-\item{yearmon}{character. String specifying the name of the spdf}
+\item{yearmon}{character. String specifying the name of the sf_ob}
 
 \item{removefile}{logical. Remove files after processing?}
 
@@ -36,7 +36,7 @@ ipdw(
 
 \item{dist_power}{numeric. Distance decay power (p)}
 
-\item{trim_rstack}{logical. Trim the raster output by the convex hill of spdf}
+\item{trim_rstack}{logical. Trim the raster output by the convex hill of sf_ob}
 }
 \value{
 RasterLayer
@@ -45,8 +45,8 @@ RasterLayer
 Interpolate geo-referenced point data using inverse path distance weighting.
 }
 \details{
-This is a high level function that interpolates a
-SpatialPointsDataFrame object in a single pass.
+This is a high level function that interpolates an
+sf object with point geometries in a single pass.
 
 Points must be located within a single contiguous area. The presence of "landlocked"
 points will cause errors. It may be necessary to increase the value

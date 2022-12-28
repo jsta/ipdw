@@ -5,7 +5,7 @@
 \title{Inverse Distance Weighting with custom distances}
 \usage{
 ipdwInterp(
-  spdf,
+  sf_ob,
   rstack,
   paramlist,
   overlapped = FALSE,
@@ -16,7 +16,7 @@ ipdwInterp(
 )
 }
 \arguments{
-\item{spdf}{SpatialPointsDataFrame object}
+\item{sf_ob}{sf object with point geometries}
 
 \item{rstack}{RasterStack of path distances}
 
@@ -24,13 +24,13 @@ ipdwInterp(
 
 \item{overlapped}{logical. Default is FALSE, specify TRUE if some points lie on top of barriers}
 
-\item{yearmon}{character. String specifying the name of the spdf}
+\item{yearmon}{character. String specifying the name of the sf object}
 
 \item{removefile}{logical. Remove files after processing?}
 
 \item{dist_power}{numeric. Distance decay power (p)}
 
-\item{trim_rstack}{logical. Trim the raster stack by the convex hull of spdf}
+\item{trim_rstack}{logical. Trim the raster stack by the convex hull of sf_ob}
 }
 \value{
 RasterLayer
@@ -45,9 +45,10 @@ where \code{d} is the distance between prediction and measurement points,
 \code{v_i} is the measured parameter value, and \code{p} is a power parameter.
 }
 \examples{
-spdf <- data.frame(rnorm(2))
+sf_ob <- data.frame(rnorm(2))
 xy   <- data.frame(x = c(4, 2), y = c(8, 4))
-coordinates(spdf) <- xy
+sf_ob <- st_as_sf(cbind(sf_ob, xy), coords = c("x", "y"))
+
 m <- matrix(NA, 10, 10)
 costras <- raster(m, xmn = 0, xmx = ncol(m), ymn = 0, ymx = nrow(m))
 
@@ -58,8 +59,8 @@ for (i in 1:nrow(costras)) {
   costras[, i] <- costras[, i] + i
 }
 
-rstack <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
-final.raster <- ipdwInterp(spdf, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
+rstack <- pathdistGen(sf_ob, costras, 100, progressbar = FALSE)
+final.raster <- ipdwInterp(sf_ob, rstack, paramlist = c("rnorm.2."), overlapped = TRUE)
 plot(final.raster)
-plot(spdf, add = TRUE)
+plot(sf_ob, add = TRUE)
 }
