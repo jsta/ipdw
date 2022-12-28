@@ -24,8 +24,8 @@ test_that("returns correct class and warn on bad projection", {
 
 test_that("SpatialPoints objects are handled correctly", {
   library(sf)
-  pols <- st_read(system.file("extdata/kattegat_coast.gpkg", package = "ipdw"))
-  pnts <- st_read(system.file("extdata/kattegat_pnts.gpkg", package = "ipdw"))
+  pols <- st_read(system.file("extdata/kattegat_coast.gpkg", package = "ipdw"), quiet = TRUE)
+  pnts <- st_read(system.file("extdata/kattegat_pnts.gpkg", package = "ipdw"), quiet = TRUE)
   costras <- costrasterGen(pnts, pols, extent = "pnts",
     projstr = projection(pols))
   expect_is(costras, "RasterLayer")
