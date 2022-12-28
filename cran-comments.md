@@ -1,6 +1,6 @@
 ## Test environments
 
-* ubuntu 20 (on ghactions), R 4.2.0
+* ubuntu 20 (on ghactions), R 4.2.2
 
 ## R CMD check results
 
