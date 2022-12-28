@@ -32,7 +32,7 @@ The `ipdw` package was developed with coastal marine applications in mind where 
 library(ipdw)
 ```
 
-To begin, we need to load an object representing point observations as either a matrix of coordinates or a `SpatialPointsDataFrame` object and an object representing a coastline as a `SpatialPolygonsDataFrame` object. The data for this demonstration come from a built-in dataset in the `geoR` package for the Kattegat basin of Denmark (see `?geoR::kattegat`). 
+To begin, we need to load an object representing point observations as either a matrix of coordinates or an `sf` object with point geometries and an object representing a coastline as an `sf` object with polygon geometries. The data for this demonstration come from a built-in dataset in the `geoR` package for the Kattegat basin of Denmark (see `?geoR::kattegat`). 
 
 ```{r load_data, message = FALSE, results='hide'}
 library(sf)
@@ -40,7 +40,7 @@ pols <- st_read(system.file("extdata/kattegat_coast.gpkg", package = "ipdw"))
 pnts <- st_read(system.file("extdata/kattegat_pnts.gpkg", package = "ipdw"))
 ```
 
-We can use this `SpatialPolygons` object to create a cost raster defining travel through land areas with a very high cost. As a result, interpolation neighborhoods will be defined based on in-water rather than Euclidean distances. Cost raster creation is accomplished with the `ipdw` function `costrasterGen`. By default, open water areas are set to a per unit travel cost of 1 whereas land areas are set to a per unit travel cost of 10,000. Note that a projection is defined for the `costrasterGen` function by the `projstr` parameter. It is critical to check the resolution of the cost raster before proceeding. The resolution of the cost raster will determine the resolution of the interpolated output. If the resolution is too fine, this will result in very long processing times. If necessary, coarsen the cost raster with the `raster` function `aggregate`. 
+We can use this polygon `sf` object to create a cost raster defining travel through land areas with a very high cost. As a result, interpolation neighborhoods will be defined based on in-water rather than Euclidean distances. Cost raster creation is accomplished with the `ipdw` function `costrasterGen`. By default, open water areas are set to a per unit travel cost of 1 whereas land areas are set to a per unit travel cost of 10,000. Note that a projection is defined for the `costrasterGen` function by the `projstr` parameter. It is critical to check the resolution of the cost raster before proceeding. The resolution of the cost raster will determine the resolution of the interpolated output. If the resolution is too fine, this will result in very long processing times. If necessary, coarsen the cost raster with the `raster` function `aggregate`. 
 
 ```{r create_costraster}
 costras <- costrasterGen(pnts, pols, extent = "pnts",
@@ -84,7 +84,7 @@ for (i in seq_along(gridlev)) {
 }
 ```
 
-Next, we save the training and validation datasets as objects of class `SpatialPointsDataFrame`. Note that the projection of the training and validation datasets matches the cost raster we created previously. Calculations within the `ipdw` package require projected datasets. More about `R` projections can be found from the PROJ.4 documentation at the Open Source Geospatial Foundation (https://proj4.org).
+Next, we save the training and validation datasets as objects of class class `sf` with point geometries. Note that the projection of the training and validation datasets matches the cost raster we created previously. Calculations within the `ipdw` package require projected datasets. More about `R` projections can be found from the PROJ.4 documentation at the Open Source Geospatial Foundation (https://proj4.org).
 
 
 ```{r split_training_validation}
@@ -101,7 +101,7 @@ plot(st_geometry(validate), col = "red", add = TRUE)
 
 ## Interpolation
 
-We have assembled an object of class `SpatialPointsDataFrame` to be interpolated and an underlying cost raster of class `Raster`. We can either proceed in a single step using the high-level `ipdw` function `ipdw` or in two steps using calls to the `pathdistGen` and `ipdwInterp` functions. For simplicity, the single step option, `ipdw`, is shown below. The two step option would be useful for the case where we want interpolate multiple parameters of the same `SpatialPointsDataFrame` object using a single `RasterStack` of path distances.
+We have assembled an object of class `sf` with point geometries to be interpolated and an underlying cost raster of class `Raster`. We can either proceed in a single step using the high-level `ipdw` function `ipdw` or in two steps using calls to the `pathdistGen` and `ipdwInterp` functions. For simplicity, the single step option, `ipdw`, is shown below. The two step option would be useful for the case where we want interpolate multiple parameters of the same `sf` object using a single `RasterStack` of path distances.
 
 
 ```{r interpolate, cache = FALSE, message = FALSE, results = 'hide'}
@@ -140,7 +140,7 @@ plot(final.idw - final.ipdw,  main = "IDW versus IPDW")
 knitr::include_graphics("images/plot_ipdw_vs_idw-1.png")
 ```
 
-We can compare interpolation errors quantitatively using the `errorGen` function. Figure 3 shows a plot of the validation dataset against the interpolated estimates at those points. The validation dataset enters into the function both as a `SpatialPointsDataFrame` object and as the underlying values contained in the data slot.  
+We can compare interpolation errors quantitatively using the `errorGen` function. Figure 3 shows a plot of the validation dataset against the interpolated estimates at those points. The validation dataset enters into the function both as a `sf` object and as the underlying data values.  
 
 ```{r generate_validation, eval=FALSE}
 measured.spdf              <- data.frame(validate$salinity)
@@ -161,8 +161,8 @@ valid.idw <- errorGen(final.idw, validate["salinity"], measured.spdf,
 knitr::include_graphics("images/plot_validation-1.png")
 ```
 
-Results from IDW and IPDW appear similar because no validation points are present in the area downstream (south) of the contiguous barrier (Figure 1, 2). Up to this point, we have seen a simple implementation of IPDW requiring only a `SpatialPointsDataFrame` and a cost `Raster`. 
+Results from IDW and IPDW appear similar because no validation points are present in the area downstream (south) of the contiguous barrier (Figure 1, 2). Up to this point, we have seen a simple implementation of IPDW requiring only an `sf` object with point geometries and a cost `Raster`. 
 
-Test comparisons between the `ipdw` and the ESRI [@mitchell2012; @suominen2010] implementations of IPDW found `ipdw` to be much faster and more flexible. In particular, the high-level function `ipdw` provides the ability to run IPDW in one step while the lower-level function `ipdwInterp` can be called multiple times following `pathdistGen` in order to interpolate multiple parameters of a single `SpatialPointsDataFrame`. This is accomplished by saving the output from `pathdistGen`.
+Test comparisons between the `ipdw` and the ESRI [@mitchell2012; @suominen2010] implementations of IPDW found `ipdw` to be much faster and more flexible. In particular, the high-level function `ipdw` provides the ability to run IPDW in one step while the lower-level function `ipdwInterp` can be called multiple times following `pathdistGen` in order to interpolate multiple parameters of a single `sf` object. This is accomplished by saving the output from `pathdistGen`.
 
 ## References

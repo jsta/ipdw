@@ -9,7 +9,7 @@ rm_na_pointslayers(param_name, sf_ob, rstack)
 \arguments{
 \item{param_name}{character name of data column}
 
-\item{sf_ob}{SpatialPointsDataFrame object}
+\item{sf_ob}{sf object with point geometries}
 
 \item{rstack}{RasterStack or RasterBrick}
 }

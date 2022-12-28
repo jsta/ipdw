@@ -133,7 +133,7 @@ ipdwInterp <- function(sf_ob, rstack, paramlist, overlapped = FALSE,
 #' @title Remove NA points features and drop corresponding raster stack layers
 #' @description Remove NA points features and drop corresponding raster stack layers
 #' @param param_name character name of data column
-#' @param sf_ob SpatialPointsDataFrame object
+#' @param sf_ob sf object with point geometries
 #' @param rstack RasterStack or RasterBrick
 #' @export
 
