@@ -1,37 +1,33 @@
 #' @name costrasterGen
 #'
 #' @title Generate a cost Raster
-#' @description Generate a cost raster from an object of class \code{SpatialPolygons}, \code{matrix}, or \code{SpatialPointsDataFrame}
+#' @description Generate a cost raster from an object of class sf with point or polygon geometries
 #'
-#' @param xymat Matrix of coordinates or a \code{SpatialPointsDataFrame} object
-#' @param pols SpatialPolygons object
-#' @param extent Define extent based on extent of xymat/xyspdf (points) or pols (polys). Default is polys.
+#' @param xymat Matrix of coordinates or an sf object with point geometries
+#' @param pols sf object with polygon geometries
+#' @param extent Define extent based on extent of xymat/sf (points) or pols (polys). Default is polys.
 #' @param resolution Numeric defaults to 1. See \code{\link[raster]{raster}}.
-#' @param projstr proj4 string defining the output projection. An error will be thrown if projstr does not match the projection of the extent target. Pass NULL for non-geographic grids.
+#' @param projstr proj4 string defining the output projection. A warning will be thrown if projstr does not match the projection of the extent target. Pass NULL for non-geographic grids.
 #'
-#' @details Ensure that the projection of the xymat coordinates and pols match. This can be accomplished by running the \code{projection} command on both inputs. If they do not match use the \code{spTransform} command.
-#' @seealso \code{\link[rgdal]{spTransform-methods}}, \code{\link[raster]{rasterize}}
+#' @details Ensure that the projection of the xymat coordinates and pols match. If they do not match use the \code{st_transform} command.
+#' @seealso \code{\link[raster]{rasterize}}
 #'
 #' @return RasterLayer
 #'
 #' @importFrom raster raster rasterize reclassify
-#' @importFrom sp proj4string coordinates bbox
+#' @importFrom sf st_polygon st_as_sf st_crs
 #' @importFrom methods is
 #' @export
 #'
 #' @examples \dontrun{
-#' Sr1 <- Polygon(cbind(c(0, 0, 1, 1, 0), c(0, 12, 12, 0, 0)))
-#' Sr4 <- Polygon(cbind(c(9, 9, 10, 10, 9), c(0, 12, 12, 0, 0)))
-#' Sr2 <- Polygon(cbind(c(1, 1, 9, 9, 1), c(11, 12, 12, 11, 11)))
-#' Sr3 <- Polygon(cbind(c(1, 1, 9, 9, 1), c(0, 1, 1, 0, 0)))
-#' Sr5 <- Polygon(cbind(c(4, 4, 5, 5, 4), c(4, 8, 8, 4, 4)))
-#' Srs1 <- Polygons(list(Sr1), "s1")
-#' Srs2 <- Polygons(list(Sr2), "s2")
-#' Srs3 <- Polygons(list(Sr3), "s3")
-#' Srs4 <- Polygons(list(Sr4), "s4")
-#' Srs5 <- Polygons(list(Sr5), "s5")
-#'
-#' pols <- SpatialPolygons(list(Srs1, Srs2, Srs3, Srs4, Srs5), 1:5)
+#' library(sf)
+#' Sr1 <- st_polygon(list(cbind(c(0, 0, 1, 1, 0), c(0, 12, 12, 0, 0))))
+#' Sr4 <- st_polygon(list(cbind(c(9, 9, 10, 10, 9), c(0, 12, 12, 0, 0))))
+#' Sr2 <- st_polygon(list(cbind(c(1, 1, 9, 9, 1), c(11, 12, 12, 11, 11))))
+#' Sr3 <- st_polygon(list(cbind(c(1, 1, 9, 9, 1), c(0, 1, 1, 0, 0))))
+#' Sr5 <- st_polygon(list(cbind(c(4, 4, 5, 5, 4), c(4, 8, 8, 4, 4))))
+#' pols <- st_as_sf(st_sfc(Sr1, Sr2, Sr3, Sr4, Sr5,
+#'   crs = "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
 #'
 #' # using a matrix object
 #' xymat <- matrix(3, 3, nrow = 1, ncol = 2)
@@ -48,31 +44,38 @@ costrasterGen <- function(xymat, pols, extent = "polys", projstr,
 
     if (!identical(projstr, sp::proj4string(xymat))) {
       message("Warning, the projection of xymat does not
-    			match projstr. See rgdal::spTransform")
+    			match projstr. See sf::st_transform")
     }
 
     xymat <- sp::coordinates(xymat)
   }
 
   # add check to see if projstr and projection(pols) match
-  if (!identical(projstr, sp::proj4string(pols))) {
+  if (!identical(projstr, st_crs(pols)$proj4string)) {
     message("Warning, the projection of polygons does not
-    				match projstr. See rgdal::spTransform")
+    				match projstr. See sf::st_transform")
   }
 
   # define spatial domain based on pnts or polys
   if (extent == "polys" | extent == "pols") {
-    xmn <- min(sp::bbox(pols)[1, ])
-    xmx <- max(sp::bbox(pols)[1, ])
-    ymn <- min(sp::bbox(pols)[2, ])
-    ymx <- max(sp::bbox(pols)[2, ])
+    xmn <- as.numeric(st_bbox(pols)["xmin"])
+    xmx <- as.numeric(st_bbox(pols)["xmax"])
+    ymn <- as.numeric(st_bbox(pols)["ymin"])
+    ymx <- as.numeric(st_bbox(pols)["ymax"])
   }
 
   if (extent == "points" | extent == "pnts") {
-    ymn <- range(xymat[, 2])[1]
-    ymx <- range(xymat[, 2])[2]
-    xmn <- range(xymat[, 1])[1]
-    xmx <- range(xymat[, 1])[2]
+    if(is(xymat, "sf")) {
+      xmn <- as.numeric(st_bbox(xymat)["xmin"])
+      xmx <- as.numeric(st_bbox(xymat)["xmax"])
+      ymn <- as.numeric(st_bbox(xymat)["ymin"])
+      ymx <- as.numeric(st_bbox(xymat)["ymax"])
+    }else {
+      ymn <- range(xymat[, 2])[1]
+      ymx <- range(xymat[, 2])[2]
+      xmn <- range(xymat[, 1])[1]
+      xmx <- range(xymat[, 1])[2]
+    }
   }
 
   nrow <- ymx - ymn

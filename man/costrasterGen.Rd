@@ -7,13 +7,13 @@
 costrasterGen(xymat, pols, extent = "polys", projstr, resolution = 1)
 }
 \arguments{
-\item{xymat}{Matrix of coordinates or a \code{SpatialPointsDataFrame} object}
+\item{xymat}{Matrix of coordinates or an sf object with point geometries}
 
-\item{pols}{SpatialPolygons object}
+\item{pols}{sf object with polygon geometries}
 
-\item{extent}{Define extent based on extent of xymat/xyspdf (points) or pols (polys). Default is polys.}
+\item{extent}{Define extent based on extent of xymat/sf (points) or pols (polys). Default is polys.}
 
-\item{projstr}{proj4 string defining the output projection. An error will be thrown if projstr does not match the projection of the extent target. Pass NULL for non-geographic grids.}
+\item{projstr}{proj4 string defining the output projection. A warning will be thrown if projstr does not match the projection of the extent target. Pass NULL for non-geographic grids.}
 
 \item{resolution}{Numeric defaults to 1. See \code{\link[raster]{raster}}.}
 }
@@ -21,25 +21,21 @@ costrasterGen(xymat, pols, extent = "polys", projstr, resolution = 1)
 RasterLayer
 }
 \description{
-Generate a cost raster from an object of class \code{SpatialPolygons}, \code{matrix}, or \code{SpatialPointsDataFrame}
+Generate a cost raster from an object of class sf with point or polygon geometries
 }
 \details{
-Ensure that the projection of the xymat coordinates and pols match. This can be accomplished by running the \code{projection} command on both inputs. If they do not match use the \code{spTransform} command.
+Ensure that the projection of the xymat coordinates and pols match. If they do not match use the \code{st_transform} command.
 }
 \examples{
 \dontrun{
-Sr1 <- Polygon(cbind(c(0, 0, 1, 1, 0), c(0, 12, 12, 0, 0)))
-Sr4 <- Polygon(cbind(c(9, 9, 10, 10, 9), c(0, 12, 12, 0, 0)))
-Sr2 <- Polygon(cbind(c(1, 1, 9, 9, 1), c(11, 12, 12, 11, 11)))
-Sr3 <- Polygon(cbind(c(1, 1, 9, 9, 1), c(0, 1, 1, 0, 0)))
-Sr5 <- Polygon(cbind(c(4, 4, 5, 5, 4), c(4, 8, 8, 4, 4)))
-Srs1 <- Polygons(list(Sr1), "s1")
-Srs2 <- Polygons(list(Sr2), "s2")
-Srs3 <- Polygons(list(Sr3), "s3")
-Srs4 <- Polygons(list(Sr4), "s4")
-Srs5 <- Polygons(list(Sr5), "s5")
-
-pols <- SpatialPolygons(list(Srs1, Srs2, Srs3, Srs4, Srs5), 1:5)
+library(sf)
+Sr1 <- st_polygon(list(cbind(c(0, 0, 1, 1, 0), c(0, 12, 12, 0, 0))))
+Sr4 <- st_polygon(list(cbind(c(9, 9, 10, 10, 9), c(0, 12, 12, 0, 0))))
+Sr2 <- st_polygon(list(cbind(c(1, 1, 9, 9, 1), c(11, 12, 12, 11, 11))))
+Sr3 <- st_polygon(list(cbind(c(1, 1, 9, 9, 1), c(0, 1, 1, 0, 0))))
+Sr5 <- st_polygon(list(cbind(c(4, 4, 5, 5, 4), c(4, 8, 8, 4, 4))))
+pols <- st_as_sf(st_sfc(Sr1, Sr2, Sr3, Sr4, Sr5,
+  crs = "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
 
 # using a matrix object
 xymat <- matrix(3, 3, nrow = 1, ncol = 2)
@@ -51,5 +47,5 @@ points(xymat)
 }
 }
 \seealso{
-\code{\link[rgdal]{spTransform-methods}}, \code{\link[raster]{rasterize}}
+\code{\link[raster]{rasterize}}
 }
