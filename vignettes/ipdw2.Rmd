@@ -144,7 +144,6 @@ We can compare interpolation errors quantitatively using the `errorGen` function
 
 ```{r generate_validation, eval=FALSE}
 measured.spdf              <- data.frame(validate$salinity)
-# coordinates(measured.spdf) <- coordinates(validate)
 
 valid.ipdw <- errorGen(final.ipdw, validate["salinity"], measured.spdf)
 valid.idw  <- errorGen(final.idw, validate["salinity"], measured.spdf)
