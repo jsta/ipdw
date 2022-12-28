@@ -1,3 +1,8 @@
+## ipdw 2.0.0
+
+* Converted external (user-facing) operations from `sp` to `sf` (#19)
+* Dropped reliance on retiring `rgdal` and `rgeos` packages (#22)
+
 ## ipdw 1.0-0
 
 * Maintenance release to reflect archiving of the `geoR` package and updated maintainer contact info
