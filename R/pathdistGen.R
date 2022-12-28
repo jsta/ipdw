@@ -18,6 +18,7 @@
 #' @export
 #'
 #' @examples
+#' library(sf)
 #' sf_ob <- data.frame(rnorm(2))
 #' xy   <- data.frame(x = c(4, 2), y = c(8, 4))
 #' sf_ob <- st_as_sf(cbind(sf_ob, xy), coords = c("x", "y"))

@@ -1,7 +1,7 @@
 context("errorGen")
 
 test_that("errorGen works", {
-
+  library(sf)
   validation.data <- data.frame(rnorm(10, mean = 0.2, sd = 1))
   names(validation.data) <- c("validation")
   validation.sf_ob <- validation.data
