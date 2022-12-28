@@ -1,9 +1,9 @@
 context("ipdwInterp")
 
 test_that("ipdwInterp works", {
-  spdf                  <- data.frame(aa = rnorm(2))
+  sf_ob                 <- data.frame(aa = rnorm(2))
   xy                    <- data.frame(x = c(4, 2), y = c(8, 4))
-  sp::coordinates(spdf) <- xy
+  sf_ob                 <- st_as_sf(cbind(sf_ob, xy), coords = c("x", "y"))
   m                     <- matrix(NA, 10, 5)
   costras               <- raster::raster(xmn = 0, xmx = ncol(m),
     ymn = 0, ymx = nrow(m))
@@ -18,20 +18,20 @@ test_that("ipdwInterp works", {
     costras[, i]  <- costras[, i] + i
   }
 
-  rstack       <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
-  pointslayers <- rm_na_pointslayers(param_name = "rnorm.2.", spdf = spdf,
+  rstack       <- pathdistGen(sf_ob, costras, 100, progressbar = FALSE)
+  pointslayers <- rm_na_pointslayers(param_name = "rnorm.2.", sf_ob = sf_ob,
     rstack = rstack)
   rstack       <- pointslayers$rstack
-  spdf         <- pointslayers$spdf
-  res          <- ipdwInterp(spdf, rstack, "aa")
+  sf_ob        <- pointslayers$sf_ob
+  res          <- ipdwInterp(sf_ob, rstack, "aa")
 
-  expect_identical(dim(rstack)[3], nrow(spdf))
+  expect_identical(dim(rstack)[3], nrow(sf_ob))
   expect_s4_class(res, "RasterLayer")
-  expect_error(ipdwInterp(spdf, rstack),
+  expect_error(ipdwInterp(sf_ob, rstack),
     "Must pass a specific column name to the paramlist argument.")
 
-  expect_error(ipdwInterp(spdf, rstack, "bb"),
-    "Variable(s) 'bb' does not exist in spdf object.", fixed = TRUE)
+  expect_error(ipdwInterp(sf_ob, rstack, "bb"),
+    "Variable(s) 'bb' does not exist in sf_ob object.", fixed = TRUE)
 })
 
 # test_that("raster should not given warning", {
