@@ -35,9 +35,9 @@ library(ipdw)
 To begin, we need to load an object representing point observations as either a matrix of coordinates or a `SpatialPointsDataFrame` object and an object representing a coastline as a `SpatialPolygonsDataFrame` object. The data for this demonstration come from a built-in dataset in the `geoR` package for the Kattegat basin of Denmark (see `?geoR::kattegat`). 
 
 ```{r load_data, message = FALSE, results='hide'}
-library(rgdal)
-pols <- readOGR(system.file("extdata/kattegat_coast.gpkg", package = "ipdw"))
-pnts <- readOGR(system.file("extdata/kattegat_pnts.gpkg", package = "ipdw"))
+library(sf)
+pols <- st_read(system.file("extdata/kattegat_coast.gpkg", package = "ipdw"))
+pnts <- st_read(system.file("extdata/kattegat_pnts.gpkg", package = "ipdw"))
 ```
 
 We can use this `SpatialPolygons` object to create a cost raster defining travel through land areas with a very high cost. As a result, interpolation neighborhoods will be defined based on in-water rather than Euclidean distances. Cost raster creation is accomplished with the `ipdw` function `costrasterGen`. By default, open water areas are set to a per unit travel cost of 1 whereas land areas are set to a per unit travel cost of 10,000. Note that a projection is defined for the `costrasterGen` function by the `projstr` parameter. It is critical to check the resolution of the cost raster before proceeding. The resolution of the cost raster will determine the resolution of the interpolated output. If the resolution is too fine, this will result in very long processing times. If necessary, coarsen the cost raster with the `raster` function `aggregate`. 

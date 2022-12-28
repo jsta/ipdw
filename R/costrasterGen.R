@@ -15,7 +15,7 @@
 #' @return RasterLayer
 #'
 #' @importFrom raster raster rasterize reclassify
-#' @importFrom sf st_polygon st_as_sf st_crs
+#' @importFrom sf st_polygon st_as_sf st_crs st_bbox
 #' @importFrom methods is
 #' @export
 #'
