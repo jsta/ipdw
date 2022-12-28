@@ -49,7 +49,7 @@ costras <- costrasterGen(pnts, pols, extent = "pnts",
 costras[160:170, 1:80] <- 10000
 ```
 
-In order to evaluate the utility of IPDW, we split the dataset into seperate training and validation datasets. The training dataset is created in a spatially balanced manner by building a grid and randomly selecting one measurement point per grid cell. In the following code block, the size of this grid is defined as 2 times the average distance among measurement points. Average distance is computed using the `spatstat` package [@bad2005]. Random selection is accomplished with the `gdata` function `resample` [@warn2014]. Subsetting the full dataset is not required to run `ipdw`. Alternative means of estimating interpolation errors, such as leave-one-out cross validation, are in development.
+In order to evaluate the utility of IPDW, we split the dataset into separate training and validation datasets. The training dataset is created in a spatially balanced manner by building a grid and randomly selecting one measurement point per grid cell. In the following code block, the size of this grid is defined as 2 times the average distance among measurement points. Average distance is computed using the `spatstat` package [@bad2005]. Random selection is accomplished with the `gdata` function `resample` [@warn2014]. Subsetting the full dataset is not required to run `ipdw`. Alternative means of estimating interpolation errors, such as leave-one-out cross validation, are in development.
 
 ```{r avg_nearest_neigh, message = FALSE}
 # find average nearest neighbor
