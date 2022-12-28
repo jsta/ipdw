@@ -4,16 +4,16 @@
 \alias{pathdistGen}
 \title{Generate a stack of path distance raster objects}
 \usage{
-pathdistGen(spdf, costras, range, yearmon = "default", progressbar = TRUE)
+pathdistGen(sf_ob, costras, range, yearmon = "default", progressbar = TRUE)
 }
 \arguments{
-\item{spdf}{SpatialPointsDataFrame object}
+\item{sf_ob}{sf object with point geometries}
 
 \item{costras}{RasterLayer cost raster}
 
 \item{range}{numeric. Range of interpolation neighborhood}
 
-\item{yearmon}{character. String specifying the name of the spdf}
+\item{yearmon}{character. String specifying the name of the sf_ob}
 
 \item{progressbar}{logical show progressbar during processing?}
 }
@@ -24,9 +24,9 @@ RasterStack object of path distances
 Generate a stack of path accumulated distance raster objects
 }
 \examples{
-spdf <- data.frame(rnorm(2))
-xy <- data.frame(x = c(4, 2), y = c(8, 4))
-coordinates(spdf) <- xy
+sf_ob <- data.frame(rnorm(2))
+xy   <- data.frame(x = c(4, 2), y = c(8, 4))
+sf_ob <- st_as_sf(cbind(sf_ob, xy), coords = c("x", "y"))
 
 m <- matrix(NA, 10, 10)
 costras <- raster(m, xmn = 0, xmx = ncol(m), ymn = 0, ymx = nrow(m))
@@ -37,5 +37,5 @@ for (i in 1:nrow(costras)) {
   costras[, i] <- costras[, i] + i
 }
 
-rstack <- pathdistGen(spdf, costras, 100, progressbar = FALSE)
+rstack <- pathdistGen(sf_ob, costras, 100, progressbar = FALSE)
 }
