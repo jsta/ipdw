@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ipdw</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0-0</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ipdwInterp</span><span class="op">(</span></span>
-<span>  <span class="va">spdf</span>,</span>
+<span>  <span class="va">sf_ob</span>,</span>
 <span>  <span class="va">rstack</span>,</span>
 <span>  <span class="va">paramlist</span>,</span>
 <span>  overlapped <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -77,8 +77,8 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>spdf</dt>
-<dd><p>SpatialPointsDataFrame object</p></dd>
+    <dl><dt>sf_ob</dt>
+<dd><p>sf object with point geometries</p></dd>
 
 
 <dt>rstack</dt>
@@ -94,7 +94,7 @@
 
 
 <dt>yearmon</dt>
-<dd><p>character. String specifying the name of the spdf</p></dd>
+<dd><p>character. String specifying the name of the sf object</p></dd>
 
 
 <dt>removefile</dt>
@@ -106,7 +106,7 @@
 
 
 <dt>trim_rstack</dt>
-<dd><p>logical. Trim the raster stack by the convex hull of spdf</p></dd>
+<dd><p>logical. Trim the raster stack by the convex hull of sf_ob</p></dd>
 
 </dl></div>
     <div id="value">
@@ -125,9 +125,11 @@ where <code>d</code> is the distance between prediction and measurement points,
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">spdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">xy</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">coordinates</span><span class="op">(</span><span class="va">spdf</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">xy</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sf_ob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xy</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sf_ob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">sf_ob</span>, <span class="va">xy</span><span class="op">)</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">costras</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="op">(</span><span class="va">m</span>, xmn <span class="op">=</span> <span class="fl">0</span>, xmx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>, ymn <span class="op">=</span> <span class="fl">0</span>, ymx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -138,10 +140,10 @@ where <code>d</code> is the distance between prediction and measurement points,
 <span class="r-in"><span>  <span class="va">costras</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">costras</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">+</span> <span class="va">i</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">rstack</span> <span class="op">&lt;-</span> <span class="fu"><a href="pathdistGen.html">pathdistGen</a></span><span class="op">(</span><span class="va">spdf</span>, <span class="va">costras</span>, <span class="fl">100</span>, progressbar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">final.raster</span> <span class="op">&lt;-</span> <span class="fu">ipdwInterp</span><span class="op">(</span><span class="va">spdf</span>, <span class="va">rstack</span>, paramlist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rnorm.2."</span><span class="op">)</span>, overlapped <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rstack</span> <span class="op">&lt;-</span> <span class="fu"><a href="pathdistGen.html">pathdistGen</a></span><span class="op">(</span><span class="va">sf_ob</span>, <span class="va">costras</span>, <span class="fl">100</span>, progressbar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">final.raster</span> <span class="op">&lt;-</span> <span class="fu">ipdwInterp</span><span class="op">(</span><span class="va">sf_ob</span>, <span class="va">rstack</span>, paramlist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rnorm.2."</span><span class="op">)</span>, overlapped <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">final.raster</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">spdf</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sf_ob</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ipdwInterp-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
