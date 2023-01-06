@@ -104,6 +104,7 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Linking to GEOS 3.11.1, GDAL 3.6.1, PROJ 9.1.1; sf_use_s2() is TRUE</span>
 <span class="r-in"><span><span class="va">validation.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">0.2</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">validation.data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"validation"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">validation.sf_ob</span> <span class="op">&lt;-</span> <span class="va">validation.data</span></span></span>
@@ -120,21 +121,21 @@
 <span class="r-plt img"><img src="errorGen-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="va">valid.stats</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     r2 rmse    pe logmse</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.99 0.19 116.7  -3.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     r2 rmse     pe logmse</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.99  0.2 131.33  -3.18</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    validation.data  predicted</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       -0.5435893 -0.4631206</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       -0.6978375 -0.6274869</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       -0.5170500 -0.5382650</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        0.1014650  0.0597980</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        1.2751716  1.7057445</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       -2.0147855 -1.9619316</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       -0.8806477 -0.6749170</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8        2.0609081  2.2323187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       -0.5373079 -0.2997667</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       2.2927413  2.4594724</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    validation.data   predicted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        1.0107014  1.15222473</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       -2.1253690 -2.12131479</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        0.4406080  0.08990841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       -1.5616918 -1.66553006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       -0.4726455 -0.43624251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       -1.8285199 -2.01160455</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       -0.4302755 -0.37619675</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       -3.7426556 -4.12028416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       -0.7158509 -0.96657834</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       0.2293261  0.36391096</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
