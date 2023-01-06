@@ -1,4 +1,4 @@
-## ipdw 2.0.0
+## ipdw 2.0-0
 
 * Converted external (user-facing) operations from `sp` to `sf` (#19)
 * Dropped reliance on retiring `rgdal` and `rgeos` packages (#22)
